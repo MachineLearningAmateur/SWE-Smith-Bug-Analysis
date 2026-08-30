@@ -1,0 +1,249 @@
+{
+  "cases": 35,
+  "dominant_language": "typescript",
+  "frame": "strict_corpus",
+  "generated_at_utc": "2026-08-30T03:11:43Z",
+  "isolation_statement": "Only repository names and diff file extensions were read. No failure label, family, pattern, scope, confidence or reviewer verdict was read or used.",
+  "language_distribution": {
+    "c": 1,
+    "cpp": 1,
+    "csharp": 2,
+    "go": 5,
+    "java": 2,
+    "php": 1,
+    "python": 4,
+    "rust": 3,
+    "typescript": 12,
+    "unknown": 4
+  },
+  "language_proportions": {
+    "c": 0.0286,
+    "cpp": 0.0286,
+    "csharp": 0.0571,
+    "go": 0.1429,
+    "java": 0.0571,
+    "php": 0.0286,
+    "python": 0.1143,
+    "rust": 0.0857,
+    "typescript": 0.3429,
+    "unknown": 0.1143
+  },
+  "method": "Language is the dominant source-file extension in each case's pull-request diff. Documentation, configuration and lock files are ignored. A tie gives 'unknown' rather than a guess.",
+  "per_case": [
+    {
+      "case_id": "002",
+      "language": "typescript",
+      "repo": "Cap-go/capgo"
+    },
+    {
+      "case_id": "003",
+      "language": "python",
+      "repo": "airbytehq/airbyte"
+    },
+    {
+      "case_id": "005",
+      "language": "typescript",
+      "repo": "calcom/cal.com"
+    },
+    {
+      "case_id": "006",
+      "language": "typescript",
+      "repo": "calcom/cal.com"
+    },
+    {
+      "case_id": "007",
+      "language": "go",
+      "repo": "celestiaorg/celestia-core"
+    },
+    {
+      "case_id": "008",
+      "language": "go",
+      "repo": "celestiaorg/celestia-core"
+    },
+    {
+      "case_id": "009",
+      "language": "unknown",
+      "repo": "christianhelle/apiclientcodegen"
+    },
+    {
+      "case_id": "012",
+      "language": "python",
+      "repo": "crewAIInc/crewAI"
+    },
+    {
+      "case_id": "015",
+      "language": "csharp",
+      "repo": "dotnet/diagnostics"
+    },
+    {
+      "case_id": "020",
+      "language": "unknown",
+      "repo": "elizaOS/eliza"
+    },
+    {
+      "case_id": "021",
+      "language": "unknown",
+      "repo": "esphome/esphome-devices"
+    },
+    {
+      "case_id": "024",
+      "language": "rust",
+      "repo": "freenet/freenet-core"
+    },
+    {
+      "case_id": "026",
+      "language": "typescript",
+      "repo": "legions-developer/invoicely"
+    },
+    {
+      "case_id": "030",
+      "language": "python",
+      "repo": "marimo-team/marimo"
+    },
+    {
+      "case_id": "032",
+      "language": "typescript",
+      "repo": "microsoft/TypeScript"
+    },
+    {
+      "case_id": "033",
+      "language": "typescript",
+      "repo": "microsoft/TypeScript"
+    },
+    {
+      "case_id": "034",
+      "language": "typescript",
+      "repo": "microsoft/react-native-gallery"
+    },
+    {
+      "case_id": "036",
+      "language": "typescript",
+      "repo": "microsoft/vscode"
+    },
+    {
+      "case_id": "037",
+      "language": "typescript",
+      "repo": "microsoft/vscode"
+    },
+    {
+      "case_id": "038",
+      "language": "typescript",
+      "repo": "microsoft/vscode"
+    },
+    {
+      "case_id": "039",
+      "language": "typescript",
+      "repo": "microsoft/vscode"
+    },
+    {
+      "case_id": "041",
+      "language": "java",
+      "repo": "objectionary/eo"
+    },
+    {
+      "case_id": "042",
+      "language": "python",
+      "repo": "reflex-dev/reflex-web"
+    },
+    {
+      "case_id": "044",
+      "language": "go",
+      "repo": "rqlite/sql"
+    },
+    {
+      "case_id": "045",
+      "language": "cpp",
+      "repo": "shader-slang/slang"
+    },
+    {
+      "case_id": "046",
+      "language": "php",
+      "repo": "shopware/shopware"
+    },
+    {
+      "case_id": "051",
+      "language": "rust",
+      "repo": "vercel/turborepo"
+    },
+    {
+      "case_id": "062",
+      "language": "c",
+      "repo": "reeze/php-leveldb"
+    },
+    {
+      "case_id": "063",
+      "language": "rust",
+      "repo": "tomhrr/cosh"
+    },
+    {
+      "case_id": "074",
+      "language": "go",
+      "repo": "Azure/azure-storage-fuse"
+    },
+    {
+      "case_id": "082",
+      "language": "unknown",
+      "repo": "mlflow/mlflow"
+    },
+    {
+      "case_id": "084",
+      "language": "go",
+      "repo": "onflow/flow-go"
+    },
+    {
+      "case_id": "087",
+      "language": "csharp",
+      "repo": "microsoft/perfview"
+    },
+    {
+      "case_id": "091",
+      "language": "java",
+      "repo": "hmislk/hmis"
+    },
+    {
+      "case_id": "094",
+      "language": "typescript",
+      "repo": "onlook-dev/onlook"
+    }
+  ],
+  "profile_sha256": "3c8dc831753474e4f3cbd5d072005ed6be9a83f9451f25f3c845058bed475987",
+  "project_type_note": "Project type is not deterministically available from the frozen packets and was not assigned.",
+  "repo_size_bin_distribution": {
+    "UNKNOWN": 35
+  },
+  "repo_size_note": "Repository size is not recorded in the frozen AIDev evidence packets and was not inferred. Any SSR environment match is therefore on language only; the repo-size mismatch is documented in docs/fidelity_limitations.md.",
+  "repositories": {
+    "Azure/azure-storage-fuse": 1,
+    "Cap-go/capgo": 1,
+    "airbytehq/airbyte": 1,
+    "calcom/cal.com": 2,
+    "celestiaorg/celestia-core": 2,
+    "christianhelle/apiclientcodegen": 1,
+    "crewAIInc/crewAI": 1,
+    "dotnet/diagnostics": 1,
+    "elizaOS/eliza": 1,
+    "esphome/esphome-devices": 1,
+    "freenet/freenet-core": 1,
+    "hmislk/hmis": 1,
+    "legions-developer/invoicely": 1,
+    "marimo-team/marimo": 1,
+    "microsoft/TypeScript": 2,
+    "microsoft/perfview": 1,
+    "microsoft/react-native-gallery": 1,
+    "microsoft/vscode": 4,
+    "mlflow/mlflow": 1,
+    "objectionary/eo": 1,
+    "onflow/flow-go": 1,
+    "onlook-dev/onlook": 1,
+    "reeze/php-leveldb": 1,
+    "reflex-dev/reflex-web": 1,
+    "rqlite/sql": 1,
+    "shader-slang/slang": 1,
+    "shopware/shopware": 1,
+    "tomhrr/cosh": 1,
+    "vercel/turborepo": 1
+  },
+  "source_checkout": "D:\\Code Projects\\Algoverse\\SSR_AIDev_Coverage",
+  "source_repository": "MachineLearningAmateur/AIBugAnalysis",
+  "unique_repositories": 29
+}

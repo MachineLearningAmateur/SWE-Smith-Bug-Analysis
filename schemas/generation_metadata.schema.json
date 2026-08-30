@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ssr-swesmith-coverage/generation_metadata.schema.json",
+  "title": "SSR bug generation metadata (HIDDEN from reviewers)",
+  "description": "Everything about how a bug state was produced. This file is hidden metadata: it must never appear inside a review packet, and reviewers must not read it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bug_id",
+    "corpus_name",
+    "bug_order",
+    "generation_strategy",
+    "environment",
+    "generator",
+    "created_at_utc",
+    "artifacts"
+  ],
+  "properties": {
+    "bug_id": {
+      "type": "string",
+      "pattern": "^BUG_[0-9a-f]{12}$",
+      "description": "Internal generation identifier. Never shown to a reviewer."
+    },
+    "corpus_name": {"type": "string"},
+    "bug_order": {"type": "integer", "minimum": 1, "maximum": 2},
+    "generation_strategy": {
+      "enum": ["REMOVAL", "HISTORY_REVERSION", "FAILED_SOLVER"]
+    },
+    "parent_bug_id": {"type": ["string", "null"], "pattern": "^BUG_[0-9a-f]{12}$"},
+    "parent_generation_strategy": {
+      "type": ["string", "null"],
+      "enum": ["REMOVAL", "HISTORY_REVERSION", null]
+    },
+    "strategy_draw": {
+      "type": "object",
+      "description": "Record of the seeded 50/50 REMOVAL vs HISTORY_REVERSION draw.",
+      "additionalProperties": false,
+      "required": ["seed", "attempt_index", "draw_value", "chosen"],
+      "properties": {
+        "seed": {"type": "integer"},
+        "attempt_index": {"type": "integer", "minimum": 0},
+        "draw_value": {"type": "number", "minimum": 0, "maximum": 1},
+        "chosen": {"enum": ["REMOVAL", "HISTORY_REVERSION"]}
+      }
+    },
+    "environment": {
+      "type": "object",
+      "description": "Handoff section 4: the recorded environment substrate.",
+      "additionalProperties": false,
+      "required": ["backend", "source_repo", "source_commit", "language"],
+      "properties": {
+        "backend": {"enum": ["docker", "wsl", "local"]},
+        "swesmith_sha": {"type": ["string", "null"]},
+        "swesmith_version": {"type": ["string", "null"]},
+        "environment_id": {"type": ["string", "null"], "description": "SWE-smith environment or image identifier."},
+        "image_id": {"type": ["string", "null"], "description": "Resolved Docker image digest."},
+        "source_repo": {"type": "string"},
+        "source_commit": {"type": "string"},
+        "language": {"type": "string"},
+        "repo_size": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "files": {"type": ["integer", "null"]},
+            "source_files": {"type": ["integer", "null"]},
+            "lines": {"type": ["integer", "null"]},
+            "bytes": {"type": ["integer", "null"]},
+            "bin": {"enum": ["SMALL", "MEDIUM", "LARGE", "UNKNOWN"]}
+          }
+        },
+        "docker_version": {"type": ["string", "null"]},
+        "os": {"type": ["string", "null"]},
+        "runtime_versions": {
+          "type": "object",
+          "additionalProperties": {"type": ["string", "null"]}
+        }
+      }
+    },
+    "generator": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["provider", "model", "protocol"],
+      "properties": {
+        "provider": {"type": "string"},
+        "model": {"type": "string"},
+        "temperature": {"type": ["number", "null"]},
+        "top_p": {"type": ["number", "null"]},
+        "max_tokens": {"type": ["integer", "null"]},
+        "protocol": {"type": "string", "description": "Textual action protocol version."},
+        "steps_used": {"type": ["integer", "null"]},
+        "parse_failures": {"type": ["integer", "null"]},
+        "prompt_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "prompt_tokens": {"type": ["integer", "null"]},
+        "completion_tokens": {"type": ["integer", "null"]},
+        "estimated_cost_usd": {"type": ["number", "null"]}
+      }
+    },
+    "solver": {
+      "type": ["object", "null"],
+      "description": "Present only when bug_order is 2. Records the failed repair that produced this state.",
+      "additionalProperties": false,
+      "properties": {
+        "provider": {"type": "string"},
+        "model": {"type": "string"},
+        "steps_used": {"type": ["integer", "null"]},
+        "oracle_result": {"enum": ["FAILED", "PASSED", "ERROR"]},
+        "pred_patch_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "pred_patch_changed_lines": {"type": ["integer", "null"]},
+        "prompt_tokens": {"type": ["integer", "null"]},
+        "completion_tokens": {"type": ["integer", "null"]},
+        "estimated_cost_usd": {"type": ["number", "null"]}
+      }
+    },
+    "created_at_utc": {"type": "string"},
+    "run_id": {"type": ["string", "null"]},
+    "artifacts": {
+      "type": "object",
+      "description": "SHA-256 of each SSR artifact file, keyed by file name.",
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    },
+    "notes": {"type": ["string", "null"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"bug_order": {"const": 2}}, "required": ["bug_order"]},
+      "then": {
+        "required": ["parent_bug_id", "parent_generation_strategy", "solver"],
+        "properties": {
+          "generation_strategy": {"const": "FAILED_SOLVER"},
+          "parent_bug_id": {"type": "string"},
+          "solver": {"type": "object"}
+        }
+      },
+      "else": {
+        "properties": {
+          "generation_strategy": {"enum": ["REMOVAL", "HISTORY_REVERSION"]},
+          "parent_bug_id": {"type": "null"},
+          "parent_generation_strategy": {"type": "null"}
+        }
+      }
+    }
+  ]
+}

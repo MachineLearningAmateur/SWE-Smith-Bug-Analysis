@@ -1,0 +1,52 @@
+# Broad pattern families for the AIDev failure taxonomy.
+#
+# STATUS: APPROVED AND FROZEN AS TAXONOMY v1 (2026-08-29).
+# Canonical documentation: analysis/taxonomy/frozen_failure_taxonomy_v1.md.
+# Derivation and per-merge accounting: family_mapping_analysis.md.
+#
+# Review decisions applied (2026-08-29):
+# - The proposed CONTRACT_VIOLATION merge (broke_existing_contract_or_behavior
+#   + violated_project_constraint_or_convention) was DROPPED: it rested on a
+#   single observed disagreement pair and failed the repeated-disagreement
+#   criterion. Each label is its own single-member family.
+# - masked_symptom_instead_of_fixing inside REPOSITORY_UNDERSTANDING was
+#   ACCEPTED (strongest empirical support in the disagreement data).
+# - The code-state precedence decision rule was ADOPTED for future reviews
+#   (see frozen_failure_taxonomy_v1.md); it does not alter the sealed reviews.
+#
+# Design rule: a merge requires BOTH repeated empirical disagreement between
+# the fine-grained labels AND a conceptual justification. Fine-grained labels
+# are preserved alongside families in every derived dataset.
+#
+# UNASSIGNED is intentionally absent: it is not a technical pattern and maps
+# to no family. Cases without a technical pattern stay outside the pattern
+# analysis.
+
+REPOSITORY_UNDERSTANDING:
+  - false_premise_about_existing_code
+  - misdiagnosed_root_cause
+  - masked_symptom_instead_of_fixing
+
+BROKEN_CONTRACT:
+  - broke_existing_contract_or_behavior
+
+CONSTRAINT_VIOLATION:
+  - violated_project_constraint_or_convention
+
+INCOMPLETE_PROPAGATION:
+  - incomplete_change_propagation
+
+VACUOUS_VERIFICATION:
+  - vacuous_verification
+
+UNVERIFIED_TRIAL_AND_ERROR:
+  - unverified_trial_and_error
+
+SOLUTION_SHAPE:
+  - disproportionate_or_duplicative_solution
+
+BASELINE_STATE:
+  - wrong_baseline_or_branch
+
+OTHER:
+  - OTHER_TECHNICAL_PATTERN

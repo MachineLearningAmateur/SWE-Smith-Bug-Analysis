@@ -1,0 +1,48 @@
+# Solver and second-order construction (handoff section 9).
+#
+# The solver is the SAME model as the injector. It sees the buggy repository
+# state and the failing test evidence, and nothing about how the bug was made.
+#
+# IMPORTANT: do not deliberately make the solver fail. Second-order states are
+# a natural by-product of genuine solver failures. If the yield is low, report
+# the low yield; never manufacture failures.
+
+model:
+  provider: openrouter
+  name: qwen/qwen-2.5-coder-32b-instruct
+  temperature: 0.2
+  top_p: 0.95
+  max_tokens: 4096
+  request_retries: 4
+  request_timeout_s: 180
+
+agent_loop:
+  max_steps: 40
+  max_parse_failures: 3
+  command_timeout_s: 300
+  max_observation_bytes: 12000
+  max_read_bytes: 40000
+  context_window_turns: 24
+
+prompt: prompts/solver.md
+
+evidence_given_to_solver:
+  # The solver gets the same neutral failure evidence a maintainer would have.
+  failing_test_names: true
+  failing_test_output: true
+  test_command: true
+  # Never given: the injection diff, the strategy, the parent bug, the
+  # weakening diff, or any generation metadata.
+  bug_inject_diff: false
+  generation_strategy: false
+
+second_order:
+  enabled: true
+  # A failed repair becomes a second-order bug state only when all hold.
+  require_solver_patch_nonempty: true
+  require_oracle_still_failing: true
+  require_repo_runnable: true
+  # A solver patch that changes nothing meaningful is not a new bug state.
+  min_solver_patch_changed_lines: 2
+  # The second-order state is (clean + bug_inject + solver patch).
+  record_parent_lineage: true

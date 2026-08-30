@@ -1,0 +1,5 @@
+[
+  "ACTION: READ\nPATH: smokepkg/core.py",
+  "ACTION: EDIT\nPATH: smokepkg/core.py\nOLD:\n<<<END\n    if value < low:\n        return low\n    return value\nEND\nNEW:\n<<<END\n    if value < low:\n        return low\n    if value > low:\n        return low\n    return value\nEND",
+  "ACTION: FINISH\nSUMMARY: clamp was missing a bound check, so a second comparison was added"
+]

@@ -1,0 +1,40 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Secrets
+.env
+.env.local
+*.key
+
+# Heavyweight artifacts: Docker layers, source worktrees, package caches,
+# toolchains. These MUST stay outside Git (see docs/swesmith_setup.md).
+workspace/
+sandbox/
+*.tar
+*.tar.gz
+*.img
+node_modules/
+
+# Run artifacts. Trajectories and raw logs can be large; only the frozen
+# review packets, manifests and metrics are tracked.
+runs/**
+!runs/.gitkeep
+data/generated_pool/**
+!data/generated_pool/.gitkeep
+data/rejected/**
+!data/rejected/.gitkeep
+
+# The validated pool keeps metadata and diffs (small) but not buggy trees.
+data/validated_pool/**/tree/
+data/validated_pool/**/*.tar.gz
+
+# OS
+Thumbs.db
+.DS_Store

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ssr-swesmith-coverage/review_result.schema.json",
+  "title": "Independent SSR blind-review result",
+  "description": "One record per reviewed bug state, written by one reviewer. The fine-grained failure_pattern enum and the failure_scope enum are taken unchanged from frozen AIDev taxonomy v1. Broad families are NOT recorded here: they are derived deterministically afterwards by scripts/apply_frozen_families.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bug_id",
+    "failure_pattern",
+    "pattern_confidence",
+    "failure_scope",
+    "taxonomy_fit",
+    "supporting_evidence_ids",
+    "reasoning_summary",
+    "proposed_other_pattern"
+  ],
+  "properties": {
+    "bug_id": {
+      "type": "string",
+      "pattern": "^SSR_(0[0-9][1-9]|0[1-9][0-9]|100)$",
+      "description": "The neutral packet identifier, SSR_001 to SSR_100."
+    },
+    "failure_pattern": {
+      "description": "Fine-grained label from frozen AIDev taxonomy v1, unchanged. UNASSIGNED is deliberately absent: every case in this study is an execution-validated technical bug state, so the non-technical escape hatch cannot apply. Use OTHER_TECHNICAL_PATTERN when no defined pattern fits.",
+      "enum": [
+        "masked_symptom_instead_of_fixing",
+        "false_premise_about_existing_code",
+        "incomplete_change_propagation",
+        "misdiagnosed_root_cause",
+        "broke_existing_contract_or_behavior",
+        "disproportionate_or_duplicative_solution",
+        "vacuous_verification",
+        "violated_project_constraint_or_convention",
+        "unverified_trial_and_error",
+        "wrong_baseline_or_branch",
+        "OTHER_TECHNICAL_PATTERN"
+      ]
+    },
+    "pattern_confidence": {"enum": ["HIGH", "MEDIUM", "LOW"]},
+    "failure_scope": {
+      "description": "Unchanged from AIDev v1. Under the frozen code-state-precedence rule, a case where both a code-state pattern and a verification-process pattern apply takes the code-state pattern as failure_pattern and records the verification facet here as BOTH.",
+      "enum": ["CODE_STATE", "REPAIR_PROCESS", "BOTH", "UNKNOWN"]
+    },
+    "taxonomy_fit": {"enum": ["DIRECT", "OTHER", "UNCLEAR"]},
+    "supporting_evidence_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
+      "description": "Must be a subset of the evidence_ids listed in the packet. Checked by scripts/validate_review_output.py."
+    },
+    "reasoning_summary": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 2000,
+      "description": "Short evidence-based justification. Never private chain-of-thought."
+    },
+    "proposed_other_pattern": {
+      "type": ["string", "null"],
+      "minLength": 3,
+      "maxLength": 300
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {"failure_pattern": {"const": "OTHER_TECHNICAL_PATTERN"}},
+        "required": ["failure_pattern"]
+      },
+      "then": {
+        "properties": {
+          "proposed_other_pattern": {"type": "string"},
+          "taxonomy_fit": {"enum": ["OTHER", "UNCLEAR"]}
+        }
+      },
+      "else": {"properties": {"proposed_other_pattern": {"type": "null"}}}
+    },
+    {
+      "if": {"properties": {"taxonomy_fit": {"const": "OTHER"}}, "required": ["taxonomy_fit"]},
+      "then": {"properties": {"failure_pattern": {"const": "OTHER_TECHNICAL_PATTERN"}}}
+    }
+  ]
+}

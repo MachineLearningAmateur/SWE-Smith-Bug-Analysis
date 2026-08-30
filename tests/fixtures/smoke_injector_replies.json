@@ -1,0 +1,12 @@
+[
+  "ACTION: SHELL\nCOMMAND: ls -R . | head -40",
+  "ACTION: READ\nPATH: smokepkg/core.py",
+  "ACTION: FINISH\nSUMMARY: the numeric helpers in smokepkg, covered by tests/test_core.py\nTEST_FILES:\n<<<END\ntests/test_core.py\nEND\nTEST_SCRIPT:\n<<<END\n#!/usr/bin/env bash\nset -uo pipefail\nPY=\"\"\nfor candidate in python3 python py; do\n  if \"$candidate\" -c 'import sys' >/dev/null 2>&1; then PY=\"$candidate\"; break; fi\ndone\nif [ -z \"$PY\" ]; then echo 'no python interpreter found'; exit 127; fi\n\"$PY\" -m pytest tests/test_core.py -v -rA --no-header -p no:cacheprovider\nEND\nTEST_PARSER:\n<<<END\nimport json\nimport re\nimport sys\n\nLINE = re.compile(r\"^(?P<name>\\\\S+::\\\\S+)\\\\s+(?P<status>PASSED|FAILED|ERROR|SKIPPED|XFAIL|XPASS)\")\nSHORT = re.compile(r\"^(?P<status>PASSED|FAILED|ERROR|SKIPPED)\\\\s+(?P<name>\\\\S+::\\\\S+)\")\nNORMALISE = {\"XFAIL\": \"SKIPPED\", \"XPASS\": \"PASSED\"}\n\ntext = sys.stdin.read()\ntests = {}\nfor raw in text.splitlines():\n    line = raw.strip()\n    for pattern in (LINE, SHORT):\n        match = pattern.match(line)\n        if match:\n            status = match.group(\"status\")\n            tests[match.group(\"name\")] = NORMALISE.get(status, status)\n            break\ncollection_error = \"errors during collection\" in text or \"ImportError while importing\" in text\njson.dump({\"tests\": tests, \"collection_error\": collection_error}, sys.stdout)\nEND",
+
+  "ACTION: READ\nPATH: smokepkg/core.py",
+  "ACTION: EDIT\nPATH: smokepkg/core.py\nOLD:\n<<<END\n    if value < low:\n        return low\n    if value > high:\n        return high\n    return value\nEND\nNEW:\n<<<END\n    if value < low:\n        return low\n    return value\nEND",
+  "ACTION: FINISH\nSUMMARY: clamp no longer limits a value to the upper bound",
+
+  "ACTION: EDIT\nPATH: tests/test_core.py\nOLD:\n<<<END\ndef test_clamp_above():\n    assert clamp(50, 0, 10) == 10\nEND\nNEW:\n<<<END\ndef test_clamp_above():\n    assert clamp(50, 0, 10) in (10, 50)\nEND",
+  "ACTION: FINISH\nSUMMARY: test_clamp_above now accepts the unclamped value, so it no longer fails"
+]

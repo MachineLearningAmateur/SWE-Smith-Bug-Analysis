@@ -1,0 +1,59 @@
+{
+  "record_version": 1,
+  "recorded_at_utc": "2026-08-29T00:00:00Z",
+  "purpose": "Provenance record for the AIDev failure taxonomy imported verbatim into the SSR/SWE-smith coverage study. The taxonomy is frozen: it must not be modified on the basis of what SSR bugs look like.",
+  "source": {
+    "repository": "https://github.com/MachineLearningAmateur/AIBugAnalysis",
+    "remote": "git@github.com:MachineLearningAmateur/AIBugAnalysis.git",
+    "source_commit": "85e4bf9caf0a63436a1a305592d82294536ccd8e",
+    "source_worktree_clean": true,
+    "local_checkout_used_for_import": "D:/Code Projects/Algoverse/SSR_AIDev_Coverage",
+    "freeze_commit_recorded_in_taxonomy": "7e2a866",
+    "taxonomy_version": "aidev_failure_taxonomy_v1",
+    "freeze_date": "2026-08-29"
+  },
+  "artifacts": [
+    {
+      "role": "frozen_taxonomy",
+      "source_path": "analysis/taxonomy/frozen_failure_taxonomy_v1.md",
+      "local_path": "taxonomy/frozen_failure_taxonomy_v1.md",
+      "sha256": "ecf76f0d752afd2632d4a2825b648a36cce4c16926782aec18fd4e2637fe4cc7"
+    },
+    {
+      "role": "family_mapping",
+      "source_path": "analysis/taxonomy/proposed_pattern_families.yaml",
+      "local_path": "taxonomy/pattern_families.yaml",
+      "sha256": "1ce7232047437f87e7116d84b369e4f820e854481cbc744faf3b1d4c1af60985",
+      "expected_sha256_from_handoff": "1ce7232047437f87e7116d84b369e4f820e854481cbc744faf3b1d4c1af60985",
+      "handoff_hash_match": true
+    }
+  ],
+  "import_rules_applied": {
+    "definitions_rewritten": false,
+    "categories_merged_or_split": false,
+    "copied_byte_for_byte": true,
+    "renamed_on_import": {
+      "proposed_pattern_families.yaml": "pattern_families.yaml"
+    }
+  },
+  "adopted_decision_rules": {
+    "code_state_precedence": "When both a code-state pattern and a verification-process pattern (vacuous_verification, unverified_trial_and_error) apply, the reviewer assigns the code-state pattern as the primary failure_pattern. The verification problem is recorded through failure_scope.",
+    "family_derivation": "Broad families are derived deterministically by script from the reviewer's fine-grained label. Reviewers never choose a family.",
+    "unassigned": "UNASSIGNED maps to no family and is excluded from pattern agreement statistics."
+  },
+  "fields_not_reused_for_ssr": {
+    "outcome_classification": "PR-outcome labels such as TECHNICAL_FAILURE_EVIDENCE and NONTECHNICAL_REJECTION describe pull-request outcomes and do not apply to validated synthetic bug states.",
+    "human_correction": "No human correction exists for a synthetic bug state.",
+    "test_issue_alignment": "There is no issue text in the SSR setting.",
+    "evidence_overstated": "Excluded from AIDev analyses for systematic reviewer divergence; not carried over."
+  },
+  "fields_reused_for_ssr": [
+    "failure_pattern",
+    "pattern_confidence",
+    "failure_scope",
+    "supporting_evidence_ids",
+    "reasoning_summary",
+    "proposed_other_pattern"
+  ],
+  "isolation_statement": "No SSR or SWE-smith data was inspected or used at any point in the derivation of this taxonomy. AIDev failure-family frequencies and AIDev failure examples were not used to guide SSR bug generation, deduplication, or sample selection."
+}

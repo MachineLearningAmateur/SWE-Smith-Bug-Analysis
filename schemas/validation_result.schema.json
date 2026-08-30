@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ssr-swesmith-coverage/validation_result.schema.json",
+  "title": "SSR bug execution-validation result",
+  "description": "Result of executing the eight required validation checks. A candidate enters the validated pool only when validated is true.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "bug_id",
+    "validated",
+    "checks",
+    "states",
+    "fail_to_pass",
+    "hidden_by_weakening",
+    "validated_at_utc",
+    "validator_version"
+  ],
+  "properties": {
+    "bug_id": {"type": "string", "pattern": "^BUG_[0-9a-f]{12}$"},
+    "validated": {"type": "boolean"},
+    "rejection_reasons": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Empty when validated is true. Kept for yield analysis when false."
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "required", "status"],
+        "properties": {
+          "id": {
+            "enum": [
+              "TEST_FILES_EXIST",
+              "PARSER_HANDLES_REAL_OUTPUT",
+              "TEST_SCRIPT_RUNS_ON_CLEAN",
+              "CLEAN_TESTS_PASS",
+              "BUG_CREATES_NEW_FAILURES",
+              "WEAKENING_HIDES_FAILURE",
+              "REPO_STAYS_RUNNABLE",
+              "INVERSE_MUTATION_SUCCEEDS"
+            ]
+          },
+          "required": {"type": "boolean"},
+          "status": {"enum": ["PASS", "FAIL", "SKIP", "ERROR"]},
+          "detail": {"type": ["string", "null"], "maxLength": 4000},
+          "duration_s": {"type": ["number", "null"]}
+        }
+      }
+    },
+    "states": {
+      "type": "object",
+      "description": "Test results for each repository state.",
+      "additionalProperties": false,
+      "required": ["CLEAN", "BUG", "BUG_WEAKENED"],
+      "properties": {
+        "CLEAN": {"$ref": "#/$defs/stateResult"},
+        "BUG": {"$ref": "#/$defs/stateResult"},
+        "BUG_WEAKENED": {"$ref": "#/$defs/stateResult"},
+        "BUG_REVERTED": {"$ref": "#/$defs/stateResult"}
+      }
+    },
+    "fail_to_pass": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tests that pass on CLEAN and fail on BUG. This is the oracle."
+    },
+    "pass_to_pass": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "hidden_by_weakening": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Subset of fail_to_pass that no longer fails once test_weaken.diff is applied."
+    },
+    "flaky_tests": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Tests that changed result between identical CLEAN runs. Excluded from fail_to_pass."
+    },
+    "reference_state": {
+      "enum": ["CLEAN", "BUG"],
+      "description": "CLEAN for a first-order bug, BUG for a second-order bug."
+    },
+    "validated_at_utc": {"type": "string"},
+    "validator_version": {"type": "string"},
+    "total_duration_s": {"type": ["number", "null"]}
+  },
+  "$defs": {
+    "stateResult": {
+      "type": ["object", "null"],
+      "additionalProperties": false,
+      "required": ["exit_code", "passed", "failed", "errored", "skipped"],
+      "properties": {
+        "exit_code": {"type": ["integer", "null"]},
+        "passed": {"type": "array", "items": {"type": "string"}},
+        "failed": {"type": "array", "items": {"type": "string"}},
+        "errored": {"type": "array", "items": {"type": "string"}},
+        "skipped": {"type": "array", "items": {"type": "string"}},
+        "collection_error": {"type": "boolean"},
+        "timed_out": {"type": "boolean"},
+        "duration_s": {"type": ["number", "null"]},
+        "stdout_sha256": {"type": ["string", "null"], "pattern": "^[0-9a-f]{64}$"},
+        "log_path": {"type": ["string", "null"]}
+      }
+    }
+  }
+}

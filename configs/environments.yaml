@@ -1,0 +1,51 @@
+# The SWE-smith environment registry.
+#
+# SWE-smith is ONLY the environment layer (handoff section 4). Each entry
+# names a repository image and where the checkout lives inside it. Nothing
+# here may carry a SWE-smith test command, RepoProfile test metadata, a
+# synthetic issue, a fail-to-pass list or mutation metadata: the injector has
+# to discover the tests itself, and ssr/agent_loop.py refuses to run if any
+# withheld string reaches the prompt.
+#
+# Populate `environments` from the SWE-smith image set once Docker is
+# available. `scripts/generate_bug.py --env <name>` selects one entry.
+#
+# Fields:
+#   backend      docker | wsl | local
+#   image        Docker image reference (docker backend)
+#   repo_path    path to the checkout inside the environment
+#   upstream     owner/name of the upstream project. Used for the neutral
+#                repository name in review packets and for the per-repository
+#                ceiling during sampling. NEVER use the SWE-smith image name
+#                here: the packet leakage scan rejects it.
+#   language     dominant language, for environment matching
+#   notes        free text, hidden metadata only
+
+environments: {}
+
+# Example of the intended shape, kept commented so it is never selected:
+#
+# environments:
+#   pvlib_python:
+#     backend: docker
+#     image: jyangballin/swesmith.x86_64.pvlib_1776_pvlib-python.<tag>
+#     repo_path: /testbed
+#     upstream: pvlib/pvlib-python
+#     language: python
+#   sqlfluff:
+#     backend: docker
+#     image: jyangballin/swesmith.x86_64.sqlfluff_1776_sqlfluff.<tag>
+#     repo_path: /testbed
+#     upstream: sqlfluff/sqlfluff
+#     language: python
+
+# Harness-proving entries. These are NOT valid for a corpus run: the local
+# backend is not isolated, and `scripts/generate_bug.py` records the backend
+# in every metadata record so scripted or local candidates can be excluded.
+smoke_environments:
+  local_smoke:
+    backend: local
+    repo_path: "{workspace}/smoke_repo"
+    upstream: ssr-harness/smoke
+    language: python
+    notes: A tiny local repository created by tests/make_smoke_repo.py.

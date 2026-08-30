@@ -1,0 +1,62 @@
+# Execution validation (handoff section 8).
+#
+# A candidate enters the validated pool ONLY after every required check
+# passes. Rejected candidates keep their logs for yield analysis.
+
+test_execution:
+  # Wall clock for one full test-suite execution inside the sandbox.
+  timeout_s: 1800
+  # Repeat the CLEAN run to detect flaky suites before anything else.
+  clean_run_repeats: 2
+  # A test that changes result between identical CLEAN runs is quarantined
+  # and never counted as a fail-to-pass test.
+  drop_flaky_tests: true
+
+# Required checks, in execution order. Every required check must pass.
+checks:
+  - id: TEST_FILES_EXIST
+    required: true
+    description: Every path in test_files.txt exists in the clean repository.
+  - id: PARSER_HANDLES_REAL_OUTPUT
+    required: true
+    description: test_parser.py turns the real CLEAN stdout/stderr into a non-empty test-result table.
+  - id: TEST_SCRIPT_RUNS_ON_CLEAN
+    required: true
+    description: test_script.sh exits without a harness error on the clean repository.
+  - id: CLEAN_TESTS_PASS
+    required: true
+    description: The clean repository has at least min_clean_passing passing tests and no failing test in the listed files.
+  - id: BUG_CREATES_NEW_FAILURES
+    required: true
+    description: Applying bug_inject.diff turns at least min_fail_to_pass previously passing tests into failing tests.
+  - id: WEAKENING_HIDES_FAILURE
+    required: true
+    description: Applying test_weaken.diff on top of the bug hides at least one of those new failures.
+  - id: REPO_STAYS_RUNNABLE
+    required: true
+    description: The buggy repository still imports and still runs the suite; it is a semantic bug, not a build break.
+  - id: INVERSE_MUTATION_SUCCEEDS
+    required: true
+    # SSR criterion: reverting the injected diff must restore the clean result.
+    # Only meaningful for multi-file bugs, but it is cheap, so it always runs.
+    description: Reverting bug_inject.diff restores the CLEAN fail/pass table exactly.
+
+thresholds:
+  min_clean_passing: 5
+  min_fail_to_pass: 1
+  # Guard against a "bug" that simply breaks everything.
+  max_fail_to_pass_fraction: 0.5
+  # A bug whose only effect is a collection or import error is a build break.
+  reject_on_collection_error: true
+
+# Applied to a second-order candidate. Same checks, but the reference state
+# is the first-order buggy state, not the clean state.
+second_order:
+  reference_state: BUG
+  require_new_failures_vs_reference: false
+  require_still_failing_oracle: true
+
+storage:
+  validated_pool: data/validated_pool
+  rejected: data/rejected
+  keep_rejected_logs: true

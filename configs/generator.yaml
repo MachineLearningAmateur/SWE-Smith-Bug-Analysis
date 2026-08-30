@@ -1,0 +1,59 @@
+# First-order bug generation (handoff sections 5, 6, 7).
+#
+# The injector is an LLM agent driven by a strict textual action protocol.
+# It is given ONLY the repository. It must discover the tests and the repo
+# structure itself. SWE-smith's known test command, RepoProfile metadata,
+# synthetic issue text, fail-to-pass test list and mutation metadata are
+# never placed in the injector context (enforced in ssr/agent_loop.py).
+
+corpus_name: SSR_STYLE_QWEN25CODER32B
+
+model:
+  provider: openrouter
+  # Fixed model for BOTH injector and solver. Surrogate for CWM-sft 32B.
+  name: qwen/qwen-2.5-coder-32b-instruct
+  temperature: 0.6
+  top_p: 0.95
+  max_tokens: 4096
+  # Total attempts per HTTP call before the attempt is abandoned.
+  request_retries: 4
+  request_timeout_s: 180
+
+strategy_selection:
+  # Handoff section 7: 50/50 REMOVAL vs HISTORY_REVERSION, fixed seed.
+  seed: 20260829
+  weights:
+    REMOVAL: 0.5
+    HISTORY_REVERSION: 0.5
+
+agent_loop:
+  max_steps: 60
+  # Consecutive unparseable model replies tolerated before the attempt aborts.
+  max_parse_failures: 3
+  # Per-command wall clock inside the sandbox.
+  command_timeout_s: 300
+  # Bytes of a single observation shown back to the model.
+  max_observation_bytes: 12000
+  # Bytes of a single file returned by ACTION: READ.
+  max_read_bytes: 40000
+  # Truncate the trajectory sent back to the model, oldest-first, keeping
+  # the system prompt and the first user turn.
+  context_window_turns: 24
+
+requirements:
+  # A candidate that only breaks the syntax or the build is not an SSR bug.
+  reject_if_repo_not_importable: true
+  reject_if_only_syntax_error: true
+  # Two lines is the floor, not a target. A single-line edit is usually a
+  # character-level mutation rather than an SSR-style change; removing a
+  # two-line guard clause is a genuine behaviour removal.
+  min_changed_lines: 2
+  max_changed_files: 25
+
+prompts:
+  REMOVAL: prompts/injector_removal.md
+  HISTORY_REVERSION: prompts/injector_history_reversion.md
+
+output:
+  generated_pool: data/generated_pool
+  runs: runs
