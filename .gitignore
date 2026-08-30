@@ -13,6 +13,10 @@ venv/
 .env.local
 *.key
 
+# Personal Claude Code overrides. The shared .claude/settings.json IS tracked:
+# it denies a reviewer read access to the hidden generation metadata.
+.claude/settings.local.json
+
 # Heavyweight artifacts: Docker layers, source worktrees, package caches,
 # toolchains. These MUST stay outside Git (see docs/swesmith_setup.md).
 workspace/
@@ -34,6 +38,13 @@ data/rejected/**
 # The validated pool keeps metadata and diffs (small) but not buggy trees.
 data/validated_pool/**/tree/
 data/validated_pool/**/*.tar.gz
+
+# TRACKED ON PURPOSE, do not add ignore rules for these. A checkout is only
+# review-ready if the frozen evidence travels with it:
+#   data/review_packets/**            the 100 packets
+#   data/review_manifest.csv          the neutral manifest
+#   data/review_snapshot_manifest.json  the per-file hashes
+#   data/CORPUS_STATUS.json           research or rehearsal
 
 # OS
 Thumbs.db

@@ -27,10 +27,18 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from ssr.corpus import read_status, status_banner  # noqa: E402
 from ssr.paths import ANALYSIS, REVIEWERS  # noqa: E402
 from ssr.review_workflow import cross_check_metadata, load_results, require_both_complete  # noqa: E402
 from ssr.taxonomy import family_for, verify_provenance  # noqa: E402
 from ssr.util import SsrError, setup_logging, utc_now, write_json  # noqa: E402
+
+
+def _corpus_kind() -> str:
+    try:
+        return read_status().corpus_kind
+    except SsrError:
+        return "UNKNOWN"
 
 
 def cohen_kappa(left: list[str], right: list[str]) -> float | None:
@@ -115,6 +123,7 @@ def main() -> int:
     left, right = REVIEWERS
     metrics = {
         "computed_at_utc": utc_now(),
+        "corpus_kind": _corpus_kind(),
         "n_cases": len(joined),
         "taxonomy": provenance,
         "snapshot_manifest_sha256": metadata["snapshot_manifest_sha256"],
@@ -171,6 +180,7 @@ def main() -> int:
         writer.writeheader()
         writer.writerows(disagreements)
 
+    print(status_banner())
     log.info("family agreement %s, kappa %s", metrics["family"]["exact_agreement"], metrics["family"]["cohens_kappa"])
     print(json.dumps({
         "output": str(output),

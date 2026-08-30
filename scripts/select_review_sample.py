@@ -51,6 +51,16 @@ from ssr.util import (  # noqa: E402
 DEDUP_REPORT = SAMPLING / "dedup_report.json"
 
 
+def _display_path(path: Path) -> str:
+    """Repository-relative when it is inside the repository, absolute otherwise."""
+    from ssr.paths import REPO_ROOT
+
+    try:
+        return path.resolve().relative_to(REPO_ROOT).as_posix()
+    except ValueError:
+        return path.resolve().as_posix()
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--pool", default=str(VALIDATED_POOL))
@@ -149,7 +159,9 @@ def main() -> int:
     # Hidden crosswalk and record.
     crosswalk_path = Path(config.get_path("outputs.crosswalk", "data/sampling/selection_crosswalk.csv"))
     if not crosswalk_path.is_absolute():
-        crosswalk_path = Path(__file__).resolve().parent.parent / crosswalk_path
+        # Follow the data root, not the repository root: a run against an
+        # alternate SSR_DATA_ROOT must never write into the real data/.
+        crosswalk_path = SAMPLING / crosswalk_path.name
     crosswalk_path.parent.mkdir(parents=True, exist_ok=True)
     with open(crosswalk_path, "w", encoding="utf-8", newline="") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0].keys()), lineterminator="\n")
@@ -190,7 +202,7 @@ def main() -> int:
         SAMPLING / "review_manifest_freeze.json",
         {
             "frozen_at_utc": utc_now(),
-            "review_manifest": str(REVIEW_MANIFEST.relative_to(Path(__file__).resolve().parent.parent)),
+            "review_manifest": _display_path(REVIEW_MANIFEST),
             "sha256": manifest_hash,
             "rows": len(rows),
         },

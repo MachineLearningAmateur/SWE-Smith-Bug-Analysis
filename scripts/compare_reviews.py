@@ -29,7 +29,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from ssr.paths import ANALYSIS, REVIEWERS, SAMPLING  # noqa: E402
+from ssr.corpus import read_status, status_banner  # noqa: E402
+from ssr.paths import ANALYSIS, REVIEWERS, REVIEWS, SAMPLING  # noqa: E402
 from ssr.review_workflow import cross_check_metadata, load_results, require_both_complete  # noqa: E402
 from ssr.taxonomy import family_for, verify_provenance  # noqa: E402
 from ssr.util import SsrError, setup_logging, utc_now, write_json  # noqa: E402
@@ -52,6 +53,13 @@ CAVEAT = (
 )
 
 
+def _corpus_kind() -> str:
+    try:
+        return read_status().corpus_kind
+    except SsrError:
+        return "UNKNOWN"
+
+
 def load_crosswalk(path: Path) -> dict[str, dict[str, str]]:
     if not path.is_file():
         raise SsrError(f"{path} does not exist; the sample was never selected")
@@ -60,13 +68,22 @@ def load_crosswalk(path: Path) -> dict[str, dict[str, str]]:
 
 
 def safe_output(path: Path) -> Path:
+    """Comparison output stays under the analysis root and never in reviews/.
+
+    The analysis root follows SSR_ANALYSIS_ROOT, so a self-test that
+    redirects it is still confined; what the check forbids is writing the
+    comparison into a reviewer's own directory.
+    """
     resolved = path.resolve()
-    repo_root = Path(__file__).resolve().parent.parent
     try:
-        resolved.relative_to((repo_root / "analysis").resolve())
+        resolved.relative_to(ANALYSIS.resolve())
     except ValueError as exc:
-        raise SsrError("comparison output must stay under analysis/") from exc
-    return resolved
+        raise SsrError(f"comparison output must stay under {ANALYSIS}") from exc
+    try:
+        resolved.relative_to(REVIEWS.resolve())
+    except ValueError:
+        return resolved
+    raise SsrError("comparison must never write into a reviewer directory")
 
 
 def main() -> int:
@@ -148,6 +165,7 @@ def main() -> int:
 
     report = {
         "computed_at_utc": utc_now(),
+        "corpus_kind": _corpus_kind(),
         "stratification_caveat": CAVEAT,
         "taxonomy": provenance,
         "snapshot_manifest_sha256": metadata["snapshot_manifest_sha256"],
@@ -174,6 +192,7 @@ def main() -> int:
         writer.writeheader()
         writer.writerows(rows)
 
+    print(status_banner())
     log.info("compared %d case(s) across %d source(s)", len(rows), len(by_source))
     print(json.dumps({
         "output": str(output),

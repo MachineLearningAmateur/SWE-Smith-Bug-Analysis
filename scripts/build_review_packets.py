@@ -29,9 +29,11 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
+from ssr.corpus import classify, write_status  # noqa: E402
 from ssr.metrics import split_by_file  # noqa: E402
 from ssr.packets import PacketBuilder, PacketSource, packet_digest, packet_file_hashes  # noqa: E402
 from ssr.paths import (  # noqa: E402
+    REVIEW_MANIFEST,
     REVIEW_PACKETS,
     REVIEW_SNAPSHOT_MANIFEST,
     SAMPLING,
@@ -164,7 +166,7 @@ def main() -> int:
         "frozen_at_utc": utc_now(),
         "packet_count": len(packets),
         "taxonomy_fingerprint": taxonomy_fingerprint(),
-        "review_manifest_sha256": sha256_file(Path(__file__).resolve().parent.parent / "data" / "review_manifest.csv"),
+        "review_manifest_sha256": sha256_file(REVIEW_MANIFEST) if REVIEW_MANIFEST.is_file() else "",
         "packets": packets,
         "note": (
             "Every reviewer must record this file's SHA-256 in review_metadata.json. "
@@ -173,10 +175,19 @@ def main() -> int:
     }
     write_json(REVIEW_SNAPSHOT_MANIFEST, manifest)
 
+    # Mark the corpus. A rehearsal and a research corpus are reviewed the same
+    # way, so without this marker their agreement statistics look identical.
+    corpus_kind, reasons = classify(entries[row["bug_id"]] for row in rows)
+    status = write_status(corpus_kind, len(packets))
+    if reasons:
+        log.warning("this corpus is a REHEARSAL: %s", "; ".join(reasons[:3]))
+
     print(json.dumps({
         "packets_built": len(built),
+        "corpus_kind": status.corpus_kind,
+        "rehearsal_reasons": reasons[:5],
         "snapshot_manifest": str(REVIEW_SNAPSHOT_MANIFEST),
-        "snapshot_manifest_sha256": sha256_file(REVIEW_SNAPSHOT_MANIFEST),
+        "snapshot_manifest_sha256": status.snapshot_manifest_sha256,
     }, indent=2))
     return 0
 

@@ -35,7 +35,7 @@ tells them.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
@@ -205,6 +205,16 @@ class PacketBuilder:
         self.max_oracle_bytes = max_oracle_bytes
 
     def build(self, source: PacketSource) -> dict[str, Any]:
+        # Normalise every path-shaped value before anything is written or
+        # hashed, so a packet built on Windows matches one built on Linux.
+        source = replace(
+            source,
+            fail_to_pass=[normalise_test_id(name) for name in source.fail_to_pass],
+            oracle_outputs={
+                normalise_test_id(name): text for name, text in source.oracle_outputs.items()
+            },
+            code_context={posix(path): text for path, text in source.code_context.items()},
+        )
         directory = self.root / source.packet_id
         directory.mkdir(parents=True, exist_ok=True)
 
@@ -316,15 +326,38 @@ class PacketBuilder:
         return {"packet": packet, "files": written, "directory": str(directory)}
 
 
+def posix(path_like: str) -> str:
+    """Normalise a repository path to forward slashes.
+
+    A packet built on Windows must be byte-identical to the same packet built
+    on Linux, because both reviewers hash it. Test runners report node IDs
+    using the host separator, so the separator is normalised here rather than
+    left to leak into the frozen evidence.
+    """
+    return path_like.replace("\\", "/")
+
+
+def normalise_test_id(test_name: str) -> str:
+    """Normalise the file part of a test node ID, leaving the rest alone.
+
+    Only the part before ``::`` is a path. A parametrised case name after it
+    may legitimately contain a backslash, so it is untouched.
+    """
+    if "::" not in test_name:
+        return posix(test_name)
+    head, _, tail = test_name.partition("::")
+    return f"{posix(head)}::{tail}"
+
+
 def _safe_name(repo_path: str) -> str:
-    name = PurePosixPath(repo_path).name or "file"
+    name = PurePosixPath(posix(repo_path)).name or "file"
     cleaned = re.sub(r"[^A-Za-z0-9_.\-]", "_", name)
     return cleaned[:80] or "file"
 
 
 def _test_file_of(test_name: str) -> str | None:
     if "::" in test_name:
-        return test_name.split("::", 1)[0]
+        return posix(test_name.split("::", 1)[0])
     return None
 
 

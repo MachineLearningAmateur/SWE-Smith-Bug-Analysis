@@ -104,11 +104,22 @@ def expected_bug_ids() -> list[str]:
 
 
 def snapshot_manifest_hash() -> str:
+    if not REVIEW_SNAPSHOT_MANIFEST.is_file():
+        raise SsrError(
+            f"{REVIEW_SNAPSHOT_MANIFEST} does not exist. This checkout has no frozen "
+            "evidence, so there is nothing for a review to be tied to."
+        )
     return sha256_file(REVIEW_SNAPSHOT_MANIFEST)
 
 
 def init_metadata(reviewer: str, *, model: str, notes: str | None = None) -> dict[str, Any]:
+    from ssr.corpus import read_status  # local import: avoids a cycle
+
     paths = ReviewerPaths(reviewer).ensure()
+    try:
+        corpus_kind = read_status().corpus_kind
+    except SsrError:
+        corpus_kind = "UNKNOWN"
     metadata = {
         "reviewer": reviewer,
         "model": model,
@@ -116,6 +127,9 @@ def init_metadata(reviewer: str, *, model: str, notes: str | None = None) -> dic
         "completed_at_utc": None,
         "snapshot_manifest_sha256": snapshot_manifest_hash(),
         "taxonomy_fingerprint": taxonomy_fingerprint(),
+        # Carried into every downstream report, so a rehearsal review can
+        # never be mistaken for a research result.
+        "corpus_kind": corpus_kind,
         "expected_case_count": len(expected_bug_ids()),
         "notes": notes,
     }

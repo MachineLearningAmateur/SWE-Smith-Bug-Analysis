@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./data/sampling/**)",
+      "Read(./data/validated_pool/**)",
+      "Read(./data/generated_pool/**)",
+      "Read(./data/rejected/**)",
+      "Read(./runs/**)",
+      "Read(./analysis/**)",
+      "Read(./reviews/codex/**)",
+      "Read(./workspace/**)"
+    ],
+    "allow": [
+      "Read(./data/review_packets/**)",
+      "Read(./taxonomy/**)",
+      "Read(./docs/**)",
+      "Read(./schemas/**)",
+      "Read(./data/review_manifest.csv)",
+      "Read(./data/review_snapshot_manifest.json)",
+      "Read(./data/CORPUS_STATUS.json)",
+      "Write(./reviews/claude/**)",
+      "Edit(./reviews/claude/**)"
+    ]
+  }
+}

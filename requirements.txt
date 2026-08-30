@@ -1,0 +1,6 @@
+# Full pipeline: generation, validation, solving, sampling and analysis.
+# A reviewer does not need this file; see requirements-review.txt.
+
+pyyaml>=6.0
+jsonschema>=4.21
+requests>=2.31

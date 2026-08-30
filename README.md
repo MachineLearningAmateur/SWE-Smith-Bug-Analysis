@@ -9,7 +9,11 @@ This repository builds a comparable SSR-style corpus over SWE-smith
 environments, freezes 100 neutral evidence packets, and has Codex and Claude
 classify them independently under the **same** frozen taxonomy.
 
-Start with [`docs/research_scope.md`](docs/research_scope.md).
+**Reviewing the bugs?** Go straight to [`QUICKSTART.md`](QUICKSTART.md).
+You need Python 3.10+ and nothing else: no Docker, no API key, no network.
+
+**Running the study?** Start with
+[`docs/research_scope.md`](docs/research_scope.md).
 
 ## Status
 
@@ -38,14 +42,29 @@ What is already done and verified:
 
 ## Install
 
+A reviewer needs two packages and no more:
+
+```bash
+python -m pip install -r requirements-review.txt
+python scripts/check_review_ready.py --reviewer claude   # or codex
+```
+
+Running the study needs the full set:
+
 ```bash
 python -m pip install -e ".[dev]"
-python scripts/check_environment.py
+python scripts/selftest.py            # proves the pipeline here, offline
+python scripts/check_environment.py   # says what a corpus run still needs
 ```
 
 Copy `.env.example` to `.env` and fill in `OPENROUTER_API_KEY`. The key is
 never written to any artifact and is stripped from every sandbox process, so
 an injector with shell access cannot read it.
+
+Everything works the same on macOS, Linux and Windows. `scripts/selftest.py`
+runs the whole downstream pipeline against a temporary directory and touches
+nothing under `data/`, `reviews/` or `analysis/`; run it after cloning and
+after changing anything under `ssr/` or `scripts/`.
 
 ## The pipeline
 
@@ -71,14 +90,102 @@ python scripts/select_review_sample.py
 python scripts/build_review_packets.py --env <name>
 
 # 6. two independent blind reviews (see AGENTS.md and CLAUDE.md)
+python scripts/check_review_ready.py --reviewer codex
 python scripts/validate_review_output.py --reviewer codex  --finalise
 python scripts/validate_review_output.py --reviewer claude --finalise
+
+#    or hand each reviewer a bundle that physically excludes hidden data
+python scripts/make_review_bundle.py --reviewer codex --out ../codex_review --zip
+python scripts/import_review_results.py --reviewer codex --from ../codex_review
 
 # 7. analysis, locked until both COMPLETE markers exist
 python scripts/apply_frozen_families.py
 python scripts/compare_reviews.py
 python scripts/compute_patch_metrics.py --env <name>
 ```
+
+## The prompt to hand the reviewer
+
+Open the checkout (or the bundle) with Claude Code or the Codex CLI and paste
+this. Both agents read their brief from the repository root on their own:
+Claude Code reads `CLAUDE.md`, Codex reads `AGENTS.md`. The prompt only has to
+start them and set the standard.
+
+Replace `<claude|codex>` with whichever one you are running.
+
+```text
+You are the independent blind reviewer for this study. Read CLAUDE.md (if you
+are Claude) or AGENTS.md (if you are Codex) in full before anything else, then
+read taxonomy/frozen_failure_taxonomy_v1.md in full. Both are in this
+repository root. They are your complete brief; follow them exactly.
+
+First, run:
+
+    python -m pip install -r requirements-review.txt
+    python scripts/check_review_ready.py --reviewer <claude|codex>
+
+Do not start until that check passes. If it reports the corpus as REHEARSAL,
+carry on the same way but say so in your final message.
+
+Then work through every case, in the order the check gives you:
+
+1. Read ONLY data/review_packets/<the case id>/ for that case. Read the
+   packet.json, the bug_diff.diff, every file under context/ and oracle/, and
+   test_results.txt.
+2. Decide what kind of technical failure that buggy repository state
+   represents, using the fine-grained labels from the frozen taxonomy.
+3. Write reviews/<claude|codex>/cases/<the case id>.json immediately, before
+   moving on. One file per case. Never batch, never hold results in memory.
+4. Run:
+       python scripts/validate_review_output.py --reviewer <claude|codex> --case <the case id>
+   Fix anything it rejects before continuing.
+
+Rules that matter most, all of them in your brief:
+- Assign the fine-grained label only. Never a family: families are derived by
+  script afterwards.
+- Apply code-state precedence. If a code-state pattern and a
+  verification-process pattern both apply, the code-state pattern is the
+  primary failure_pattern and the verification facet goes in failure_scope.
+- UNASSIGNED does not exist here. If no defined pattern fits, use
+  OTHER_TECHNICAL_PATTERN with taxonomy_fit OTHER and describe it in
+  proposed_other_pattern. Do not force a poor fit: those cases are the answer
+  to the question this study asks.
+- Cite only evidence IDs listed in that packet.
+- reasoning_summary is a short evidence-based justification, not a transcript
+  of your reasoning.
+
+Never read: the other reviewer's directory, data/sampling/, analysis/, or any
+metadata.json, trajectory.jsonl, solver_result.json or pred_patch.diff. If you
+find yourself wanting to know how a bug was made, that is exactly what this
+protocol exists to prevent. Classify what is in front of you.
+
+Write nothing outside reviews/<claude|codex>/. If you believe something else in
+the repository is broken, stop and tell me rather than fixing it.
+
+When all cases exist and validate, run:
+
+    python scripts/validate_review_output.py --reviewer <claude|codex> --finalise
+
+Then report: how many cases you recorded, the distribution of labels you
+assigned, how many you marked OTHER_TECHNICAL_PATTERN or UNCLEAR, and anything
+about the taxonomy that fitted badly. Do not compare yourself with the other
+reviewer and do not run the analysis scripts.
+```
+
+### If you want it in one line
+
+```bash
+# Claude Code
+claude "Read CLAUDE.md and taxonomy/frozen_failure_taxonomy_v1.md in full, run python scripts/check_review_ready.py --reviewer claude, then review every case exactly as CLAUDE.md instructs, saving each result immediately."
+
+# Codex CLI
+codex "Read AGENTS.md and taxonomy/frozen_failure_taxonomy_v1.md in full, run python scripts/check_review_ready.py --reviewer codex, then review every case exactly as AGENTS.md instructs, saving each result immediately."
+```
+
+The short form works because the briefs are self-contained: they carry the
+label definitions quoted from the frozen taxonomy, the meaning of every
+`failure_scope` and `taxonomy_fit` value, what a packet holds, a worked case,
+and the boundaries. An agent that reads its brief needs nothing else.
 
 ## Layout
 
@@ -109,7 +216,21 @@ Each is enforced by code, not convention. That is the point of the design.
 
 Two more, on the review itself: `assert_write_boundary` refuses any write
 outside a reviewer's own directory, and `require_both_complete` locks the
-comparison until both `COMPLETE` markers exist.
+comparison until both `COMPLETE` markers exist. For a reviewer on someone
+else's machine, `scripts/make_review_bundle.py` goes further and leaves the
+hidden material out of what they receive at all.
+
+## Research or rehearsal, never in doubt
+
+Every checkout carries `data/CORPUS_STATUS.json`. **RESEARCH** means every
+packet came from an execution-validated bug state built in an isolated
+environment by the configured model. **REHEARSAL** means at least one packet
+came from a harness-proving or synthetic source, so a review of it tests the
+workflow and its numbers must not be reported.
+
+The marker is written when the packets are built, copied into each reviewer's
+metadata, and printed at the top of the family and comparison reports. Nobody
+has to remember which kind of corpus they are looking at.
 
 ## The language mismatch, stated up front
 
@@ -141,6 +262,7 @@ any number here beside a number from the SSR paper.
 
 | Document | Covers |
 |---|---|
+| [`QUICKSTART.md`](QUICKSTART.md) | cloning and running a review on any machine, and handing one to someone else |
 | [`docs/research_scope.md`](docs/research_scope.md) | the question, what crosses over from AIDev, what is withheld from whom |
 | [`docs/swesmith_setup.md`](docs/swesmith_setup.md) | Docker, WSL, SWE-smith, declaring environments, the current blockers |
 | [`docs/ssr_reproduction_protocol.md`](docs/ssr_reproduction_protocol.md) | the action protocol, the three stages, the eight validation checks, second-order construction |
@@ -161,8 +283,12 @@ The suite covers the action protocol, the taxonomy freeze and prompt drift,
 deduplication, objective metrics, deterministic sampling under every
 constraint, packet leakage scanning, and reviewer-output validation.
 
+`scripts/selftest.py` runs all of it plus the whole downstream pipeline
+against a scratch directory, and is the single command that answers "does this
+checkout work on my machine".
+
 `tests/make_smoke_repo.py` builds a tiny git repository so the generation
 pipeline can be exercised without Docker; `tests/make_synthetic_pool.py` and
 `tests/simulate_reviews.py` rehearse the downstream path at full scale.
-Artifacts from either are marked and excluded from the sampling frame, so a
-rehearsal cannot leak into a real study.
+Artifacts from either are marked REHEARSAL and excluded from the sampling
+frame, so a rehearsal cannot leak into a real study.

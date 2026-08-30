@@ -1,0 +1,13 @@
+# Everything a blind reviewer needs. Nothing else.
+#
+# A review reads frozen files and writes JSON. It needs no Docker, no API
+# key, no network and no generation dependency. Install with:
+#
+#     python -m pip install -r requirements-review.txt
+#
+# Then check the checkout with:
+#
+#     python scripts/check_review_ready.py
+
+pyyaml>=6.0
+jsonschema>=4.21
