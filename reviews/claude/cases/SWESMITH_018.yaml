@@ -1,0 +1,19 @@
+case_id: SWESMITH_018
+failure_pattern: violated_project_constraint_or_convention
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF deletes `string = string.replace("\\", "/")` from matches() and swaps
+  re.match for re.search (CODE_CONTEXT_01). The normalisation existed so that
+  Windows-style paths match the forward-slash patterns used throughout the build
+  helpers; without it the helper no longer meets that cross-platform compatibility
+  target, and re.search additionally loosens the anchored matching. SPECIFICATION and
+  TEST_FAILURE_01/02 (backslash inputs expected to match) cover this.
+proposed_other_pattern: null

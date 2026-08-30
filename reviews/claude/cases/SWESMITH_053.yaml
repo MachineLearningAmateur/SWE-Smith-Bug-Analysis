@@ -1,0 +1,21 @@
+case_id: SWESMITH_053
+failure_pattern: false_premise_about_existing_code
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF replaces `from dask._compatibility import importlib_metadata` with
+  `from dask.compatibility import entry_points`, a module that does not exist in
+  this repository, so importing dask.backends fails at load time (SPECIFICATION
+  traceback, TEST_FAILURE_01). It also moves entrypoint_class from the third
+  positional parameter of CreationDispatch.__init__ to an optional fourth one and
+  strips the Generic typing (CODE_CONTEXT_01), which breaks existing positional
+  callers. The change rests on an incorrect assumption about the package's
+  module layout and constructor signature; the import shape suggests an older
+  dask API, but the packet does not establish that.
+proposed_other_pattern: null

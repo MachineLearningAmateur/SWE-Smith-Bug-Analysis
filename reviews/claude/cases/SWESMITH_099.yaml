@@ -1,0 +1,18 @@
+case_id: SWESMITH_099
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF rewrites date_of_birth and deletes the TypeError/ValueError guards on
+  minimum_age and maximum_age (negative values, non-integers, minimum greater
+  than maximum), and also narrows the generated window by dropping the
+  maximum_age + 1 boundary handling (CODE_CONTEXT_01). Invalid ages the method
+  previously rejected are now silently accepted; SPECIFICATION and
+  TEST_FAILURE_01 (value errors) cover the lost validation contract.
+proposed_other_pattern: null

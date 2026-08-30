@@ -1,0 +1,17 @@
+case_id: SWESMITH_027
+failure_pattern: incomplete_change_propagation
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_06
+- TEST_FAILURE_08
+reasoning_summary: >-
+  BUG_DIFF deletes the `y = (longitude_1 - longitude_2) * coef` line from
+  geo.distance while the next statement still computes `sqrt(x * x + y * y)`
+  (CODE_CONTEXT_01, lines 247-251), so every non-haversine distance raises NameError.
+  The removal of the definition was not propagated to its remaining use; all
+  distance-dependent tests fail (TEST_FAILURE_06, TEST_FAILURE_08 among 30).
+proposed_other_pattern: null

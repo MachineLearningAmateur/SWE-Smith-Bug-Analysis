@@ -1,0 +1,19 @@
+case_id: SWESMITH_097
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF rewrites _container_getitem and removes the `except ValueError` and
+  `except TypeError` handlers that translated indexing errors into
+  AstroidValueError/AstroidTypeError; only IndexError is still wrapped, and
+  only for Const indices (CODE_CONTEXT_01). Applying a zero-step slice to elts now
+  raises a bare ValueError out of inference instead of the Astroid exception
+  callers catch, regressing the inference error contract (SPECIFICATION,
+  TEST_FAILURE_01).
+proposed_other_pattern: null

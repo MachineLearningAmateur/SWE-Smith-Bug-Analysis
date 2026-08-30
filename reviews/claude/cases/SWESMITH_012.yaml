@@ -1,0 +1,20 @@
+case_id: SWESMITH_012
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+- TEST_FAILURE_03
+reasoning_summary: >-
+  BUG_DIFF reorders statements in _NodeCacheItem.__init__ so self.change_time is
+  assigned before the `if change_time is None` default (time.time()) runs
+  (CODE_CONTEXT_01). Items created without an explicit time now carry
+  change_time=None while last_used gets the real timestamp. The logic and the default
+  are both still present; only their order is wrong. No defined pattern describes a
+  local statement-ordering defect (TEST_FAILURE_01, TEST_FAILURE_03).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that assigns a value before its default
+  is computed, with no misunderstanding or propagation aspect.

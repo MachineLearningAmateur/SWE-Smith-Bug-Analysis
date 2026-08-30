@@ -1,0 +1,19 @@
+case_id: SWESMITH_019
+failure_pattern: false_premise_about_existing_code
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_08
+reasoning_summary: >-
+  BUG_DIFF rewrites decorated_main to read args.config_file, an attribute the Hydra
+  argument parser does not define (the existing rerun option is
+  args.experimental_rerun), and to call _run_hydra without the args_parser argument it
+  previously required (CODE_CONTEXT_01). Both changes assume an API shape the
+  repository does not have, so every @hydra.main entry point fails at launch
+  (SPECIFICATION; TEST_FAILURE_01, TEST_FAILURE_08 among 105).
+proposed_other_pattern: null

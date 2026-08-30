@@ -1,0 +1,18 @@
+case_id: SWESMITH_078
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF rewrites X509Extension.__str__ so that a critical extension is rendered
+  as "critical,<text>" and a failed X509V3_EXT_print returns an "<unprintable
+  extension value ...>" placeholder instead of asserting (CODE_CONTEXT_01). The
+  documented representation - the bare extension text, e.g. 'CA:FALSE' for a
+  critical basicConstraints - is regressed (SPECIFICATION, TEST_FAILURE_01). The
+  added prefix is extra behaviour that itself constitutes the defect.
+proposed_other_pattern: null

@@ -1,0 +1,21 @@
+case_id: SWESMITH_079
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_02
+- TEST_FAILURE_10
+reasoning_summary: >-
+  BUG_DIFF moves `return self._apply(var_func, ...)` from the end of
+  ExponentialMovingWindow.var to its first line, before the `var_func` closure and
+  the window function it wraps are defined (CODE_CONTEXT_01, lines 704-719), so
+  every var/std call raises UnboundLocalError. All statements are present; only
+  the return's position changed. No defined pattern describes a hoisted-return
+  ordering defect (TEST_FAILURE_02, TEST_FAILURE_10 among 23).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that moves an unconditional return
+  ahead of the definitions it depends on, with no misunderstanding or propagation
+  aspect.

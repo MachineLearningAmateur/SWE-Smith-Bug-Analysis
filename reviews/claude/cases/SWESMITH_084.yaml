@@ -1,0 +1,23 @@
+case_id: SWESMITH_084
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_02
+- TEST_FAILURE_05
+reasoning_summary: >-
+  BUG_DIFF shuffles the statements of AccessTokenEndpoint.validate_access_token_request
+  (CODE_CONTEXT_01, lines 119-215): valid_client and v are read before they are
+  assigned, `return v, request` sits mid-method with the client/token validation
+  and the final all(...) computation unreachably after it, and the transport and
+  mandatory-parameter checks run after the signature check. The same statements
+  are all still present; only their order is wrong, so the method raises
+  UnboundLocalError. No defined pattern describes a wholesale statement-ordering
+  defect (TEST_FAILURE_02, TEST_FAILURE_05).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that reads locals before their
+  definitions and moves the return ahead of the logic it depends on, with no
+  misunderstanding or propagation aspect.

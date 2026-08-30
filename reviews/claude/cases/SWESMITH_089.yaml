@@ -1,0 +1,18 @@
+case_id: SWESMITH_089
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF deletes the "add a tail slice" step at the end of
+  _slice_source_file_using_patches (CODE_CONTEXT_01, lines 330-339), so when the
+  last patch ends before end-of-file the returned slices stop there and the
+  remaining source is dropped from the fixed output. The method's promise that
+  its slices partition the entire raw source, which _build_up_fixed_source_string
+  depends on, is regressed (TEST_FAILURE_01, TEST_FAILURE_02).
+proposed_other_pattern: null

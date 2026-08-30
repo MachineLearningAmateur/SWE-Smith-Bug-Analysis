@@ -1,0 +1,21 @@
+case_id: SWESMITH_045
+failure_pattern: incomplete_change_propagation
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- CODE_CONTEXT_02
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF deletes pygments/lexers/lean.py and re-inlines a LeanLexer into
+  theorem.py whose token rules call include(...) while the module's pygments.lexer
+  import still only brings in RegexLexer, bygroups, default and words
+  (CODE_CONTEXT_02), so importing the module raises NameError. In _mapping.py the
+  Lean3/Lean4 entries and 314 following entries are replaced by one LeanLexer line
+  and a literal "# ... rest of the lexers ..." comment (CODE_CONTEXT_01). The
+  relocation was not propagated to the import and the registry, taking the whole
+  lexer package down (SPECIFICATION; 5060 failures, TEST_FAILURE_01).
+proposed_other_pattern: null

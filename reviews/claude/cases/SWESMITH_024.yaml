@@ -1,0 +1,19 @@
+case_id: SWESMITH_024
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF moves `direct_url = self.direct_url` from the top of
+  editable_project_location to just before the final return, while the
+  `if direct_url and direct_url.is_local_editable()` check still comes first
+  (CODE_CONTEXT_01, lines 74-86), so the property raises UnboundLocalError. All
+  statements are present; only their order is wrong. No defined pattern describes a
+  use-before-definition ordering defect (TEST_FAILURE_01).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that reads a local before the statement
+  that defines it, with no misunderstanding or propagation aspect.

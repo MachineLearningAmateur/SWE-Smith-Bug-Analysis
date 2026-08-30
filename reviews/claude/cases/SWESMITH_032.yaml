@@ -1,0 +1,19 @@
+case_id: SWESMITH_032
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF rewrites parse_address to rsplit on the last colon and accept ports in
+  0-65535, dropping the "exactly one colon" check and the explicit "port 0 is not
+  allowed" rule (CODE_CONTEXT_01). The function's docstring still promises ValueError
+  for invalid format or out-of-range ports, so inputs the repository rejected are now
+  accepted; SPECIFICATION and TEST_FAILURE_01/02 (port zero, too many colons) cover
+  the regressed validation.
+proposed_other_pattern: null

@@ -1,0 +1,19 @@
+case_id: SWESMITH_015
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF reworks APISpec.__init__ and removes the loop that calls
+  plugin.init_spec(self) for every plugin (CODE_CONTEXT_01). The plugin lifecycle the
+  library promises (plugins receive the spec at construction) is no longer honoured, so
+  every plugin-backed helper fails; SPECIFICATION describes this and TEST_FAILURE_01
+  (plugin access in init_spec) plus the marshmallow-extension tests (TEST_FAILURE_02
+  and 380 more) confirm it.
+proposed_other_pattern: null

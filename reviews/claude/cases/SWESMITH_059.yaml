@@ -1,0 +1,20 @@
+case_id: SWESMITH_059
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF exchanges the bodies of the `elif not segment.segments` branch and the
+  `else` branch in _iter_templated_patches: raw leaf segments now take the
+  recursive "go deeper" path and segments with children hit the early return
+  (CODE_CONTEXT_01, lines 106-217). Conditions and both bodies are intact; only
+  their pairing changed. No defined pattern describes a localised branch-body swap
+  (TEST_FAILURE_01, TEST_FAILURE_02).
+proposed_other_pattern: >-
+  Local logic mutation - two branch outcomes swapped within otherwise intact control
+  flow, with no misunderstanding or propagation aspect.

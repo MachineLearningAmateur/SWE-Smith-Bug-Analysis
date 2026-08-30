@@ -1,0 +1,19 @@
+case_id: SWESMITH_011
+failure_pattern: incomplete_change_propagation
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_03
+reasoning_summary: BUG_DIFF deletes the `routes = route.routes or []` rebinding inside the
+  Mount branch of get_endpoints but leaves the recursive call `self.get_endpoints(routes)`
+  in place, so a Mount now recurses over the outer route list instead of its children
+  (CODE_CONTEXT_01, lines 53-63). It also drops Host from the import and the isinstance
+  check, so Host-nested routes are no longer collected (SPECIFICATION). The partial
+  removal left a dependent use behind; TEST_FAILURE_01 and TEST_FAILURE_03 exercise
+  schema generation over mounted and hosted routes.
+proposed_other_pattern: null

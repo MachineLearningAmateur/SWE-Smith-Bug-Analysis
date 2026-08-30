@@ -1,0 +1,18 @@
+case_id: SWESMITH_036
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF removes the `local == "_ignore_"` exclusion from infer_enum_class and
+  deletes the generated `_name_` and `_value_` properties from the synthetic enum
+  member class (CODE_CONTEXT_01). Both are standard Enum semantics the brain already
+  modelled; after the change _ignore_ is treated as a member and the sunder attributes
+  disappear (SPECIFICATION, TEST_FAILURE_01 sunder names, TEST_FAILURE_02 _ignore_).
+proposed_other_pattern: null

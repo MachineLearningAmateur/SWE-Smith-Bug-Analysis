@@ -1,0 +1,19 @@
+case_id: SWESMITH_070
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_03
+reasoning_summary: >-
+  BUG_DIFF replaces the ordered-subtraction logic in GPXTrackPoint.time_difference
+  with `total_seconds(self.time - track_point.time)` (CODE_CONTEXT_01), so the
+  result is now signed and negative when the argument is later. The method's
+  documented contract - an absolute difference in seconds, relied on by
+  speed_between and add_missing_speeds - is regressed (SPECIFICATION,
+  TEST_FAILURE_01, TEST_FAILURE_03).
+proposed_other_pattern: null

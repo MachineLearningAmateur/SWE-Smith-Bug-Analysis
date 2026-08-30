@@ -1,0 +1,20 @@
+case_id: SWESMITH_028
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF scrambles get_route_path: `path.startswith(root_path)` is now evaluated
+  before `path` and `root_path` are assigned, and the `root_path` lookup sits after the
+  checks that use it (CODE_CONTEXT_01, lines 85-99), so the function raises
+  UnboundLocalError on every request. Every statement is still present; only the order
+  is wrong. No defined pattern describes a use-before-definition ordering defect
+  (TEST_FAILURE_01, TEST_FAILURE_02 among 322).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that reads locals before the statements
+  that define them, with no misunderstanding or propagation aspect.

@@ -1,0 +1,21 @@
+case_id: SWESMITH_076
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+- TEST_FAILURE_07
+reasoning_summary: >-
+  BUG_DIFF moves the fallback `return None, additional_prefix, 0` from the end of
+  _close_fstring_if_necessary to its first line (CODE_CONTEXT_01, lines 284-299),
+  so the loop that detects a closing f-string quote never runs and no f-string is
+  ever closed. Every statement is still present; only the return's position
+  changed. No defined pattern describes a hoisted-return ordering defect
+  (TEST_FAILURE_01, TEST_FAILURE_07 among 129).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that moves an unconditional return
+  ahead of the logic it was meant to follow, with no misunderstanding or
+  propagation aspect.

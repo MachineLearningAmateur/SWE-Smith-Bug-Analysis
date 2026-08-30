@@ -1,0 +1,17 @@
+case_id: SWESMITH_082
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF removes IoTDataPlaneResponse.setup_class, the override that passed
+  use_raw_body=True to BaseResponse so publish payloads stay as bytes
+  (CODE_CONTEXT_01). Without it the base class decodes the body as UTF-8 and
+  non-UTF-8 payloads such as b'\xbf' raise UnicodeDecodeError; binary publishing
+  the mock already supported is regressed (SPECIFICATION, TEST_FAILURE_01).
+proposed_other_pattern: null

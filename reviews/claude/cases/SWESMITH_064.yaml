@@ -1,0 +1,20 @@
+case_id: SWESMITH_064
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_04
+- TEST_FAILURE_13
+reasoning_summary: >-
+  BUG_DIFF moves `off = self.off` in the CT_Transform2D.y getter to after the
+  `if off is None` check that reads it (CODE_CONTEXT_01, lines 478-482), so the
+  property raises UnboundLocalError on every access. Both statements are still
+  present; only their order is wrong. No defined pattern describes a
+  use-before-definition ordering defect (TEST_FAILURE_04, TEST_FAILURE_13 among
+  39).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that reads a local before the statement
+  that defines it, with no misunderstanding or propagation aspect.

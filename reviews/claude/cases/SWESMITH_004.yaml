@@ -1,0 +1,17 @@
+case_id: SWESMITH_004
+failure_pattern: masked_symptom_instead_of_fixing
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: BUG_DIFF rewrites fetch_data_files so every download exception is caught
+  and turned into warn_and_log plus a print, and the aggregated RuntimeError is gone
+  (CODE_CONTEXT_01). Failures are suppressed rather than surfaced, so callers can no longer
+  detect an incomplete cache; SPECIFICATION and TEST_FAILURE_01 cover the missing
+  RuntimeError. The lost raise is also a regression of promised behaviour, but the
+  mechanism is exception swallowing.
+proposed_other_pattern: null

@@ -1,0 +1,18 @@
+case_id: SWESMITH_033
+failure_pattern: false_premise_about_existing_code
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF changes Stage.run to call self._sync_import(dry, force, jobs, no_download)
+  using a bare name `jobs`, but run's signature only has dry/no_commit/force/
+  allow_missing/no_download plus **kwargs (CODE_CONTEXT_01, lines 599-612), so every
+  import stage raises NameError; the previous code read kwargs.get("jobs"). The diff
+  also drops the ignore_outs() call for no_download. The change assumes a local that
+  the method does not define (SPECIFICATION, TEST_FAILURE_01).
+proposed_other_pattern: null

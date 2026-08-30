@@ -1,0 +1,18 @@
+case_id: SWESMITH_093
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF removes the loop in Components._resolve_refs_in_parameter_or_header
+  that resolved schema references inside each media type of a parameter's
+  `content` (CODE_CONTEXT_01, lines 343-346), while the sibling request-body
+  resolver still handles content. OpenAPI v3 parameters with content schemas now
+  keep the raw schema name instead of a $ref, a resolution the library already
+  promised (SPECIFICATION, TEST_FAILURE_01).
+proposed_other_pattern: null

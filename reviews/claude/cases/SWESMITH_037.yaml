@@ -1,0 +1,17 @@
+case_id: SWESMITH_037
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_03
+- TEST_FAILURE_05
+reasoning_summary: >-
+  BUG_DIFF replaces the body of the `for val_type, validators in _VALIDATORS` loop in
+  find_validators with `pass` (CODE_CONTEXT_01), so the issubclass dispatch that yields
+  the built-in validators never runs and every standard field type falls through to
+  "no validator found". The v1 validation contract for ordinary types is regressed
+  (TEST_FAILURE_03, TEST_FAILURE_05).
+proposed_other_pattern: null

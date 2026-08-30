@@ -1,0 +1,20 @@
+case_id: SWESMITH_100
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF removes the `or not os.path.exists(frame.f_code.co_filename)` clause
+  from the frame walk in find_dotenv (CODE_CONTEXT_01, lines 299-305). That
+  clause existed so callers whose code lives inside a zip archive (no real file
+  on disk) are skipped over when locating the caller's directory; without it
+  find_dotenv resolves a path inside the archive and load_dotenv fails for
+  zip-imported modules, a case the library already supported (SPECIFICATION,
+  TEST_FAILURE_01, TEST_FAILURE_02).
+proposed_other_pattern: null

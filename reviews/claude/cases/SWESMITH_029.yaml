@@ -1,0 +1,22 @@
+case_id: SWESMITH_029
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- CODE_CONTEXT_02
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+- TEST_FAILURE_03
+reasoning_summary: >-
+  BUG_DIFF removes describe_account_assignment_creation_status and
+  describe_account_assignment_deletion_status from both backend and response layers,
+  drops the deleted_account_assignments bookkeeping so delete no longer removes the
+  assignment, and replaces the stored request_id with a fresh random RequestId
+  generated per response (CODE_CONTEXT_01, CODE_CONTEXT_02). Operations and
+  identifiers the mock already promised are gone or no longer stable; SPECIFICATION
+  and TEST_FAILURE_01..03 cover delete and both describe-status calls.
+proposed_other_pattern: null

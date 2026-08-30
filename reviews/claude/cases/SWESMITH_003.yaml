@@ -1,0 +1,16 @@
+case_id: SWESMITH_003
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: BUG_DIFF drops NEW_ATTRS_NAMES and the use_bare_annotations check, so
+  attr_attributes_transform now skips every AnnAssign without a Call value regardless of
+  decorator (CODE_CONTEXT_01). The bare-annotation support that attrs.define/mutable/frozen
+  classes were already given is regressed; SPECIFICATION and TEST_FAILURE_01 describe
+  exactly that lost behaviour.
+proposed_other_pattern: null

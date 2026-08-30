@@ -1,0 +1,20 @@
+case_id: SWESMITH_091
+failure_pattern: false_premise_about_existing_code
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF rewrites Scope.ref_count to count every Scope found in
+  `scope.sources`, i.e. every source visible to the scope, instead of the
+  `selected_sources` that a scope actually references (CODE_CONTEXT_01). In this
+  optimizer those two attributes differ by design, so CTEs referenced once are
+  reported as multiply referenced and eliminate_ctes no longer inlines them. The
+  rewrite rests on an incorrect assumption about the semantics of the Scope
+  data model (SPECIFICATION, TEST_FAILURE_01, TEST_FAILURE_02).
+proposed_other_pattern: null

@@ -1,0 +1,23 @@
+case_id: SWESMITH_039
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+- TEST_FAILURE_06
+- TEST_FAILURE_07
+reasoning_summary: >-
+  BUG_DIFF applies many independent inversions across decode.py (CODE_CONTEXT_01):
+  songpos and pitchwheel byte order and offset are swapped, channel extraction becomes
+  `status_byte | 0xf0` in one place and a shifted nibble in another, the data slice
+  becomes msg_bytes[:-1], the sysex end-byte check is inverted, and check_data runs
+  only when check is False. Each site regresses the MIDI decoding the library already
+  promised (SPECIFICATION; TEST_FAILURE_01 channel, 02 sysex, 06 pitchwheel, 07
+  songpos). The multi-site, unrelated nature of the inversions is not itself a
+  defined pattern.
+proposed_other_pattern: null

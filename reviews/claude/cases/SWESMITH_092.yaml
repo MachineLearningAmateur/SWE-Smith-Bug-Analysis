@@ -1,0 +1,20 @@
+case_id: SWESMITH_092
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_02
+- TEST_FAILURE_04
+reasoning_summary: >-
+  BUG_DIFF replaces PDFStructElement.to_dict's asdict-based serialisation with a
+  hand-built dict containing only children and, if present, role_map/class_map
+  (CODE_CONTEXT_01). The dataclass fields that define an element - type, revision,
+  id, lang, alt_text, actual_text, title, page_number, attributes, mcids - are no
+  longer emitted, so the documented dictionary representation consumed by the
+  structure tests and the CLI converter is regressed (SPECIFICATION,
+  TEST_FAILURE_02, TEST_FAILURE_04 among 10).
+proposed_other_pattern: null

@@ -1,0 +1,23 @@
+case_id: SWESMITH_096
+failure_pattern: wrong_baseline_or_branch
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_02
+- CODE_CONTEXT_03
+- CODE_CONTEXT_06
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF sweeps six EC2 modules back to an earlier, un-annotated revision:
+  every type hint is stripped, fleets/flow-log models revert to older data shapes
+  (defaultdict(dict) flow logs, fleets.values() without list(), physical_resource_id
+  returning None) and the security-group-rule id generator regains size=17
+  (CODE_CONTEXT_02, CODE_CONTEXT_03, CODE_CONTEXT_06). In utils.py TypeVar is
+  dropped from the typing import while `FILTER_TYPE = TypeVar(...)` at line 475
+  survives, so importing moto.ec2.utils raises NameError (SPECIFICATION
+  traceback; TEST_FAILURE_01 among 42). The edit targets a different revision of
+  these files than the repository state it was applied to.
+proposed_other_pattern: null

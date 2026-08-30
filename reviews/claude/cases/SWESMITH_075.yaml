@@ -1,0 +1,18 @@
+case_id: SWESMITH_075
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF replaces HtmlFormatter._get_css_classes' loop, which walked a
+  non-standard token type up to its STANDARD_TYPES ancestor and emitted every
+  class along the way, with a single _get_ttype_class lookup (CODE_CONTEXT_01).
+  Custom token types such as Name.Blubb now yield only their own class instead of
+  "n n-Blubb", so stylesheets keyed on the hierarchical classes break; SPECIFICATION
+  and TEST_FAILURE_01 (-F highlight option) cover the regression.
+proposed_other_pattern: null

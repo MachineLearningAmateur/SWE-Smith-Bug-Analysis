@@ -1,0 +1,19 @@
+case_id: SWESMITH_021
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF replaces mi_compute with a different formula: the comments term becomes
+  sin(sqrt(2.4*comments/100)) instead of sin(sqrt(2.46*radians(comments))), the
+  non-negative-volume short-circuit is changed, and the final *100/171 normalisation is
+  dropped in favour of a raw clamp (CODE_CONTEXT_01). The documented MI values the
+  library already returned for given inputs change; SPECIFICATION and the two
+  expected-value parametrisations in TEST_FAILURE_01/02 pin the promised results.
+proposed_other_pattern: null

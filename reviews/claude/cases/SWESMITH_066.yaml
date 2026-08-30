@@ -1,0 +1,21 @@
+case_id: SWESMITH_066
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+- TEST_FAILURE_20
+reasoning_summary: >-
+  BUG_DIFF scrambles Request.duplicate_params so the method begins with
+  `return [k for k, c in seen_keys.items() if c > 1]` before seen_keys is created,
+  with the counting loop now unreachable below it (CODE_CONTEXT_01, lines 426-433);
+  every access raises UnboundLocalError and takes all request validation down with
+  it. All statements are present; only the order is wrong. No defined pattern
+  describes a use-before-definition ordering defect (TEST_FAILURE_01,
+  TEST_FAILURE_20 among 290).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that returns/reads a local before the
+  statement that defines it, with no misunderstanding or propagation aspect.

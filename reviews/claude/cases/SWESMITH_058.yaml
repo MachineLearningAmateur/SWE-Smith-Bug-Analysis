@@ -1,0 +1,25 @@
+case_id: SWESMITH_058
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: LOW
+failure_scope: CODE_STATE
+taxonomy_fit: UNCLEAR
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF moves Literal from typing to typing_extensions (equivalent on this
+  Python), removes the unused ParamSpec/P/TypeAdapterT symbols, and inserts a
+  module-level _frame_depth decorator that references `wraps` (never imported in
+  CODE_CONTEXT_01) and a TypeAdapter._with_frame_depth method that does not exist;
+  nothing calls _frame_depth, so the module still imports. The two failures are
+  docstring-example tests identified by source line ranges (TEST_FAILURE_01,
+  TEST_FAILURE_02) that the inserted lines shift. SPECIFICATION's claim of a Literal
+  import conflict is not supported by the diff. The evidence does not establish a
+  concrete runtime defect, so no defined pattern fits with confidence.
+proposed_other_pattern: >-
+  Dead code inserted that references unimported/nonexistent names, with test
+  failures that appear to be a line-number artefact rather than a behavioural
+  defect.

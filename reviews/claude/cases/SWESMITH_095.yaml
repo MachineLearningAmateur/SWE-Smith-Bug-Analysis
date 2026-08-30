@@ -1,0 +1,20 @@
+case_id: SWESMITH_095
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_03
+- TEST_FAILURE_04
+reasoning_summary: >-
+  BUG_DIFF scrambles _Relationships.part_with_reltype so the
+  `rels_of_reltype = self._rels_by_reltype[reltype]` lookup is now the last,
+  unreachable line while the length checks and the return read it first
+  (CODE_CONTEXT_01, lines 571-585); every call raises UnboundLocalError. All
+  statements are present; only their order is wrong. No defined pattern describes
+  a use-before-definition ordering defect (TEST_FAILURE_03, TEST_FAILURE_04).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that reads a local before the statement
+  that defines it, with no misunderstanding or propagation aspect.

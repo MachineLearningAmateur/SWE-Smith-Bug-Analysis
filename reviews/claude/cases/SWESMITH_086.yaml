@@ -1,0 +1,20 @@
+case_id: SWESMITH_086
+failure_pattern: false_premise_about_existing_code
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF rewrites get_dependencies to dispatch on FileType.VIRTUAL_ENV,
+  FileType.REQUIREMENTS and FileType.PYTHON and to call a read_requirements
+  function; none of these exist in the repository, whose members are
+  REQUIREMENTS_TXT, POETRY_LOCK, PIPENV_LOCK, PYPROJECT_TOML and
+  VIRTUAL_ENVIRONMENT and whose reader is read_dependencies (CODE_CONTEXT_01).
+  Accessing the missing enum members raises AttributeError, so no file type
+  yields dependencies. The change rests on an incorrect model of the module's
+  API (SPECIFICATION, TEST_FAILURE_01).
+proposed_other_pattern: null

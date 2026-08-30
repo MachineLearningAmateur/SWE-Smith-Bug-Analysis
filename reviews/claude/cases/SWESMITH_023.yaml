@@ -1,0 +1,21 @@
+case_id: SWESMITH_023
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+- TEST_FAILURE_03
+reasoning_summary: >-
+  BUG_DIFF scrambles the statement order of ThaiLocale._format_relative: the method
+  now begins with `return relative_string` before that local is assigned
+  (UnboundLocalError), and the direction formatting, the "now" short-circuit and the
+  space stripping sit unreachably after it (CODE_CONTEXT_01). Every statement is
+  still present; only the ordering is wrong. No defined pattern describes a
+  use-before-definition ordering defect (TEST_FAILURE_01..03).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that returns/reads a local before the
+  statement that defines it, with no misunderstanding or propagation aspect.

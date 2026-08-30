@@ -1,0 +1,19 @@
+case_id: SWESMITH_080
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+reasoning_summary: >-
+  BUG_DIFF swaps the two return branches of the Finnish business-id checksum
+  helper: `sum_ % 11 == 0` now yields str(11 - sum_ % 11) (i.e. "11") and every
+  other remainder yields "0" (CODE_CONTEXT_01, lines 39-42). The condition and
+  both expressions are intact; only their pairing is inverted, so generated ids
+  fail validation. No defined pattern describes a localised branch-body swap
+  (TEST_FAILURE_01).
+proposed_other_pattern: >-
+  Local logic mutation - two branch outcomes swapped within otherwise intact control
+  flow, with no misunderstanding or propagation aspect.

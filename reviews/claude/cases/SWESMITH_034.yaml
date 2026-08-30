@@ -1,0 +1,17 @@
+case_id: SWESMITH_034
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_02
+reasoning_summary: >-
+  BUG_DIFF deletes the public inspect and inspect_err methods from both Ok and Err
+  (CODE_CONTEXT_01), so calling them raises AttributeError. Part of the Result API the
+  library already exposed is removed with nothing replacing it; SPECIFICATION and
+  TEST_FAILURE_01/02 exercise exactly those methods.
+proposed_other_pattern: null

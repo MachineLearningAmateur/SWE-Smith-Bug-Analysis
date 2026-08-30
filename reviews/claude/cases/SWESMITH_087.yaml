@@ -1,0 +1,20 @@
+case_id: SWESMITH_087
+failure_pattern: OTHER_TECHNICAL_PATTERN
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: OTHER
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_05
+- TEST_FAILURE_09
+reasoning_summary: >-
+  BUG_DIFF moves `message_bytes = data[start:end]` from the first line of
+  MultiPartParser.on_part_data to after the branches that read message_bytes
+  (CODE_CONTEXT_01, lines 155-162), so every multipart data callback raises
+  UnboundLocalError. Both statements are present; only their order is wrong. No
+  defined pattern describes a use-before-definition ordering defect
+  (TEST_FAILURE_05, TEST_FAILURE_09 among 26).
+proposed_other_pattern: >-
+  Local logic mutation - statement reordering that reads a local before the statement
+  that defines it, with no misunderstanding or propagation aspect.

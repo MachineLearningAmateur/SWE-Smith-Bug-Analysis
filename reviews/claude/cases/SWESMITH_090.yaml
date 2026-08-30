@@ -1,0 +1,18 @@
+case_id: SWESMITH_090
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_04
+- TEST_FAILURE_05
+reasoning_summary: >-
+  BUG_DIFF removes the whole `while chars:` trie-walking loop from
+  Tokenizer._scan_keywords (CODE_CONTEXT_01, lines 1180-1200), so `word` is never
+  set and multi-character keywords, spaced keywords and comment/string starters
+  are no longer matched; every input degrades to single tokens and variables.
+  Tokenization the library already guaranteed is regressed (TEST_FAILURE_04
+  space keywords, TEST_FAILURE_05 line/col, among 5).
+proposed_other_pattern: null

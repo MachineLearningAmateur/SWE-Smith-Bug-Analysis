@@ -1,0 +1,14 @@
+case_id: SWESMITH_001
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- TEST_FAILURE_01
+reasoning_summary: BUG_DIFF deletes the entire distance() method from OptimalStringAlignment,
+  leaving the StringDistance subclass as a bare `pass` (CODE_CONTEXT_01). The class no
+  longer provides the distance interface the repository relies on, and TEST_FAILURE_01
+  exercises exactly that method.
+proposed_other_pattern: null

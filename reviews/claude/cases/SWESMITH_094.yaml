@@ -1,0 +1,21 @@
+case_id: SWESMITH_094
+failure_pattern: false_premise_about_existing_code
+pattern_confidence: MEDIUM
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- CODE_CONTEXT_01
+- SPECIFICATION
+- TEST_FAILURE_01
+- TEST_FAILURE_03
+reasoning_summary: >-
+  BUG_DIFF replaces `**(default_kwargs | engine_kwargs)` in
+  OpenpyxlReader.load_workbook with explicit read_only/data_only/keep_links
+  keywords followed by `**engine_kwargs` (CODE_CONTEXT_01). When a user passes any
+  of those keys in engine_kwargs Python raises "got multiple values for keyword
+  argument" instead of letting the user value override the default, so the
+  documented ability to set data_only=False or read_only=False is lost. The
+  change assumes call-site keyword merging semantics the language does not have
+  (SPECIFICATION, TEST_FAILURE_01, TEST_FAILURE_03).
+proposed_other_pattern: null
