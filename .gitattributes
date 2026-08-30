@@ -1,0 +1,16 @@
+# Line-ending conversion is turned off for the whole repository.
+#
+# This is a correctness requirement, not a style preference. SHA-256 hashes of
+# file bytes are load-bearing throughout this study:
+#
+#   taxonomy/TAXONOMY_PROVENANCE.json   the frozen taxonomy and family mapping
+#   data/review_snapshot_manifest.json  every review packet file
+#   data/sampling/*.json                the frozen review manifest
+#
+# ssr.taxonomy.verify_provenance re-hashes the taxonomy on every analysis run
+# and fails if it has moved. A checkout that rewrote LF to CRLF would change
+# those bytes and make a correct repository look tampered with.
+#
+# The harness writes every file with LF endings (ssr.util.write_text), so the
+# working tree stays consistent on Windows and Linux alike.
+* -text
