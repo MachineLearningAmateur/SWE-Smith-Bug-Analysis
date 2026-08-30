@@ -1,44 +1,84 @@
-# SSR / SWE-smith coverage study
+# SWE-smith / AIDev coverage study
 
-The SSR side of RQ1: does the frozen AIDev failure taxonomy cover the failures
-that an SSR-style bug pipeline produces?
+> **To what extent do SWE-smith synthetic repair tasks used to train
+> SWE-agent-LM-32B cover technical code-state failure patterns observed in real
+> coding-agent pull requests?**
 
-The AIDev side is already frozen in
+The real-agent comparison corpus is the frozen AIDev corpus in
 [`MachineLearningAmateur/AIBugAnalysis`](https://github.com/MachineLearningAmateur/AIBugAnalysis).
-This repository builds a comparable SSR-style corpus over SWE-smith
-environments, freezes 100 neutral evidence packets, and has Codex and Claude
-classify them independently under the **same** frozen taxonomy.
+This repository audits the other side: the official SWE-smith task instances
+that actually produced the training trajectories for
+[SWE-agent-LM-32B](https://huggingface.co/SWE-bench/SWE-agent-LM-32B), classified
+under the **same** frozen taxonomy by two independent blind reviewers.
 
-**Reviewing the bugs?** Go straight to [`QUICKSTART.md`](QUICKSTART.md).
-You need Python 3.10+ and nothing else: no Docker, no API key, no network.
+**Reviewing the cases?** Go to
+[Running the blind reviews](#running-the-blind-reviews). You need Python 3.10+
+and nothing else: no Docker, no API key, no network.
 
 **Running the study?** Start with
 [`docs/research_scope.md`](docs/research_scope.md).
 
 ## Status
 
-The pipeline is built and proven end to end. Two things block a corpus run,
-both outside this repository:
+The 100-case sample is **selected, frozen and packet-built**. Neither review
+has started.
 
-| Blocker | What is needed |
-|---|---|
-| **Docker is not installed** | Administrator rights. SWE-smith ships its environments as Docker images; without it there is no SWE-smith environment. See [`docs/swesmith_setup.md`](docs/swesmith_setup.md). |
-| **The configured model is blocked for this account** | `qwen/qwen-2.5-coder-32b-instruct` is served on OpenRouter by one provider that this account's privacy setting excludes. Permit it at <https://openrouter.ai/settings/privacy>, or substitute a model and record it in [`docs/fidelity_limitations.md`](docs/fidelity_limitations.md). |
+| | |
+|---|---:|
+| Population: unique tasks behind the training trajectories | 4,207 |
+| Sample | 100 |
+| Unique repositories in the sample | 52 |
+| Largest deviation from population method share | 0.45% |
+| Reconstruction failures | 0 |
 
-Run `python scripts/check_environment.py` for the current state of this
-machine.
+```
+review_manifest.csv             64e607800de2a08e4321b371d616841bbd4fbe6deaddb1321dfd355333caebfa
+review_snapshot_manifest.json   981694c07ffcc9ee9bcf00527d71a0c94b15884ebfc7d8aa537363b3f646a6de
+frozen_failure_taxonomy_v1.md   ecf76f0d752afd2632d4a2825b648a36cce4c16926782aec18fd4e2637fe4cc7
+pattern_families.yaml           1ce7232047437f87e7116d84b369e4f820e854481cbc744faf3b1d4c1af60985
+```
 
-What is already done and verified:
+Run `python scripts/check_review_ready.py` to re-verify all of it locally.
 
-* the frozen taxonomy is imported byte for byte, and its family-mapping
-  SHA-256 matches the handoff exactly;
-* the neutral AIDev environment profile is built — and shows a language
-  mismatch that cannot be fixed (see below);
-* generation, validation, solving and second-order construction run end to end
-  against a local repository;
-* deduplication, selection, packet building, the dual-review workflow, family
-  derivation and the source-specific comparison run end to end at full
-  100-bug scale.
+## The population
+
+The population is **not** the full 50k SWE-smith corpus. It is the unique task
+instances behind the official training trajectories, read at pinned revisions:
+
+| Dataset | Revision | Why pinned |
+|---|---|---|
+| `SWE-bench/SWE-smith-trajectories` | `f6b6d7e01f2b` | last revision before the July 2025 expansion, which added three splits totalling 76k rows that are **not** the training set |
+| `SWE-bench/SWE-smith` | `9f2a10465194` | the 2025-04-29 upload; it still carries `base_commit` and `created_at`, which current `main` dropped |
+
+```
+5017  trajectories claimed by the dataset card
+5016  trajectory rows actually shipped      <- reported, not reconciled
+4211  unique task instances
+4207  resolvable in the pinned task dataset <- 4 excluded, all pallets/flask
+```
+
+By generation method: `lm_rewrite` 36.3%, mirrored pull requests 27.6%,
+procedural mutations 34.2%, combined 1.9%. All Python.
+Full profile: [`analysis/population_profile.md`](analysis/population_profile.md).
+
+## Two findings that would have inverted this study
+
+Both were established by reconstruction, not assumption. Both are enforced in
+code and locked by tests, because either one taken the SWE-bench way round
+produces a corpus that looks fine and means the opposite.
+
+**`patch` is the BUG, not the gold repair.** In SWE-bench, `patch` is the fix.
+In SWE-smith it is the diff that *introduces* the defect: it is byte-equal to
+the branch's own `Bug Patch` commit, applies to that commit's parent, and does
+not apply to the buggy state. The reference repair is its **reverse**; there is
+no separate field.
+
+**`base_commit` is NOT the clean state.** Its tree differs from the bug's actual
+parent on every instance checked, and the bug diff does not apply to it. The
+clean state is the parent of the `Bug Patch` commit.
+
+Evidence and citations:
+[`docs/swesmith_field_semantics.md`](docs/swesmith_field_semantics.md).
 
 ## Install
 
@@ -53,99 +93,116 @@ Running the study needs the full set:
 
 ```bash
 python -m pip install -e ".[dev]"
-python scripts/selftest.py            # proves the pipeline here, offline
-python scripts/check_environment.py   # says what a corpus run still needs
+python -m pytest tests -q
 ```
 
-Copy `.env.example` to `.env` and fill in `OPENROUTER_API_KEY`. The key is
-never written to any artifact and is stripped from every sandbox process, so
-an injector with shell access cannot read it.
-
-Everything works the same on macOS, Linux and Windows. `scripts/selftest.py`
-runs the whole downstream pipeline against a temporary directory and touches
-nothing under `data/`, `reviews/` or `analysis/`; run it after cloning and
-after changing anything under `ssr/` or `scripts/`.
+Everything works the same on macOS, Linux and Windows.
 
 ## The pipeline
 
 ```bash
-# 1. environment profile from the AIDev corpus (neutral facts only)
-python scripts/profile_aidev_environment_mix.py --aidev-repo /path/to/AIBugAnalysis
+# 1. build the population from the pinned official releases
+python scripts/build_training_population.py
 
-# 2. generate and validate first-order bugs
-python scripts/generate_bug.py  --env <name> --attempts 20
-python scripts/validate_bug.py  --env <name> --all
+# 2. verify what each dataset field means, by reconstruction
+python scripts/verify_swesmith_semantics.py --n 5
 
-# 3. solve, and build second-order states from genuine failures
-python scripts/run_solver.py             --env <name> --all
-python scripts/build_second_order_bug.py --env <name> --all
-python scripts/validate_bug.py           --env <name> --all
+# 3. select 100 and freeze their packets
+python scripts/build_swesmith_packets.py
 
-# 4. deduplicate, then select exactly 100
-python scripts/deduplicate_bug_pool.py
-python scripts/select_review_sample.py --dry-run
-python scripts/select_review_sample.py
+# 4. two independent blind reviews  -- see below
 
-# 5. freeze the neutral review packets
-python scripts/build_review_packets.py --env <name>
-
-# 6. two independent blind reviews (see AGENTS.md and CLAUDE.md)
-python scripts/check_review_ready.py --reviewer codex
-python scripts/validate_review_output.py --reviewer codex  --finalise
-python scripts/validate_review_output.py --reviewer claude --finalise
-
-#    or hand each reviewer a bundle that physically excludes hidden data
-python scripts/make_review_bundle.py --reviewer codex --out ../codex_review --zip
-python scripts/import_review_results.py --reviewer codex --from ../codex_review
-
-# 7. analysis, locked until both COMPLETE markers exist
+# 5. analysis, locked until both COMPLETE markers exist
 python scripts/apply_frozen_families.py
 python scripts/compare_reviews.py
-python scripts/compute_patch_metrics.py --env <name>
 ```
 
-## The prompt to hand the reviewer
+Selection and packet building are one command because they are coupled: a task
+that cannot be reconstructed must not be replaced by hand. It goes on an
+exclusion list and the deterministic sampler runs again with the same seed.
 
-Open the checkout (or the bundle) with Claude Code or the Codex CLI and paste
-this. Both agents read their brief from the repository root on their own:
-Claude Code reads `CLAUDE.md`, Codex reads `AGENTS.md`. The prompt only has to
-start them and set the standard.
+## Running the blind reviews
 
-Replace `<claude|codex>` with whichever one you are running.
+The sample and the packets are **already selected and frozen**. Do not
+regenerate the sample, modify the taxonomy, rebuild packets, or change any
+sampling parameter before or during a review. `scripts/check_review_ready.py`
+re-hashes every packet and refuses to proceed if anything moved.
+
+Run each review in a **fresh session**, on its **own branch**, cut from the
+same frozen pre-review commit. Two branches keep the reviewers from seeing
+each other's work in the working tree, and make the independence auditable
+afterwards from the history alone.
+
+### Set up the two branches
+
+```bash
+git clone <repository-url> swesmith-review
+cd swesmith-review
+
+# The frozen pre-review commit. Both branches start here.
+git checkout -b codex-review  ed7d6f1
+git checkout -b claude-review ed7d6f1
+
+python -m pip install -r requirements-review.txt
+```
+
+Then open **one fresh session per reviewer**, each with its own branch checked
+out. Never run both reviewers in one session.
+
+| Reviewer | Branch | Writes | Format |
+|---|---|---|---|
+| Codex | `codex-review` | `reviews/codex/cases/SWESMITH_nnn.json` | JSON |
+| Claude | `claude-review` | `reviews/claude/cases/SWESMITH_nnn.yaml` | YAML |
+
+The two formats are deliberate. The records are semantically identical and
+validate against the same schema; different bytes make each reviewer's output
+obviously its own and discourage copy-paste between them.
+
+### The prompt for Codex
+
+Check out `codex-review`, start a fresh Codex session, and paste this:
 
 ```text
-You are the independent blind reviewer for this study. Read CLAUDE.md (if you
-are Claude) or AGENTS.md (if you are Codex) in full before anything else, then
-read taxonomy/frozen_failure_taxonomy_v1.md in full. Both are in this
-repository root. They are your complete brief; follow them exactly.
+You are the independent blind reviewer for this study. Read AGENTS.md in full
+before anything else, then read taxonomy/frozen_failure_taxonomy_v1.md in
+full. Both are in this repository root. They are your complete brief; follow
+them exactly.
 
 First, run:
 
     python -m pip install -r requirements-review.txt
-    python scripts/check_review_ready.py --reviewer <claude|codex>
+    python scripts/check_review_ready.py --reviewer codex
 
-Do not start until that check passes. If it reports the corpus as REHEARSAL,
-carry on the same way but say so in your final message.
+Do not start until that check passes. It re-hashes every packet against the
+frozen manifest; if it reports a mismatch, stop and say so rather than
+continuing.
 
-Then work through every case, in the order the check gives you:
+Then work through all 100 cases, in order:
 
-1. Read ONLY data/review_packets/<the case id>/ for that case. Read the
-   packet.json, the bug_diff.diff, every file under context/ and oracle/, and
-   test_results.txt.
-2. Decide what kind of technical failure that buggy repository state
+1. Read ONLY data/review_packets/<case id>/ for that case: packet.json,
+   bug_diff.diff, everything under context/, specification.md,
+   test_evidence.md and reference_repair.diff.
+2. Decide what kind of technical failure that synthetic buggy code state
    represents, using the fine-grained labels from the frozen taxonomy.
-3. Write reviews/<claude|codex>/cases/<the case id>.json immediately, before
+3. Write reviews/codex/cases/<case id>.json immediately, as JSON, before
    moving on. One file per case. Never batch, never hold results in memory.
 4. Run:
-       python scripts/validate_review_output.py --reviewer <claude|codex> --case <the case id>
+       python scripts/validate_review_output.py --reviewer codex --case <case id>
    Fix anything it rejects before continuing.
 
 Rules that matter most, all of them in your brief:
+- BUG_DIFF is the bug, not a repair. REFERENCE_REPAIR is its exact reverse.
+  Reading them the wrong way round inverts every judgement.
+- SPECIFICATION is a generated description and can be wrong. Where it
+  disagrees with BUG_DIFF, the diff wins.
 - Assign the fine-grained label only. Never a family: families are derived by
   script afterwards.
 - Apply code-state precedence. If a code-state pattern and a
   verification-process pattern both apply, the code-state pattern is the
   primary failure_pattern and the verification facet goes in failure_scope.
+- vacuous_verification and unverified_trial_and_error describe a repair
+  process. A static synthetic bug shows you none. Do not invent one, and do
+  not treat the bug generator as an agent attempting a fix.
 - UNASSIGNED does not exist here. If no defined pattern fits, use
   OTHER_TECHNICAL_PATTERN with taxonomy_fit OTHER and describe it in
   proposed_other_pattern. Do not force a poor fit: those cases are the answer
@@ -154,17 +211,16 @@ Rules that matter most, all of them in your brief:
 - reasoning_summary is a short evidence-based justification, not a transcript
   of your reasoning.
 
-Never read: the other reviewer's directory, data/sampling/, analysis/, or any
-metadata.json, trajectory.jsonl, solver_result.json or pred_patch.diff. If you
-find yourself wanting to know how a bug was made, that is exactly what this
-protocol exists to prevent. Classify what is in front of you.
+Never read: reviews/claude/, data/hidden/, data/population/, analysis/, or
+anything under archive/. If you find yourself wanting to know how a bug was
+made, that is exactly what this protocol exists to prevent.
 
-Write nothing outside reviews/<claude|codex>/. If you believe something else in
-the repository is broken, stop and tell me rather than fixing it.
+Write nothing outside reviews/codex/. If you believe something else in the
+repository is broken, stop and tell me rather than fixing it.
 
-When all cases exist and validate, run:
+When all 100 exist and validate, run:
 
-    python scripts/validate_review_output.py --reviewer <claude|codex> --finalise
+    python scripts/validate_review_output.py --reviewer codex --finalise
 
 Then report: how many cases you recorded, the distribution of labels you
 assigned, how many you marked OTHER_TECHNICAL_PATTERN or UNCLEAR, and anything
@@ -172,106 +228,184 @@ about the taxonomy that fitted badly. Do not compare yourself with the other
 reviewer and do not run the analysis scripts.
 ```
 
-### If you want it in one line
+### The prompt for Claude
 
-```bash
-# Claude Code
-claude "Read CLAUDE.md and taxonomy/frozen_failure_taxonomy_v1.md in full, run python scripts/check_review_ready.py --reviewer claude, then review every case exactly as CLAUDE.md instructs, saving each result immediately."
+Check out `claude-review`, start a fresh Claude Code session, and paste this:
 
-# Codex CLI
-codex "Read AGENTS.md and taxonomy/frozen_failure_taxonomy_v1.md in full, run python scripts/check_review_ready.py --reviewer codex, then review every case exactly as AGENTS.md instructs, saving each result immediately."
+```text
+You are the independent blind reviewer for this study. Read CLAUDE.md in full
+before anything else, then read taxonomy/frozen_failure_taxonomy_v1.md in
+full. Both are in this repository root. They are your complete brief; follow
+them exactly.
+
+First, run:
+
+    python -m pip install -r requirements-review.txt
+    python scripts/check_review_ready.py --reviewer claude
+
+Do not start until that check passes. It re-hashes every packet against the
+frozen manifest; if it reports a mismatch, stop and say so rather than
+continuing.
+
+Then work through all 100 cases, in order:
+
+1. Read ONLY data/review_packets/<case id>/ for that case: packet.json,
+   bug_diff.diff, everything under context/, specification.md,
+   test_evidence.md and reference_repair.diff.
+2. Decide what kind of technical failure that synthetic buggy code state
+   represents, using the fine-grained labels from the frozen taxonomy.
+3. Write reviews/claude/cases/<case id>.yaml immediately, as YAML, before
+   moving on. One file per case. Never batch, never hold results in memory.
+4. Run:
+       python scripts/validate_review_output.py --reviewer claude --case <case id>
+   Fix anything it rejects before continuing.
+
+Rules that matter most, all of them in your brief:
+- BUG_DIFF is the bug, not a repair. REFERENCE_REPAIR is its exact reverse.
+  Reading them the wrong way round inverts every judgement.
+- SPECIFICATION is a generated description and can be wrong. Where it
+  disagrees with BUG_DIFF, the diff wins.
+- Assign the fine-grained label only. Never a family: families are derived by
+  script afterwards.
+- Apply code-state precedence. If a code-state pattern and a
+  verification-process pattern both apply, the code-state pattern is the
+  primary failure_pattern and the verification facet goes in failure_scope.
+- vacuous_verification and unverified_trial_and_error describe a repair
+  process. A static synthetic bug shows you none. Do not invent one, and do
+  not treat the bug generator as an agent attempting a fix.
+- UNASSIGNED does not exist here. If no defined pattern fits, use
+  OTHER_TECHNICAL_PATTERN with taxonomy_fit OTHER and describe it in
+  proposed_other_pattern. Do not force a poor fit: those cases are the answer
+  to the question this study asks.
+- Cite only evidence IDs listed in that packet.
+- reasoning_summary is a short evidence-based justification, not a transcript
+  of your reasoning.
+
+Never read: reviews/codex/, data/hidden/, data/population/, analysis/, or
+anything under archive/. If you find yourself wanting to know how a bug was
+made, that is exactly what this protocol exists to prevent.
+
+Write nothing outside reviews/claude/. If you believe something else in the
+repository is broken, stop and tell me rather than fixing it.
+
+When all 100 exist and validate, run:
+
+    python scripts/validate_review_output.py --reviewer claude --finalise
+
+Then report: how many cases you recorded, the distribution of labels you
+assigned, how many you marked OTHER_TECHNICAL_PATTERN or UNCLEAR, and anything
+about the taxonomy that fitted badly. Do not compare yourself with the other
+reviewer and do not run the analysis scripts.
 ```
 
-The short form works because the briefs are self-contained: they carry the
-label definitions quoted from the frozen taxonomy, the meaning of every
-`failure_scope` and `taxonomy_fit` value, what a packet holds, a worked case,
-and the boundaries. An agent that reads its brief needs nothing else.
+### Stronger isolation, if you want it
+
+Branches keep the two reviewers apart in one clone. A **bundle** goes further
+and leaves the hidden material out of what a reviewer receives at all:
+
+```bash
+python scripts/make_review_bundle.py --reviewer codex --out ../codex_review --zip
+```
+
+The export re-hashes every packet inside the bundle and refuses to publish one
+containing excluded material. When the review comes back:
+
+```bash
+python scripts/import_review_results.py --reviewer codex --from ../codex_review
+```
+
+The import refuses a review done against different evidence or a different
+taxonomy version, so a stale bundle cannot be merged by accident.
+
+### After both reviews finish
+
+Merge the two branches, then run the analysis. It is locked until both
+`COMPLETE` markers exist.
+
+```bash
+git checkout main
+git merge codex-review claude-review     # they touch disjoint directories
+python scripts/apply_frozen_families.py
+python scripts/compare_reviews.py
+```
+
+`apply_frozen_families.py` applies the frozen mapping to both reviewers'
+original fine-grained labels; the labels themselves are never overwritten.
+`compare_reviews.py` joins the sealed reviews to the hidden sample metadata,
+which is the first point in the study where a bug's generation method and its
+taxonomy label are allowed to meet.
 
 ## Layout
 
 ```
-configs/      generator, solver, validation, sampling, environments
 taxonomy/     the frozen AIDev taxonomy, imported verbatim, with provenance
-prompts/      injector (removal, history reversion) and solver prompts
-schemas/      generation metadata, validation result, review packet, review result
-ssr/          the library: execution backends, action protocol, agent loop,
-              validation, deduplication, sampling, packets, taxonomy, metrics
+configs/      sampling parameters and the per-reviewer serialisation map
+schemas/      review packet and review result
+ssr/          the library: SWE-smith access, sampling, reconstruction,
+              packets, review workflow and formats, taxonomy
 scripts/      one command-line entry point per pipeline step
-data/         pools, sampling records, review packets, objective metrics
+data/         population, review packets, manifests, hidden sample metadata
 reviews/      codex/ and claude/, one directory each, strictly separated
-analysis/     derived families, agreement, source-specific comparison
-tests/        unit tests, plus the smoke repository and rehearsal fixtures
+analysis/     population profile, sample balance, language confound plan
+archive/      the paused SSR generation path, intact and inactive
+tests/        the suite, including the semantic locks described above
 ```
 
-## The four isolation rules
+## The isolation rules
 
-Each is enforced by code, not convention. That is the point of the design.
+Each is enforced by code, not convention.
 
 | Rule | Enforced by |
 |---|---|
-| The injector never sees SWE-smith's test command, RepoProfile metadata, synthetic issue or fail-to-pass list. It discovers the tests itself. | `ssr/agent_loop.py` raises if a withheld string reaches the prompt |
-| The solver never sees the injection diff, the strategy, the weakening diff or the parent bug. | `configs/solver.yaml` and `prompts/solver.md` |
-| A review packet carries no strategy, order, lineage, generator identity or source allocation. | two fatal scans in `ssr/packets.py` |
-| Sampling never reads a taxonomy label. | `ssr.sampling.assert_no_taxonomy_fields` |
+| Sampling never reads a taxonomy label. | `ssr.swesmith_sampling.assert_neutral` |
+| A packet carries no generation method, trajectory, model, attempt count, frequency, mirror name or instance ID. | a leakage scan over the literals identifying each task, in `ssr/packets.py` |
+| The clean state is the bug commit's parent, never `base_commit`. | `ssr/packets.py`, locked by `tests/test_swesmith_packets.py` |
+| A reviewer writes only inside its own directory. | `ssr.review_workflow.assert_write_boundary` |
+| The comparison is locked until both reviews finish. | `ssr.review_workflow.require_both_complete` |
 
-Two more, on the review itself: `assert_write_boundary` refuses any write
-outside a reviewer's own directory, and `require_both_complete` locks the
-comparison until both `COMPLETE` markers exist. For a reviewer on someone
-else's machine, `scripts/make_review_bundle.py` goes further and leaves the
-hidden material out of what they receive at all.
+No classifier is run over the population before selection, so the sample cannot
+become indirectly taxonomy-aware.
 
-## Research or rehearsal, never in doubt
+## The language confound, stated up front
 
-Every checkout carries `data/CORPUS_STATUS.json`. **RESEARCH** means every
-packet came from an execution-validated bug state built in an isolated
-environment by the configured model. **REHEARSAL** means at least one packet
-came from a harness-proving or synthetic source, so a review of it tests the
-workflow and its numbers must not be reported.
+The SWE-smith training population is **100% Python**. The strict AIDev corpus is
+34.3% TypeScript, 14.3% Go and **11.4% Python** — four cases, all of which carry
+the same broad family.
 
-The marker is written when the packets are built, copied into each reviewer's
-metadata, and printed at the top of the family and comparison reports. Nobody
-has to remember which kind of corpus they are looking at.
+Any coverage difference between the corpora is therefore confounded with
+language, and the Python-matched sensitivity analysis cannot resolve it at
+n = 4. [`analysis/language_confound_plan.md`](analysis/language_confound_plan.md)
+says so, and says what will be reported instead.
 
-## The language mismatch, stated up front
+## What this population is, and is not
 
-The strict AIDev corpus is **34% TypeScript, 14% Go and 11% Python**.
-SWE-smith is Python-dominant. The two cannot be matched on language, so any
-difference in failure-pattern coverage between the corpora is confounded with
-a difference in language. The selector pulls the sample as close to the AIDev
-profile as the pool allows and records every language outside tolerance;
-[`docs/fidelity_limitations.md`](docs/fidelity_limitations.md) states the
-consequence for the research claim.
-
-## The 30/30/40 caveat
-
-The final 100 is deliberately allocated 30 first-order REMOVAL, 30 first-order
-HISTORY_REVERSION, 40 second-order FAILED_SOLVER. That is a study-design
-choice made for coverage, **not** an estimate of the natural published SSR
-mixture. Report the three sources separately; report pooled figures only with
-the caveat attached. `scripts/compare_reviews.py` does both automatically.
-
-## This is SSR-style, not SSR
-
-Published SSR uses CWM-sft 32B and CWM environment images, and its policy
-evolves under reinforcement learning. This study uses a static surrogate
-policy over SWE-smith environments. Read
-[`docs/fidelity_limitations.md`](docs/fidelity_limitations.md) before placing
-any number here beside a number from the SSR paper.
+These are SWE-smith tasks that **yielded a trajectory good enough to be used for
+fine-tuning**. They are a selected set of successful rollouts, not the full
+SWE-smith generation distribution. That is exactly right for a question about
+training-data coverage, and exactly wrong as a claim about SWE-smith in general.
+[`docs/limitations.md`](docs/limitations.md) carries this and eight more.
 
 ## Documentation
 
 | Document | Covers |
 |---|---|
-| [`QUICKSTART.md`](QUICKSTART.md) | cloning and running a review on any machine, and handing one to someone else |
-| [`docs/research_scope.md`](docs/research_scope.md) | the question, what crosses over from AIDev, what is withheld from whom |
-| [`docs/swesmith_setup.md`](docs/swesmith_setup.md) | Docker, WSL, SWE-smith, declaring environments, the current blockers |
-| [`docs/ssr_reproduction_protocol.md`](docs/ssr_reproduction_protocol.md) | the action protocol, the three stages, the eight validation checks, second-order construction |
-| [`docs/sample_selection_protocol.md`](docs/sample_selection_protocol.md) | deduplication, the allocation and shortfall rule, repository domination, freezing |
-| [`docs/review_protocol.md`](docs/review_protocol.md) | the reviewer's task, the record format, the boundaries, the analysis |
-| [`docs/fidelity_limitations.md`](docs/fidelity_limitations.md) | every way this study differs from published SSR |
+| [`QUICKSTART.md`](QUICKSTART.md) | cloning and running a review on any machine |
+| [`docs/swesmith_field_semantics.md`](docs/swesmith_field_semantics.md) | what every field means, and the evidence for it |
+| [`docs/review_protocol.md`](docs/review_protocol.md) | the reviewer's task, the record format, the boundaries |
+| [`docs/limitations.md`](docs/limitations.md) | every way this study is bounded |
+| [`analysis/population_profile.md`](analysis/population_profile.md) | the population, by method, repository and shape |
+| [`analysis/sample_balance.md`](analysis/sample_balance.md) | population versus sample, and every distortion |
+| [`analysis/language_confound_plan.md`](analysis/language_confound_plan.md) | how the language confound will be handled |
 
 Reviewers read [`AGENTS.md`](AGENTS.md) (Codex) or [`CLAUDE.md`](CLAUDE.md)
 (Claude) and nothing else about the pipeline.
+
+## The paused SSR path
+
+An earlier design generated SSR-style bugs with an OpenRouter model. It worked
+end to end and is preserved intact under
+[`archive/ssr_future/`](archive/ssr_future/), marked inactive. No bug generated
+by it may enter this study's sample.
 
 ## Tests
 
@@ -279,16 +413,7 @@ Reviewers read [`AGENTS.md`](AGENTS.md) (Codex) or [`CLAUDE.md`](CLAUDE.md)
 python -m pytest tests -q
 ```
 
-The suite covers the action protocol, the taxonomy freeze and prompt drift,
-deduplication, objective metrics, deterministic sampling under every
-constraint, packet leakage scanning, and reviewer-output validation.
-
-`scripts/selftest.py` runs all of it plus the whole downstream pipeline
-against a scratch directory, and is the single command that answers "does this
-checkout work on my machine".
-
-`tests/make_smoke_repo.py` builds a tiny git repository so the generation
-pipeline can be exercised without Docker; `tests/make_synthetic_pool.py` and
-`tests/simulate_reviews.py` rehearse the downstream path at full scale.
-Artifacts from either are marked REHEARSAL and excluded from the sampling
-frame, so a rehearsal cannot leak into a real study.
+The suite covers the frozen taxonomy, the two SWE-smith semantics above,
+generation-method parsing, packet leakage, deterministic sampling, the review
+formats, the reviewer boundaries, and that the 100 frozen packets still match
+their recorded hashes.

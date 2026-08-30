@@ -247,10 +247,15 @@ def main() -> int:
     instructions = "AGENTS.md" if args.reviewer == "codex" else "CLAUDE.md" if args.reviewer == "claude" else "AGENTS.md (Codex) or CLAUDE.md (Claude)"
     print("This checkout is ready for review.")
     print(f"  1. Read taxonomy/frozen_failure_taxonomy_v1.md, then {instructions}.")
-    fmt = codec_for(args.reviewer).name if args.reviewer else "your reviewer's"
-    ext = codec_for(args.reviewer).extension if args.reviewer else ""
-    print(f"  2. Work through the cases, saving one {fmt} file each "
-          f"(SWESMITH_nnn{ext}) under reviews/{who}/cases/.")
+    if args.reviewer:
+        codec = codec_for(args.reviewer)
+        shape = f"one {codec.name} file each (SWESMITH_nnn{codec.extension})"
+    else:
+        shapes = ", ".join(
+            f"{name} writes {codec_for(name).name}" for name in REVIEWERS
+        )
+        shape = f"one file per case in your own format ({shapes})"
+    print(f"  2. Work through the cases, saving {shape}, under reviews/{who}/cases/.")
     print(f"  3. Finish with: python scripts/validate_review_output.py --reviewer {who} --finalise")
     return 0
 

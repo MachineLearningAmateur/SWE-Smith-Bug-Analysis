@@ -4,7 +4,7 @@ Two audiences, two paths. Pick yours.
 
 ---
 
-## A. You are reviewing the 100 bugs
+## A. You are reviewing the 100 cases
 
 You need **Python 3.10 or later** and nothing else. No Docker, no API key, no
 network. A review reads frozen files and writes JSON.
@@ -48,13 +48,13 @@ nothing to review until they land.
 
 1. Read `taxonomy/frozen_failure_taxonomy_v1.md` in full, once.
 2. Read `CLAUDE.md` (Claude) or `AGENTS.md` (Codex). They are the whole brief.
-3. For each case, read only `data/review_packets/SSR_nnn/` and save one file
-   at `reviews/<you>/cases/SSR_nnn.json`. Save it **immediately**, one at a
+3. For each case, read only `data/review_packets/SWESMITH_nnn/` and save one file
+   at `reviews/<you>/cases/SWESMITH_nnn.<ext>`. Save it **immediately**, one at a
    time. A session that dies mid-run must lose one case, not fifty.
 4. Validate as you go:
 
    ```bash
-   python scripts/validate_review_output.py --reviewer claude --case SSR_007
+   python scripts/validate_review_output.py --reviewer claude --case SWESMITH_007
    ```
 
 5. When all 100 exist:
@@ -74,8 +74,12 @@ self-contained — they carry the label definitions quoted from the frozen
 taxonomy, every `failure_scope` and `taxonomy_fit` value, what a packet holds,
 and a worked case — so the agent needs nothing else.
 
-**A ready prompt to paste is in [`README.md`](README.md), under "The prompt to
-hand the reviewer".**
+**Ready prompts to paste, and the two-branch isolation setup, are in
+[`README.md`](README.md) under "Running the blind reviews".**
+
+Codex writes JSON; Claude writes YAML. The records are semantically identical
+and validate against the same schema. `scripts/check_review_ready.py` tells you
+which format and file name your reviewer uses.
 
 The project also ships `.claude/settings.json`, which denies Claude Code read
 access to the hidden generation metadata, so an accidental peek fails rather
@@ -87,19 +91,13 @@ than lands.
 
 ```bash
 python -m pip install -e ".[dev]"
-python scripts/selftest.py            # proves the pipeline on this machine
-python scripts/check_environment.py   # says what a corpus run still needs
+python -m pytest tests -q
+python scripts/check_review_ready.py
 ```
 
-`selftest.py` builds a synthetic corpus in a temporary directory, runs
-deduplication, selection, packet building, two placeholder reviews, family
-derivation, the comparison and a bundle export, then deletes the scratch
-directory. It touches nothing under `data/`, `reviews/` or `analysis/`, and it
-needs no network. Run it after cloning and after changing anything under
-`ssr/` or `scripts/`.
-
-The full pipeline is in `README.md`. A corpus run additionally needs Docker
-and an OpenRouter key; `check_environment.py` says which are missing here.
+The pipeline is in `README.md`. It needs no Docker and no API key: the bug
+diffs and test lists come from pinned Hugging Face dataset revisions, and the
+clean and buggy states from the public mirror repositories.
 
 ---
 

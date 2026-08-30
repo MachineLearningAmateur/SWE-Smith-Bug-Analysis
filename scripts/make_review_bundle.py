@@ -250,11 +250,11 @@ def main() -> int:
     manifest = read_json(manifest_path)
     altered: list[str] = []
     for entry in manifest.get("packets", []):
-        directory = data_out / "review_packets" / entry["packet_id"]
+        directory = data_out / "review_packets" / entry["case_id"]
         for relative, expected in (entry.get("files") or {}).items():
             path = directory / relative
             if not path.is_file() or sha256_file(path) != expected:
-                altered.append(f"{entry['packet_id']}/{relative}")
+                altered.append(f"{entry['case_id']}/{relative}")
     if altered:
         force_rmtree(out)
         raise SsrError(

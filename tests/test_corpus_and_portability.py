@@ -337,12 +337,12 @@ def readme() -> str:
 
 def test_readme_carries_a_prompt_for_the_reviewer():
     text = readme()
-    assert "## The prompt to hand the reviewer" in text
-    for command in (
-        "scripts/check_review_ready.py --reviewer <claude|codex>",
-        "scripts/validate_review_output.py --reviewer <claude|codex> --finalise",
-    ):
-        assert command in text, f"the hand-off prompt no longer names {command}"
+    assert "## Running the blind reviews" in text
+    for reviewer in ("codex", "claude"):
+        assert f"scripts/check_review_ready.py --reviewer {reviewer}" in text
+        assert f"scripts/validate_review_output.py --reviewer {reviewer} --finalise" in text
+    # The two-branch isolation setup.
+    assert "codex-review" in text and "claude-review" in text
 
 
 def test_the_prompt_states_every_rule_that_can_void_a_review():
@@ -360,10 +360,11 @@ def test_the_prompt_states_every_rule_that_can_void_a_review():
 
 def test_the_prompt_names_the_directories_a_reviewer_must_not_open():
     text = readme()
-    for forbidden in ("data/sampling/", "analysis/", "metadata.json", "trajectory.jsonl"):
+    for forbidden in ("reviews/claude/", "reviews/codex/", "data/hidden/",
+                      "data/population/", "analysis/", "archive/"):
         assert forbidden in text
 
 
-def test_quickstart_points_at_the_prompt():
+def test_quickstart_points_at_the_prompts():
     text = (REPO_ROOT_PATH / "QUICKSTART.md").read_text(encoding="utf-8")
-    assert "The prompt to" in text and "README.md" in text
+    assert "Running the blind reviews" in text and "README.md" in text
