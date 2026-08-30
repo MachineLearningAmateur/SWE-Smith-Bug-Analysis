@@ -34,7 +34,7 @@ from ssr.review_workflow import (  # noqa: E402
     finalise,
     update_progress,
 )
-from ssr.util import SsrError, read_json, setup_logging  # noqa: E402
+from ssr.util import SsrError, setup_logging  # noqa: E402
 from ssr.validate_review import validate_result, validate_results  # noqa: E402
 
 
@@ -56,7 +56,10 @@ def main() -> int:
             path = paths.case_file(case_id)
             if not path.is_file():
                 raise SsrError(f"{path} does not exist")
-            warnings.extend(validate_result(read_json(path)))
+            # Read through the reviewer's own codec: Codex writes JSON and
+            # Claude writes YAML, and this path must not assume either.
+            record = paths.codec.load(path.read_text(encoding="utf-8"))
+            warnings.extend(validate_result(record))
         _report(warnings, args.strict)
         progress = update_progress(args.reviewer)
         print(json.dumps({"validated": args.case, "progress": progress}, indent=2))

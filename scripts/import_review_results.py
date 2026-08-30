@@ -30,8 +30,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from ssr.paths import REVIEWERS, reviewer_dir  # noqa: E402
+from ssr.review_formats import codec_for  # noqa: E402
 from ssr.review_workflow import (  # noqa: E402
-    expected_bug_ids,
+    expected_case_ids,
     snapshot_manifest_hash,
 )
 from ssr.taxonomy import taxonomy_fingerprint  # noqa: E402
@@ -82,7 +83,8 @@ def main() -> int:
 
     log = setup_logging(args.verbose)
     target = reviewer_dir(args.reviewer)
-    if target.is_dir() and any(target.glob("cases/SSR_*.json")) and not args.force:
+    codec = codec_for(args.reviewer)
+    if target.is_dir() and any(target.glob(f"cases/{codec.glob()}")) and not args.force:
         raise SsrError(
             f"{target} already holds a review. Pass --force only if you mean to replace it."
         )
@@ -118,10 +120,18 @@ def main() -> int:
                 "or pass --allow-incomplete to import work in progress."
             )
 
-        cases = sorted(incoming.glob("cases/SSR_*.json"))
-        records = [read_json(path) for path in cases]
-        expected = expected_bug_ids()
-        found = {record.get("bug_id") for record in records}
+        # Read through the reviewer's own codec. Globbing a fixed extension
+        # here would silently find nothing for whichever reviewer does not
+        # write that format.
+        cases = sorted(incoming.glob(f"cases/{codec.glob()}"))
+        records = [codec.load(path.read_text(encoding="utf-8")) for path in cases]
+        if not cases:
+            raise SsrError(
+                f"{incoming}/cases holds no {codec.name} case file. Expected files named "
+                f"SWESMITH_nnn{codec.extension}, because {args.reviewer} writes {codec.name}."
+            )
+        expected = expected_case_ids()
+        found = {record.get("case_id") for record in records}
         unexpected = sorted(found - set(expected))
         if unexpected:
             raise SsrError(f"the review holds case IDs that are not in this corpus: {unexpected[:5]}")
@@ -149,6 +159,7 @@ def main() -> int:
             "reviewer": args.reviewer,
             "cases": len(cases),
             "complete": complete,
+            "case_format": codec.name,
             "snapshot_manifest_sha256": local_snapshot,
             "taxonomy_fingerprint": local_taxonomy,
             "advisory_warnings": len(warnings),

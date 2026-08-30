@@ -152,3 +152,159 @@ def test_both_briefs_show_their_own_format_and_not_the_other():
         assert f"SWESMITH_nnn{other.extension}" not in text, (
             f"{filename} shows the other reviewer's format"
         )
+
+
+# ----------------------------------------------------------------------
+# the command-line path, per reviewer
+# ----------------------------------------------------------------------
+# The codec tests above check the codecs in isolation. They did not catch a
+# validator that read every case file as JSON, because that bug lives in the
+# script, not the codec. These tests run the real command for BOTH reviewers.
+def _write_case(reviewer: str, case_id: str, cases_dir) -> None:
+    from ssr.review_formats import codec_for
+
+    codec = codec_for(reviewer)
+    record = dict(RECORD, case_id=case_id)
+    (cases_dir / codec.filename(case_id)).write_text(codec.dump(record), encoding="utf-8", newline="\n")
+
+
+@pytest.mark.parametrize("reviewer", sorted(REVIEWERS))
+def test_validate_one_case_works_for_each_reviewer(reviewer, tmp_path):
+    """Regression: this path used to read every case file as JSON, so it
+    failed for whichever reviewer did not write JSON."""
+    import os
+    import subprocess
+    import sys
+
+    from ssr.review_formats import codec_for
+
+    cases = tmp_path / reviewer / "cases"
+    cases.mkdir(parents=True)
+    _write_case(reviewer, "SWESMITH_001", cases)
+
+    env = dict(os.environ, SSR_REVIEWS_ROOT=str(tmp_path), PYTHONDONTWRITEBYTECODE="1")
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_review_output.py",
+         "--reviewer", reviewer, "--case", "SWESMITH_001"],
+        cwd=REPO_ROOT, env=env, capture_output=True, text=True, timeout=300,
+    )
+    assert result.returncode == 0, (
+        f"validating a {codec_for(reviewer).name} case failed:\n{result.stdout}\n{result.stderr}"
+    )
+    assert "SWESMITH_001" in result.stdout
+
+
+@pytest.mark.parametrize("reviewer", sorted(REVIEWERS))
+def test_progress_counts_cases_in_that_reviewers_format(reviewer, tmp_path):
+    import os
+    import subprocess
+    import sys
+
+    cases = tmp_path / reviewer / "cases"
+    cases.mkdir(parents=True)
+    for index in (1, 2, 3):
+        _write_case(reviewer, f"SWESMITH_{index:03d}", cases)
+
+    env = dict(os.environ, SSR_REVIEWS_ROOT=str(tmp_path), PYTHONDONTWRITEBYTECODE="1")
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_review_output.py", "--reviewer", reviewer],
+        cwd=REPO_ROOT, env=env, capture_output=True, text=True, timeout=300,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert '"validated_cases": 3' in result.stdout, result.stdout
+    assert '"missing": 97' in result.stdout, result.stdout
+
+
+@pytest.mark.parametrize("reviewer", sorted(REVIEWERS))
+def test_a_case_in_the_wrong_format_is_not_silently_counted(reviewer, tmp_path):
+    """A file with the other reviewer's extension must not be picked up."""
+    import os
+    import subprocess
+    import sys
+
+    from ssr.review_formats import codec_for
+
+    other = next(r for r in REVIEWERS if r != reviewer)
+    cases = tmp_path / reviewer / "cases"
+    cases.mkdir(parents=True)
+    wrong = codec_for(other)
+    (cases / wrong.filename("SWESMITH_001")).write_text(
+        wrong.dump(RECORD), encoding="utf-8", newline="\n")
+
+    env = dict(os.environ, SSR_REVIEWS_ROOT=str(tmp_path), PYTHONDONTWRITEBYTECODE="1")
+    result = subprocess.run(
+        [sys.executable, "scripts/validate_review_output.py", "--reviewer", reviewer],
+        cwd=REPO_ROOT, env=env, capture_output=True, text=True, timeout=300,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert '"validated_cases": 0' in result.stdout, (
+        "a file in the other reviewer's format was counted:\n" + result.stdout
+    )
+
+
+@pytest.mark.parametrize("reviewer", sorted(REVIEWERS))
+def test_the_importer_reads_that_reviewers_format(reviewer, tmp_path):
+    """Regression: the importer globbed a fixed extension and the old case-ID
+    prefix, so it silently found nothing for one of the two reviewers."""
+    import json as _json
+    import os
+    import subprocess
+    import sys
+
+    from ssr.review_formats import codec_for
+    from ssr.review_workflow import snapshot_manifest_hash
+    from ssr.taxonomy import taxonomy_fingerprint
+
+    codec = codec_for(reviewer)
+    incoming = tmp_path / "bundle" / "reviews" / reviewer
+    (incoming / "cases").mkdir(parents=True)
+    for index in (1, 2, 3):
+        _write_case(reviewer, f"SWESMITH_{index:03d}", incoming / "cases")
+    (incoming / "review_metadata.json").write_text(
+        _json.dumps({
+            "reviewer": reviewer,
+            "snapshot_manifest_sha256": snapshot_manifest_hash(),
+            "taxonomy_fingerprint": taxonomy_fingerprint(),
+        }, indent=2),
+        encoding="utf-8", newline="\n",
+    )
+
+    env = dict(os.environ, SSR_REVIEWS_ROOT=str(tmp_path / "target"),
+               PYTHONDONTWRITEBYTECODE="1")
+    result = subprocess.run(
+        [sys.executable, "scripts/import_review_results.py",
+         "--reviewer", reviewer, "--from", str(tmp_path / "bundle"),
+         "--allow-incomplete"],
+        cwd=REPO_ROOT, env=env, capture_output=True, text=True, timeout=300,
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert '"cases": 3' in result.stdout, result.stdout
+    imported = tmp_path / "target" / reviewer / "cases"
+    assert len(list(imported.glob(codec.glob()))) == 3
+
+
+def test_the_importer_refuses_a_review_against_other_evidence(tmp_path):
+    import json as _json
+    import os
+    import subprocess
+    import sys
+
+    reviewer = "codex"
+    incoming = tmp_path / "bundle" / "reviews" / reviewer
+    (incoming / "cases").mkdir(parents=True)
+    _write_case(reviewer, "SWESMITH_001", incoming / "cases")
+    (incoming / "review_metadata.json").write_text(
+        _json.dumps({"reviewer": reviewer,
+                     "snapshot_manifest_sha256": "0" * 64,
+                     "taxonomy_fingerprint": "0" * 64}, indent=2),
+        encoding="utf-8", newline="\n",
+    )
+    env = dict(os.environ, SSR_REVIEWS_ROOT=str(tmp_path / "target"),
+               PYTHONDONTWRITEBYTECODE="1")
+    result = subprocess.run(
+        [sys.executable, "scripts/import_review_results.py",
+         "--reviewer", reviewer, "--from", str(tmp_path / "bundle"), "--allow-incomplete"],
+        cwd=REPO_ROOT, env=env, capture_output=True, text=True, timeout=300,
+    )
+    assert result.returncode != 0
+    assert "different evidence" in result.stderr
