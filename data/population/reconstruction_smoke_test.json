@@ -1,0 +1,222 @@
+{
+  "documented_trajectory_claim": 5017,
+  "instances_checked": 5,
+  "instances_passing_required_checks": 5,
+  "required_checks": [
+    "BRANCH_HAS_EXPECTED_SHAPE",
+    "PATCH_APPLIES_TO_CLEAN",
+    "PATCH_EQUALS_BUG_COMMIT",
+    "PATCH_IS_NOT_THE_FIX",
+    "INVERSE_RESTORES_CLEAN",
+    "F2P_TESTS_WITHHELD"
+  ],
+  "results": [
+    {
+      "bug_commit": "d494bd44abd73eed407112e29cde1e3d39c3f1f3",
+      "checks": {
+        "BASE_COMMIT_IS_CLEAN_PARENT": {
+          "detail": "base_commit tree e04753b011c8 != clean parent tree f5171b007782; base_commit is NOT the clean state for this bug",
+          "status": "FAIL"
+        },
+        "BRANCH_HAS_EXPECTED_SHAPE": {
+          "detail": "3 commit(s): Remove F2P Tests <- Bug Patch <- Initial commit",
+          "status": "PASS"
+        },
+        "F2P_TESTS_WITHHELD": {
+          "detail": "all 1 FAIL_TO_PASS test file(s) absent from the branch head",
+          "status": "PASS"
+        },
+        "INVERSE_RESTORES_CLEAN": {
+          "detail": "reversing the patch restored all 1 touched file(s) to their clean blobs",
+          "status": "PASS"
+        },
+        "PATCH_APPLIES_TO_CLEAN": {
+          "detail": "applies to the parent of the bug commit (b1216720ade8)",
+          "status": "PASS"
+        },
+        "PATCH_EQUALS_BUG_COMMIT": {
+          "detail": "the dataset patch is the bug commit's own diff (31 content lines)",
+          "status": "PASS"
+        },
+        "PATCH_IS_NOT_THE_FIX": {
+          "detail": "the patch does not apply to the buggy state, so it is the bug, not the repair",
+          "status": "PASS"
+        }
+      },
+      "clean_parent_commit": "b1216720ade8be6184394357b47ff82537a8f8fc",
+      "declared_base_commit": "945bd73b1504d58065a0eda921deb1e4934c8cce",
+      "fail_to_pass": 3,
+      "instance_id": "aio-libs__async-timeout.d0baa9f1.lm_rewrite__kqd6t1mb",
+      "pass_to_pass": 29,
+      "patch_bytes": 1522,
+      "repo": "swesmith/aio-libs__async-timeout.d0baa9f1"
+    },
+    {
+      "bug_commit": "7157ff70caa0fde72abd891c259d468987055d9d",
+      "checks": {
+        "BASE_COMMIT_IS_CLEAN_PARENT": {
+          "detail": "base_commit tree e477877501dd != clean parent tree ed923a134fdd; base_commit is NOT the clean state for this bug",
+          "status": "FAIL"
+        },
+        "BRANCH_HAS_EXPECTED_SHAPE": {
+          "detail": "3 commit(s): Remove F2P Tests <- Bug Patch <- Initial commit",
+          "status": "PASS"
+        },
+        "F2P_TESTS_WITHHELD": {
+          "detail": "all 1 FAIL_TO_PASS test file(s) absent from the branch head",
+          "status": "PASS"
+        },
+        "INVERSE_RESTORES_CLEAN": {
+          "detail": "reversing the patch restored all 2 touched file(s) to their clean blobs",
+          "status": "PASS"
+        },
+        "PATCH_APPLIES_TO_CLEAN": {
+          "detail": "applies to the parent of the bug commit (4fb53dd44e14)",
+          "status": "PASS"
+        },
+        "PATCH_EQUALS_BUG_COMMIT": {
+          "detail": "the dataset patch is the bug commit's own diff (70 content lines)",
+          "status": "PASS"
+        },
+        "PATCH_IS_NOT_THE_FIX": {
+          "detail": "the patch does not apply to the buggy state, so it is the bug, not the repair",
+          "status": "PASS"
+        }
+      },
+      "clean_parent_commit": "4fb53dd44e14bfb77551ac24bfb8a931cd594be6",
+      "declared_base_commit": "75be467919a870b01157e0c0a02dc5a46a3a7243",
+      "fail_to_pass": 113,
+      "instance_id": "getmoto__moto.694ce1f4.pr_7234",
+      "pass_to_pass": 0,
+      "patch_bytes": 2375,
+      "repo": "swesmith/getmoto__moto.694ce1f4"
+    },
+    {
+      "bug_commit": "0d09cef2f39aab69d7eec4c41478ef50e16ddb1e",
+      "checks": {
+        "BASE_COMMIT_IS_CLEAN_PARENT": {
+          "detail": "base_commit tree c18baf11065c != clean parent tree a3a33585e809; base_commit is NOT the clean state for this bug",
+          "status": "FAIL"
+        },
+        "BRANCH_HAS_EXPECTED_SHAPE": {
+          "detail": "3 commit(s): Remove F2P Tests <- Bug Patch <- Initial commit",
+          "status": "PASS"
+        },
+        "F2P_TESTS_WITHHELD": {
+          "detail": "all 2 FAIL_TO_PASS test file(s) absent from the branch head",
+          "status": "PASS"
+        },
+        "INVERSE_RESTORES_CLEAN": {
+          "detail": "reversing the patch restored all 1 touched file(s) to their clean blobs",
+          "status": "PASS"
+        },
+        "PATCH_APPLIES_TO_CLEAN": {
+          "detail": "applies to the parent of the bug commit (009f8f036710)",
+          "status": "PASS"
+        },
+        "PATCH_EQUALS_BUG_COMMIT": {
+          "detail": "the dataset patch is the bug commit's own diff (20 content lines)",
+          "status": "PASS"
+        },
+        "PATCH_IS_NOT_THE_FIX": {
+          "detail": "the patch does not apply to the buggy state, so it is the bug, not the repair",
+          "status": "PASS"
+        }
+      },
+      "clean_parent_commit": "009f8f0367108f2a17f15df4036eb40e9c6b2dad",
+      "declared_base_commit": "4222890ab601341bec28236b80b4731ed85cb76e",
+      "fail_to_pass": 151,
+      "instance_id": "prettytable__prettytable.ca90b055.func_pm_ctrl_shuffle__d3x1djk0",
+      "pass_to_pass": 48,
+      "patch_bytes": 866,
+      "repo": "swesmith/prettytable__prettytable.ca90b055"
+    },
+    {
+      "bug_commit": "110b859da5c91592dd77834c8120a4e7105c9a20",
+      "checks": {
+        "BASE_COMMIT_IS_CLEAN_PARENT": {
+          "detail": "base_commit tree 954e63374f2b != clean parent tree e0438e9d259d; base_commit is NOT the clean state for this bug",
+          "status": "FAIL"
+        },
+        "BRANCH_HAS_EXPECTED_SHAPE": {
+          "detail": "3 commit(s): Remove F2P Tests <- Bug Patch <- Initial commit",
+          "status": "PASS"
+        },
+        "F2P_TESTS_WITHHELD": {
+          "detail": "all 4 FAIL_TO_PASS test file(s) absent from the branch head",
+          "status": "PASS"
+        },
+        "INVERSE_RESTORES_CLEAN": {
+          "detail": "reversing the patch restored all 1 touched file(s) to their clean blobs",
+          "status": "PASS"
+        },
+        "PATCH_APPLIES_TO_CLEAN": {
+          "detail": "applies to the parent of the bug commit (74a5787ce5a6)",
+          "status": "PASS"
+        },
+        "PATCH_EQUALS_BUG_COMMIT": {
+          "detail": "the dataset patch is the bug commit's own diff (31 content lines)",
+          "status": "PASS"
+        },
+        "PATCH_IS_NOT_THE_FIX": {
+          "detail": "the patch does not apply to the buggy state, so it is the bug, not the repair",
+          "status": "PASS"
+        }
+      },
+      "clean_parent_commit": "74a5787ce5a69519232adebde844c3f480ce9aad",
+      "declared_base_commit": "7214ad336196b6273e869cd6002fd9e553fe8f22",
+      "fail_to_pass": 8,
+      "instance_id": "conan-io__conan.86f29e13.func_pm_remove_assign__leq9zkie",
+      "pass_to_pass": 279,
+      "patch_bytes": 1512,
+      "repo": "swesmith/conan-io__conan.86f29e13"
+    },
+    {
+      "bug_commit": "7bcb69846785b44f512877ab6768973d5e4891d8",
+      "checks": {
+        "BASE_COMMIT_IS_CLEAN_PARENT": {
+          "detail": "base_commit tree 7243b45cf78d != clean parent tree 437c7f032f08; base_commit is NOT the clean state for this bug",
+          "status": "FAIL"
+        },
+        "BRANCH_HAS_EXPECTED_SHAPE": {
+          "detail": "3 commit(s): Remove F2P Tests <- Bug Patch <- Initial commit",
+          "status": "PASS"
+        },
+        "F2P_TESTS_WITHHELD": {
+          "detail": "all 4 FAIL_TO_PASS test file(s) absent from the branch head",
+          "status": "PASS"
+        },
+        "INVERSE_RESTORES_CLEAN": {
+          "detail": "reversing the patch restored all 1 touched file(s) to their clean blobs",
+          "status": "PASS"
+        },
+        "PATCH_APPLIES_TO_CLEAN": {
+          "detail": "applies to the parent of the bug commit (dcf2c9f0c57e)",
+          "status": "PASS"
+        },
+        "PATCH_EQUALS_BUG_COMMIT": {
+          "detail": "the dataset patch is the bug commit's own diff (22 content lines)",
+          "status": "PASS"
+        },
+        "PATCH_IS_NOT_THE_FIX": {
+          "detail": "the patch does not apply to the buggy state, so it is the bug, not the repair",
+          "status": "PASS"
+        }
+      },
+      "clean_parent_commit": "dcf2c9f0c57e2ede052a4f42b9bbd5ddb4b40cae",
+      "declared_base_commit": "3fb9ed8c95b8b5f0d050ce93384aa84c59433b2a",
+      "fail_to_pass": 7,
+      "instance_id": "r1chardj0n3s__parse.30da9e4f.func_pm_ctrl_invert_if__uho021ks",
+      "pass_to_pass": 91,
+      "patch_bytes": 771,
+      "repo": "swesmith/r1chardj0n3s__parse.30da9e4f"
+    }
+  ],
+  "task_dataset": "SWE-bench/SWE-smith",
+  "task_dataset_revision": "9f2a10465194",
+  "task_revision_note": "The 2025-04-29 upload, made the same day as the trajectory release. 50,137 rows, and unlike the current main it still carries base_commit and created_at.",
+  "trajectory_dataset": "SWE-bench/SWE-smith-trajectories",
+  "trajectory_dataset_revision": "f6b6d7e01f2b",
+  "trajectory_revision_note": "Last revision before the 2025-07-18/19 expansion. Its dataset card declares a single train split with num_examples 5016, and its prose states these are the trajectories used to fine-tune SWE-agent-LM-32B.",
+  "verified_at_utc": "2026-08-30T08:04:24Z"
+}

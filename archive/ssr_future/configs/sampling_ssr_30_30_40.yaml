@@ -1,0 +1,59 @@
+# Deterministic selection of the 100-bug blind-review sample.
+#
+# Handoff section 16: sampling may depend ONLY on validation status,
+# source/order metadata, language and repo-size strata, deduplication status,
+# and the fixed seed. It must NOT depend on any failure taxonomy label.
+# scripts/select_review_sample.py refuses to run if a taxonomy field is
+# present in the candidate records it reads.
+
+seed: 20260829
+target_n: 100
+
+target_sources:
+  first_order_removal: 30
+  first_order_history_reversion: 30
+  second_order_failed_solver: 40
+
+max_per_repo: 4
+min_unique_repos: 25
+preferred_unique_repos: 30
+avoid_parent_child_pairs: true
+avoid_same_base_state: true
+
+# Handoff section 13 shortfall rule.
+shortfall_policy:
+  # 1. take every eligible second-order bug up to the target;
+  # 2. fill the remaining slots equally between REMOVAL and HISTORY_REVERSION;
+  # 3. record the deviation; 4. report source-specific analyses separately.
+  fill_order: [second_order_failed_solver, first_order_removal, first_order_history_reversion]
+  balance_first_order_fill: true
+  record_deviation: true
+
+# Environment matching (handoff section 15). Neutral characteristics only.
+environment_matching:
+  enabled: true
+  profile: data/sampling/aidev_environment_profile.json
+  # Strata are neutral environment facts, never failure labels.
+  strata:
+    - language
+    - repo_size_bin
+  # Maximum absolute deviation, in proportion, from the AIDev profile before
+  # the mismatch is recorded in the selection record.
+  language_tolerance: 0.10
+  repo_size_tolerance: 0.15
+  # If a language in the AIDev profile has no SWE-smith environment at all,
+  # record the mismatch and continue.
+  allow_unmatched_language: true
+
+outputs:
+  # Neutral, reviewer-visible.
+  review_manifest: data/review_manifest.csv
+  # Hidden. Holds the generation-id crosswalk and the allocation record.
+  selection_record: data/sampling/selection_record.json
+  crosswalk: data/sampling/selection_crosswalk.csv
+  deviation_report: data/sampling/selection_deviations.json
+
+# Neutral reviewer-facing identifiers. The visible ID must carry no
+# information about strategy, order or source allocation.
+packet_id_format: "SSR_{index:03d}"
+packet_id_assignment: seeded_shuffle

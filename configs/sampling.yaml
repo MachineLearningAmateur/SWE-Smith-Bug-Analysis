@@ -1,59 +1,48 @@
-# Deterministic selection of the 100-bug blind-review sample.
+# Selection of the 100-case blind-review sample (handoff sections 11 to 14).
 #
-# Handoff section 16: sampling may depend ONLY on validation status,
-# source/order metadata, language and repo-size strata, deduplication status,
-# and the fixed seed. It must NOT depend on any failure taxonomy label.
-# scripts/select_review_sample.py refuses to run if a taxonomy field is
-# present in the candidate records it reads.
+# The population is the unique SWE-smith task instances behind the official
+# training trajectories for SWE-agent-LM-32B. The goal is a sample that
+# PRESERVES that population's composition, not one that imposes equal counts.
+# The previous SSR plan (30 REMOVAL / 30 HISTORY_REVERSION / 40 SECOND_ORDER)
+# no longer applies and is archived under archive/ssr_future/configs/.
 
-seed: 20260829
+seed: 20260830
 target_n: 100
+population: swe_agent_lm_32b_training_tasks
 
-target_sources:
-  first_order_removal: 30
-  first_order_history_reversion: 30
-  second_order_failed_solver: 40
+# Proportional (largest-remainder) allocation across the primary stratum, so
+# the sample mirrors the population share of each generation method.
+sampling: proportional_stratified
+primary_stratum: generation_method
 
-max_per_repo: 4
-min_unique_repos: 25
-preferred_unique_repos: 30
-avoid_parent_child_pairs: true
-avoid_same_base_state: true
+# Language is recorded but is a no-op stratum here: the task corpus at the
+# pinned revision is Python-only, so every row has the same value. Kept in the
+# config so the absence is explicit rather than an oversight.
+secondary_balance:
+  - language
 
-# Handoff section 13 shortfall rule.
-shortfall_policy:
-  # 1. take every eligible second-order bug up to the target;
-  # 2. fill the remaining slots equally between REMOVAL and HISTORY_REVERSION;
-  # 3. record the deviation; 4. report source-specific analyses separately.
-  fill_order: [second_order_failed_solver, first_order_removal, first_order_history_reversion]
-  balance_first_order_fill: true
-  record_deviation: true
+# A cap, not a quota. It only binds if a repository would otherwise dominate;
+# any case it displaces is recorded as a distortion in analysis/sample_balance.md.
+max_per_repo: 5
 
-# Environment matching (handoff section 15). Neutral characteristics only.
-environment_matching:
-  enabled: true
-  profile: data/sampling/aidev_environment_profile.json
-  # Strata are neutral environment facts, never failure labels.
-  strata:
-    - language
-    - repo_size_bin
-  # Maximum absolute deviation, in proportion, from the AIDev profile before
-  # the mismatch is recorded in the selection record.
-  language_tolerance: 0.10
-  repo_size_tolerance: 0.15
-  # If a language in the AIDev profile has no SWE-smith environment at all,
-  # record the mismatch and continue.
-  allow_unmatched_language: true
+avoid_duplicate_instance_ids: true
+
+# Selection may use ONLY neutral metadata: generation method, repository,
+# language, size. It may not use any taxonomy label, any AIDev frequency, any
+# model classification of the bug, or perceived difficulty. No classifier is
+# run over the population before selection (handoff section 22).
+forbidden_selection_inputs:
+  - failure_pattern
+  - failure_family
+  - taxonomy_fit
+  - aidev_frequencies
+  - model_preclassification
+  - perceived_difficulty
 
 outputs:
-  # Neutral, reviewer-visible.
   review_manifest: data/review_manifest.csv
-  # Hidden. Holds the generation-id crosswalk and the allocation record.
-  selection_record: data/sampling/selection_record.json
-  crosswalk: data/sampling/selection_crosswalk.csv
-  deviation_report: data/sampling/selection_deviations.json
+  hidden_metadata: data/hidden/sample_metadata.parquet
+  balance_report: analysis/sample_balance.md
 
-# Neutral reviewer-facing identifiers. The visible ID must carry no
-# information about strategy, order or source allocation.
-packet_id_format: "SSR_{index:03d}"
-packet_id_assignment: seeded_shuffle
+case_id_format: "SWESMITH_{index:03d}"
+case_id_assignment: seeded_shuffle
