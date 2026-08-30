@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 2,
+    "lines_deleted": 2,
+    "path": "bug_diff.diff",
+    "sha256": "3e73a6435b1059644705f9d320f4cce83d5d685dc2de595b0cf96b2f7c94f211"
+  },
+  "case_id": "SWESMITH_025",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_websocket.py",
+      "repo_path": "channels/generic/websocket.py",
+      "sha256": "bde694306119b6193080e8e5e81df645e1a6fdad33ba250f47423412b14d3ec2"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 76,
+    "path": "test_evidence.md",
+    "sha256": "329a4a99e78a27fad66b029ce4bf6670bc203f97e0bece95f60dbc285d4389d8",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_generic_websocket.py",
+        "test_name": "tests/test_generic_websocket.py::test_websocket_receive_with_none_text"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "b1a00cf04e076408add007b23f8a4f4317ef3e60b0c6835d488ebf3404f86f65"
+  },
+  "repository": {
+    "language": "python",
+    "name": "django/channels"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "49898be670ffc4820e88e412c9af7b90bb0d185d0a1710d0e3a271e1e472d597"
+  }
+}

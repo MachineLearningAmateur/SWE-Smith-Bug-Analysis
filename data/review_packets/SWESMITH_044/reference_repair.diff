@@ -1,0 +1,104 @@
+diff --git a/usaddress/__init__.py b/usaddress/__init__.py
+index 4534bff..2628219 100644
+--- a/usaddress/__init__.py
++++ b/usaddress/__init__.py
+@@ -753,74 +753,35 @@ Feature = dict[str, typing.Union[str, bool, "Feature"]]
+ 
+ 
+ def tokenFeatures(token: str) -> Feature:
+-    """
+-    Extract features from a token to be used in address parsing.
+-    
+-    Args:
+-        token: A string token from an address
+-        
+-    Returns:
+-        A dictionary of features for the token
+-    """
+-    if token in ('.', ','):
+-        return {
+-            'token.lower': token,
+-            'token.punctuation': True,
+-            'token.length': 1
+-        }
+-    
++    if token in ("&", "#", "½"):
++        token_clean = token
++    else:
++        token_clean = re.sub(r"(^[\W]*)|([^.\w]*$)", "", token, flags=re.UNICODE)
++
++    token_abbrev = re.sub(r"[.]", "", token_clean.lower())
+     features = {
+-        'token.lower': token.lower(),
+-        'token.length': len(token),
+-        'token.isupper': token.isupper(),
+-        'token.islower': token.lower() == token,
+-        'token.istitle': token.istitle(),
+-        'token.isalpha': token.isalpha(),
+-        'token.isdigit': token.isdigit(),
+-        'token.digits': digits(token),
+-        'digit.trailing_zeros': trailingZeros(token),
+-        'token.endsinpunc': token[-1] in string.punctuation if token else False,
+-        'token.has.vowels': bool(set(token.lower()) & set('aeiou')),
++        "abbrev": token_clean[-1] == ".",
++        "digits": digits(token_clean),
++        "word": (token_abbrev if not token_abbrev.isdigit() else False),
++        "trailing.zeros": (
++            trailingZeros(token_abbrev) if token_abbrev.isdigit() else False
++        ),
++        "length": (
++            "d:" + str(len(token_abbrev))
++            if token_abbrev.isdigit()
++            else "w:" + str(len(token_abbrev))
++        ),
++        "endsinpunc": (
++            token[-1] if bool(re.match(r".+[^.\w]", token, flags=re.UNICODE)) else False
++        ),
++        "directional": token_abbrev in DIRECTIONS,
++        "street_name": token_abbrev in STREET_NAMES,
++        "has.vowels": bool(set(token_abbrev[1:]) & set("aeiou")),
+     }
+-    
+-    # Check if token is a direction
+-    if token.lower() in DIRECTIONS:
+-        features['token.is_direction'] = True
+-    
+-    # Check if token is a street name
+-    if token.lower() in STREET_NAMES:
+-        features['token.is_street_name'] = True
+-    
+-    # Check if token has a period
+-    if '.' in token:
+-        features['token.has.period'] = True
+-    
+-    # Check if token has a hyphen
+-    if '-' in token:
+-        features['token.has.hyphen'] = True
+-    
+-    # Check if token has a slash
+-    if '/' in token:
+-        features['token.has.slash'] = True
+-    
+-    # Check if token has an ampersand
+-    if '&' in token:
+-        features['token.has.ampersand'] = True
+-    
+-    # Check if token has a pound sign
+-    if '#' in token:
+-        features['token.has.pound'] = True
+-    
+-    # Check if token is a number with a suffix (like 1st, 2nd, 3rd, 4th)
+-    if re.match(r'^\d+(?:st|nd|rd|th)$', token.lower()):
+-        features['token.is_ordinal'] = True
+-    
+-    # Check if token is a PO Box indicator
+-    if token.lower() in ('p.o.', 'po', 'box', 'p.o.b', 'pob'):
+-        features['token.is_po_box'] = True
+-    
++
+     return features
+ 
++
+ def tokens2features(address: list[str]) -> list[Feature]:
+     feature_sequence = [tokenFeatures(address[0])]
+     previous_features = feature_sequence[-1].copy()

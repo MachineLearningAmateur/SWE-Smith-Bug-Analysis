@@ -1,0 +1,51 @@
+diff --git a/src/result/result.py b/src/result/result.py
+index 8551239..83f1248 100644
+--- a/src/result/result.py
++++ b/src/result/result.py
+@@ -204,19 +204,6 @@ class Ok(Generic[T]):
+         """
+         return self
+ 
+-    def inspect(self, op: Callable[[T], Any]) -> Result[T, E]:
+-        """
+-        Calls a function with the contained value if `Ok`. Returns the original result.
+-        """
+-        op(self._value)
+-        return self
+-
+-    def inspect_err(self, op: Callable[[E], Any]) -> Result[T, E]:
+-        """
+-        Calls a function with the contained value if `Err`. Returns the original result.
+-        """
+-        return self
+-
+ 
+ class DoException(Exception):
+     """
+@@ -409,19 +396,6 @@ class Err(Generic[E]):
+         """
+         return op(self._value)
+ 
+-    def inspect(self, op: Callable[[T], Any]) -> Result[T, E]:
+-        """
+-        Calls a function with the contained value if `Ok`. Returns the original result.
+-        """
+-        return self
+-
+-    def inspect_err(self, op: Callable[[E], Any]) -> Result[T, E]:
+-        """
+-        Calls a function with the contained value if `Err`. Returns the original result.
+-        """
+-        op(self._value)
+-        return self
+-
+ 
+ # define Result as a generic type alias for use
+ # in type annotations
+@@ -666,4 +640,4 @@ async def do_async(
+             return next(gen)
+     except DoException as e:
+         out: Err[E] = e.err  # type: ignore
+-        return out
++        return out
+\ No newline at end of file

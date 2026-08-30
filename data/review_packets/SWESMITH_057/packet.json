@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 11,
+    "lines_deleted": 6,
+    "path": "bug_diff.diff",
+    "sha256": "865868214266bbf6277687c18cec94608411bac929857d6841277d2862e92434"
+  },
+  "case_id": "SWESMITH_057",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_utils.py",
+      "repo_path": "pdfminer/utils.py",
+      "sha256": "e64e576111d2d7fc618ab26aaae74c6556216080c364d207ab3ef63b18d006ec"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 60,
+    "passing_count": 109,
+    "path": "test_evidence.md",
+    "sha256": "3dee1ebb8c30f9ce49f2569667ef401bda6315787767e318cb4a06af3bd576be",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_converter.py",
+        "test_name": "tests/test_converter.py::TestColorSpace::test_do_rg"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_converter.py",
+        "test_name": "tests/test_converter.py::TestPaintPath::test_paint_path_quadrilaterals"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_font_size.py",
+        "test_name": "tests/test_font_size.py::test_font_size"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractPages::test_line_margin"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractPages::test_no_boxes_flow"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_issue_495_pdfobjref_iterable"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_issue_566_cid_range"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_issue_566_cmap_bytes"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_issue_625_identity_cmap"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_issue_791_non_unicode_cmap"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple1_no_boxes_flow"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple1_with_file"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple1_with_string"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple3_with_file"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple3_with_string"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple4_with_file"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple4_with_string"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple5_with_file"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_simple5_with_string"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/test_highlevel_extracttext.py",
+        "test_name": "tests/test_highlevel_extracttext.py::TestExtractText::test_zlib_corrupted"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "4b54d0a91e7dafe015f9a1db1fa08763fc63f4e421a1c94586a9e0271b5b3e66"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pdfminer/pdfminer.six"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "308092999a5718046e6e0a676f1db31c9d19dff83c154db24de4e20e89048bb7"
+  }
+}

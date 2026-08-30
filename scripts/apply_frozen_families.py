@@ -93,14 +93,14 @@ def main() -> int:
     metadata = cross_check_metadata()
 
     results = {reviewer: load_results(reviewer) for reviewer in REVIEWERS}
-    ids = {reviewer: [record["bug_id"] for record in records] for reviewer, records in results.items()}
+    ids = {reviewer: [record["case_id"] for record in records] for reviewer, records in results.items()}
     if len(set(map(tuple, ids.values()))) != 1:
-        raise SsrError("the two reviewers did not review the same bug IDs")
+        raise SsrError("the two reviewers did not review the same case IDs")
 
-    bug_ids = ids[REVIEWERS[0]]
+    case_ids = ids[REVIEWERS[0]]
     joined: list[dict] = []
-    for index, bug_id in enumerate(bug_ids):
-        row: dict = {"bug_id": bug_id}
+    for index, case_id in enumerate(case_ids):
+        row: dict = {"case_id": case_id}
         for reviewer in REVIEWERS:
             record = results[reviewer][index]
             fine = record["failure_pattern"]

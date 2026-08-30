@@ -1,0 +1,22 @@
+diff --git a/src/dotenv/main.py b/src/dotenv/main.py
+index 0084f22..052de05 100644
+--- a/src/dotenv/main.py
++++ b/src/dotenv/main.py
+@@ -299,7 +299,9 @@ def find_dotenv(
+         frame = sys._getframe()
+         current_file = __file__
+ 
+-        while frame.f_code.co_filename == current_file:
++        while frame.f_code.co_filename == current_file or not os.path.exists(
++            frame.f_code.co_filename
++        ):
+             assert frame.f_back is not None
+             frame = frame.f_back
+         frame_filename = frame.f_code.co_filename
+@@ -389,4 +391,4 @@ def dotenv_values(
+         interpolate=interpolate,
+         override=True,
+         encoding=encoding,
+-    ).dict()
+\ No newline at end of file
++    ).dict()

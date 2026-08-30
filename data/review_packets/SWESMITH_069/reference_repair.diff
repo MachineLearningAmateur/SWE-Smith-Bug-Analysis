@@ -1,0 +1,26 @@
+diff --git a/bottle.py b/bottle.py
+index c3f7358..286b5bc 100755
+--- a/bottle.py
++++ b/bottle.py
+@@ -2307,13 +2307,14 @@ class WSGIHeaderDict(DictMixin):
+         return self.environ.get(self._ekey(key), default)
+ 
+     def __getitem__(self, key):
+-        """Return the value of a request header."""
+-        value = self.raw(key)
+-        if value is None:
+-            raise KeyError(key)
+-        if py3k and isinstance(value, bytes):
+-            return value.decode('latin1')
+-        return value
++        val = self.environ[self._ekey(key)]
++        if py3k:
++            if isinstance(val, unicode):
++                val = val.encode('latin1').decode('utf8')
++            else:
++                val = val.decode('utf8')
++        return val
++
+     def __setitem__(self, key, value):
+         raise TypeError("%s is read-only." % self.__class__)
+ 

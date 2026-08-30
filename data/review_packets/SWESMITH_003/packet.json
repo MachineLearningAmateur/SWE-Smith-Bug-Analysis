@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 4,
+    "lines_deleted": 10,
+    "path": "bug_diff.diff",
+    "sha256": "595f9b228ab45fdfe0f0e16b0be52c0ed17d706b1d4190e26ab7095c4f70030e"
+  },
+  "case_id": "SWESMITH_003",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_brain_attrs.py",
+      "repo_path": "astroid/brain/brain_attrs.py",
+      "sha256": "1f9b3b1cbfa7284381fe361ee0c42f9bef0d844552de98e7b91a756224f754da"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 1592,
+    "path": "test_evidence.md",
+    "sha256": "cdd8d3f223f90c66a57535e12d7c1c5e6f1dc8b4435005dce9f015a99eb99dcb",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/brain/test_attr.py",
+        "test_name": "tests/brain/test_attr.py::AttrsTest::test_attrs_with_only_annotation_works"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "4d03cef1caa2b07a0464ee41f939190bb64261ded1e1aee1fea682b54753f7aa"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pylint-dev/astroid"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "3b0f80edb7c414d25be88c90471534a2d0d091cb4df242ffc9b97a651d5a4dac"
+  }
+}

@@ -1,0 +1,52 @@
+diff --git a/ptyprocess/ptyprocess.py b/ptyprocess/ptyprocess.py
+index 0f05803..fc22a3d 100644
+--- a/ptyprocess/ptyprocess.py
++++ b/ptyprocess/ptyprocess.py
+@@ -213,7 +213,7 @@ class PtyProcess(object):
+         command_with_path = which(command)
+         if command_with_path is None:
+             raise FileNotFoundError('The command was not found or was not ' +
+-                                    'executable: %s.' % command)
++                                    command % 'executable: %s.')
+         command = command_with_path
+         argv[0] = command
+ 
+@@ -264,8 +264,8 @@ class PtyProcess(object):
+             # nofiles where resource.RLIMIT_NOFILE is 2^63-1 and os.closerange()
+             # occasionally raises out of range error
+             max_fd = min(1048576, resource.getrlimit(resource.RLIMIT_NOFILE)[0])
+-            spass_fds = sorted(set(pass_fds) | {exec_err_pipe_write})
+-            for pair in zip([2] + spass_fds, spass_fds + [max_fd]):
++            spass_fds = sorted({exec_err_pipe_write} | set(pass_fds))
++            for pair in zip([2] + spass_fds, [max_fd] + spass_fds):
+                 os.closerange(pair[0]+1, pair[1])
+ 
+             if cwd is not None:
+@@ -301,7 +301,7 @@ class PtyProcess(object):
+ 
+         # Parent
+         inst = cls(pid, fd)
+-        
++    
+         # Set some informational attributes
+         inst.argv = argv
+         if env is not None:
+@@ -330,8 +330,8 @@ class PtyProcess(object):
+                 if exctype is OSError:
+                     exception.errno = int(errno_s)
+             except:
+-                raise Exception('Subprocess failed, got bad error data: %r'
+-                                    % exec_err_data)
++                raise Exception(exec_err_data
++                                    % 'Subprocess failed, got bad error data: %r')
+             else:
+                 raise exception
+ 
+@@ -342,7 +342,6 @@ class PtyProcess(object):
+                 raise
+ 
+         return inst
+-
+     def __repr__(self):
+         clsname = type(self).__name__
+         if self.argv is not None:

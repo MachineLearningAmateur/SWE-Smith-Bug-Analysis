@@ -1,0 +1,89 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 62,
+    "lines_deleted": 62,
+    "path": "bug_diff.diff",
+    "sha256": "91ab5ccef5591223da16297c8dc782a58b83d40d3b8cf6e0178712278a9904db"
+  },
+  "case_id": "SWESMITH_084",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_access_token.py",
+      "repo_path": "oauthlib/oauth1/rfc5849/endpoints/access_token.py",
+      "sha256": "1b478c7e2d2768073da93d96109cf18fa2059043c0f29820f6a0e91057d4e1f8"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 6,
+    "passing_count": 667,
+    "path": "test_evidence.md",
+    "sha256": "69d824f995a36398c3e0c539e939804816a09ae448301f476fa44faf8f7440a0",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/oauth1/rfc5849/endpoints/test_access_token.py",
+        "test_name": "tests/oauth1/rfc5849/endpoints/test_access_token.py::AccessTokenEndpointTest::test_check_request_token"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/oauth1/rfc5849/endpoints/test_access_token.py",
+        "test_name": "tests/oauth1/rfc5849/endpoints/test_access_token.py::AccessTokenEndpointTest::test_valid_request"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/oauth1/rfc5849/endpoints/test_access_token.py",
+        "test_name": "tests/oauth1/rfc5849/endpoints/test_access_token.py::AccessTokenEndpointTest::test_validate_client_key"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/oauth1/rfc5849/endpoints/test_access_token.py",
+        "test_name": "tests/oauth1/rfc5849/endpoints/test_access_token.py::AccessTokenEndpointTest::test_validate_request_token"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/oauth1/rfc5849/endpoints/test_access_token.py",
+        "test_name": "tests/oauth1/rfc5849/endpoints/test_access_token.py::AccessTokenEndpointTest::test_validate_signature"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/oauth1/rfc5849/endpoints/test_access_token.py",
+        "test_name": "tests/oauth1/rfc5849/endpoints/test_access_token.py::AccessTokenEndpointTest::test_validate_verifier"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "17c4d35bf22d9f582859a49170558b781dc071ddde3058054cc703754539e61a"
+  },
+  "repository": {
+    "language": "python",
+    "name": "oauthlib/oauthlib"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

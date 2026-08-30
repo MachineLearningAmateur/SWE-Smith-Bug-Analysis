@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 9,
+    "lines_deleted": 6,
+    "path": "bug_diff.diff",
+    "sha256": "e53e660d0ea2344ab63cf961974f2e4bec4455ce3fc0bb1924a86f104179619b"
+  },
+  "case_id": "SWESMITH_060",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_core.py",
+      "repo_path": "glom/core.py",
+      "sha256": "c2362164399549bb58d3beeda090534104b3292c3dd133468fe8e02ae583429c"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 177,
+    "path": "test_evidence.md",
+    "sha256": "ff8ea01b7db9e9cf8407cb776ca4c58144367c47aa309e96b4e78a973674ac5a",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "glom/test/test_path_and_t.py",
+        "test_name": "glom/test/test_path_and_t.py::test_path_eq_t"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "764bac8d5024c9fdbde380f1fb0ce641cd29aebac61bfe620100278328ef64ba"
+  },
+  "repository": {
+    "language": "python",
+    "name": "mahmoud/glom"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "3a8f07719b3ab4302904c848e3b1c1b3f2c0976f0b247f4e15f93639b657d082"
+  }
+}

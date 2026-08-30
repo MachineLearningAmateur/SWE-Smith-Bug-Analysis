@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 15,
+    "lines_deleted": 8,
+    "path": "bug_diff.diff",
+    "sha256": "e09aa878793b1d30f79a342f440cfb7bd7b42fd868de22493c0a24865197ed35"
+  },
+  "case_id": "SWESMITH_078",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_crypto.py",
+      "repo_path": "src/OpenSSL/crypto.py",
+      "sha256": "81ac203b4dda6e16ebfe4e5144718e8fb2b940db035e09bd2eef4047b7e49e48"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 448,
+    "path": "test_evidence.md",
+    "sha256": "f21ca1b6dad6918d2af5331c1ef885a40c756232362312b1fcb46a8a222a8f5e",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_crypto.py",
+        "test_name": "tests/test_crypto.py::TestX509Ext::test_str"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "279a0767e92f82a50e542b578d5731ff76d7297ed03a9f6b090f8a6508aa39c2"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pyca/pyopenssl"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "749875dd36ea7bab43d32708847cb423b9f9333d97bc80210f90eb2ef9ac82b6"
+  }
+}

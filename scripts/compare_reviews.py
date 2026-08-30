@@ -30,7 +30,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from ssr.corpus import read_status, status_banner  # noqa: E402
-from ssr.paths import ANALYSIS, REVIEWERS, REVIEWS, SAMPLING  # noqa: E402
+from ssr.paths import ANALYSIS, DATA, REVIEWERS, REVIEWS  # noqa: E402
 from ssr.review_workflow import cross_check_metadata, load_results, require_both_complete  # noqa: E402
 from ssr.taxonomy import family_for, verify_provenance  # noqa: E402
 from ssr.util import SsrError, setup_logging, utc_now, write_json  # noqa: E402
@@ -38,7 +38,7 @@ from ssr.util import SsrError, setup_logging, utc_now, write_json  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from apply_frozen_families import agreement, confusion  # noqa: E402
 
-CROSSWALK = SAMPLING / "selection_crosswalk.csv"
+CROSSWALK = DATA / "hidden" / "sample_metadata.csv"
 STRATUM_LABEL = {
     "first_order_removal": "REMOVAL",
     "first_order_history_reversion": "HISTORY_REVERSION",
@@ -64,7 +64,7 @@ def load_crosswalk(path: Path) -> dict[str, dict[str, str]]:
     if not path.is_file():
         raise SsrError(f"{path} does not exist; the sample was never selected")
     with open(path, encoding="utf-8", newline="") as handle:
-        return {row["packet_id"]: row for row in csv.DictReader(handle)}
+        return {row["case_id"]: row for row in csv.DictReader(handle)}
 
 
 def safe_output(path: Path) -> Path:
@@ -101,7 +101,7 @@ def main() -> int:
     output.mkdir(parents=True, exist_ok=True)
 
     crosswalk = load_crosswalk(Path(args.crosswalk))
-    results = {reviewer: {r["bug_id"]: r for r in load_results(reviewer)} for reviewer in REVIEWERS}
+    results = {reviewer: {r["case_id"]: r for r in load_results(reviewer)} for reviewer in REVIEWERS}
     left, right = REVIEWERS
 
     packet_ids = sorted(results[left])
@@ -115,13 +115,12 @@ def main() -> int:
     for packet_id in packet_ids:
         meta = crosswalk[packet_id]
         row = {
-            "packet_id": packet_id,
-            "source": STRATUM_LABEL.get(meta["stratum"], meta["stratum"]),
-            "repo": meta["repo"],
+            "case_id": packet_id,
+            "generation_method": meta["generation_method"],
+            "method_family": meta["method_family"],
+            "repo": meta["upstream_repo"],
             "language": meta["language"],
-            "repo_size_bin": meta["repo_size_bin"],
-            "bug_order": meta["bug_order"],
-            "lineage_parent": meta.get("parent_bug_id") or "",
+            
         }
         for reviewer in REVIEWERS:
             record = results[reviewer][packet_id]
@@ -136,7 +135,7 @@ def main() -> int:
 
     by_source: dict[str, list[dict]] = defaultdict(list)
     for row in rows:
-        by_source[row["source"]].append(row)
+        by_source[row["method_family"]].append(row)
 
     def section(subset: list[dict]) -> dict:
         return {
@@ -175,7 +174,7 @@ def main() -> int:
             language: section([row for row in rows if row["language"] == language])
             for language in sorted({row["language"] for row in rows})
         },
-        "lineage_pairs_present": sum(1 for row in rows if row["lineage_parent"]),
+        
         "confusion": {
             "fine_grained": confusion(
                 [row[f"{left}_pattern"] for row in rows], [row[f"{right}_pattern"] for row in rows]

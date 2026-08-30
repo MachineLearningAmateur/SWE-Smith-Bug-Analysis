@@ -1,0 +1,24 @@
+diff --git a/sqlglot/dialects/snowflake.py b/sqlglot/dialects/snowflake.py
+index 7a33e3f..efcec16 100644
+--- a/sqlglot/dialects/snowflake.py
++++ b/sqlglot/dialects/snowflake.py
+@@ -678,9 +678,9 @@ class Snowflake(Dialect):
+                 elif name == "EPOCH_MICROSECOND":
+                     scale = 10**6
+                 elif name == "EPOCH_NANOSECOND":
+-                    scale = None
+-                else:
+                     scale = 10**9
++                else:
++                    scale = None
+ 
+                 ts = self.expression(exp.Cast, this=expression, to=exp.DataType.build("TIMESTAMP"))
+                 to_unix: exp.Expression = self.expression(exp.TimeToUnix, this=ts)
+@@ -691,6 +691,7 @@ class Snowflake(Dialect):
+                 return to_unix
+ 
+             return self.expression(exp.Extract, this=this, expression=expression)
++
+         def _parse_bracket_key_value(self, is_map: bool = False) -> t.Optional[exp.Expression]:
+             if is_map:
+                 # Keys are strings in Snowflake's objects, see also:

@@ -1,0 +1,21 @@
+diff --git a/parso/python/errors.py b/parso/python/errors.py
+index 687546d..09c5047 100644
+--- a/parso/python/errors.py
++++ b/parso/python/errors.py
+@@ -902,7 +902,7 @@ class _NonlocalModuleLevelRule(SyntaxRule):
+ 
+ 
+ @ErrorFinder.register_rule(type='arglist')
+-class _ArglistRule():
++class _ArglistRule(SyntaxRule):
+     @property
+     def message(self):
+         if self._normalizer.version < (3, 7):
+@@ -954,6 +954,7 @@ class _ArglistRule():
+                     message = "positional argument follows keyword argument"
+                     self.add_issue(argument, message=message)
+ 
++
+ @ErrorFinder.register_rule(type='parameters')
+ @ErrorFinder.register_rule(type='lambdef')
+ class _ParameterRule(SyntaxRule):

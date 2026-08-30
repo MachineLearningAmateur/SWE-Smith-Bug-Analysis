@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 44,
+    "lines_deleted": 28,
+    "path": "bug_diff.diff",
+    "sha256": "1977ddae340cb4c79fe287582bc8494bb32c591beb06e6772c18eb9daef99a9b"
+  },
+  "case_id": "SWESMITH_097",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_node_classes.py",
+      "repo_path": "astroid/nodes/node_classes.py",
+      "sha256": "af1c0f378d51cdea44e225c6be124f1594c1ac4c7eab6a9228c99c78f99cefa0"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 1592,
+    "path": "test_evidence.md",
+    "sha256": "0516abaaf03e5b59cf4a5da6269f946a4347beff38f5434bbd9916d2af66804f",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::test_slice_zero_step_does_not_raise_ValueError"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "5257e83935dde15f9c4dc08d4aa72a6a431856690602905cd6bb37c24316aed5"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pylint-dev/astroid"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "d0b0d0399ba25f77196ed383ce997d2e70347d398551223a03b0f1c0a7d9503c"
+  }
+}

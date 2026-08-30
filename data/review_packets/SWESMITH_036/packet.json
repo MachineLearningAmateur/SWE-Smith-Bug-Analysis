@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 2,
+    "lines_deleted": 10,
+    "path": "bug_diff.diff",
+    "sha256": "b5f603263ae3e149416927f6523cf33d4d1f25ab9f977b47c5be04920113530a"
+  },
+  "case_id": "SWESMITH_036",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_brain_namedtuple_enum.py",
+      "repo_path": "astroid/brain/brain_namedtuple_enum.py",
+      "sha256": "f1ad0fe6ca8d0c26d5212c9355b74e4d532d631ed22680980153538939431067"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 1591,
+    "path": "test_evidence.md",
+    "sha256": "a88ee606a18d6e31d6566e3ca4bfc644ca0f0cdc4ce1078a25e2d4e776f9ae41",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/brain/test_enum.py",
+        "test_name": "tests/brain/test_enum.py::EnumBrainTest::test_enum_sunder_names"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/brain/test_enum.py",
+        "test_name": "tests/brain/test_enum.py::EnumBrainTest::test_enum_with_ignore"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "98c30e65d9857f3beb88fc6cd40331784f5165a66a63f8d225947bab29784bac"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pylint-dev/astroid"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "f0d06ad3a4bbde8dbc2409f05d89dba6f49443b38c5ede93fe6a5e32f0c2cc73"
+  }
+}

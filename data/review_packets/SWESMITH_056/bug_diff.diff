@@ -1,0 +1,56 @@
+diff --git a/dask/diagnostics/profile_visualize.py b/dask/diagnostics/profile_visualize.py
+index 98c56e2..591b74b 100644
+--- a/dask/diagnostics/profile_visualize.py
++++ b/dask/diagnostics/profile_visualize.py
+@@ -119,11 +119,11 @@ def visualize(
+             f.x_range = top.x_range
+             f.title = None
+             f.min_border_top = 20
+-            f.height -= 30
++            f.plot_height -= 30
+         for f in figs[:-1]:
+             f.xaxis.axis_label = None
+             f.min_border_bottom = 20
+-            f.height -= 30
++            f.plot_height -= 30
+         for f in figs:
+             f.min_border_left = 75
+             f.min_border_right = 75
+@@ -280,17 +280,8 @@ def plot_resources(results, start_time, end_time, palette="Viridis", **kwargs):
+     # Support plot_width and plot_height for backwards compatibility
+     if "plot_width" in kwargs:
+         kwargs["width"] = kwargs.pop("plot_width")
+-        if BOKEH_VERSION().major >= 3:
+-            warnings.warn("Use width instead of plot_width with Bokeh >= 3")
+     if "plot_height" in kwargs:
+         kwargs["height"] = kwargs.pop("plot_height")
+-        if BOKEH_VERSION().major >= 3:
+-            warnings.warn("Use height instead of plot_height with Bokeh >= 3")
+-
+-    # Drop `label_size` to match `plot_cache` and `plot_tasks` kwargs
+-    if "label_size" in kwargs:
+-        kwargs.pop("label_size")
+-
+     defaults.update(**kwargs)
+ 
+     if results:
+@@ -388,12 +379,8 @@ def plot_cache(
+     # Support plot_width and plot_height for backwards compatibility
+     if "plot_width" in kwargs:
+         kwargs["width"] = kwargs.pop("plot_width")
+-        if BOKEH_VERSION().major >= 3:
+-            warnings.warn("Use width instead of plot_width with Bokeh >= 3")
+     if "plot_height" in kwargs:
+         kwargs["height"] = kwargs.pop("plot_height")
+-        if BOKEH_VERSION().major >= 3:
+-            warnings.warn("Use height instead of plot_height with Bokeh >= 3")
+     defaults.update(**kwargs)
+ 
+     if results:
+@@ -434,4 +421,4 @@ def plot_cache(
+         <span style="font-size: 10px; font-family: Monaco, monospace;">@label</span>
+     </div>
+     """
+-    return p
++    return p
+\ No newline at end of file

@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 6,
+    "lines_deleted": 13,
+    "path": "bug_diff.diff",
+    "sha256": "50d510e9633e2d2ce713b8b5b50d6424c52be99692bbf3d35749ff6222a4d830"
+  },
+  "case_id": "SWESMITH_098",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_decorators.py",
+      "repo_path": "src/click/decorators.py",
+      "sha256": "f437ed25060bba284a8ee0e9f8faec2c2714540aa5d7cca3fc35da2b0f393c27"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 478,
+    "path": "test_evidence.md",
+    "sha256": "9e14a67dd9169f060f0a3d66dd45a876ef2c23600ec9fa4859efe4d4d03cc253",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_context.py",
+        "test_name": "tests/test_context.py::test_make_pass_meta_decorator_doc"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "f33cb7bdab86a844462ce057286f1e52bdcc226b993c1a92037626641f1daf16"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pallets/click"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "05ccb107237dba1446965c5a9a82352ea0d3ed59d367786c5c30814e33495039"
+  }
+}

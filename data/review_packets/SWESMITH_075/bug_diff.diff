@@ -1,0 +1,21 @@
+diff --git a/pygments/formatters/html.py b/pygments/formatters/html.py
+index 3330c1d..10ad01f 100644
+--- a/pygments/formatters/html.py
++++ b/pygments/formatters/html.py
+@@ -467,12 +467,10 @@ class HtmlFormatter(Formatter):
+ 
+     def _get_css_classes(self, ttype):
+         """Return the CSS classes of this token type prefixed with the classprefix option."""
+-        cls = self._get_css_class(ttype)
+-        while ttype not in STANDARD_TYPES:
+-            ttype = ttype.parent
+-            cls = self._get_css_class(ttype) + ' ' + cls
+-        return cls or ''
+-
++        ttypeclass = _get_ttype_class(ttype)
++        if ttypeclass:
++            return self.classprefix + ttypeclass
++        return ''
+     def _get_css_inline_styles(self, ttype):
+         """Return the inline CSS styles for this token type."""
+         cclass = self.ttype2class.get(ttype)

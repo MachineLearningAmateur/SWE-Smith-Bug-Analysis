@@ -1,0 +1,28 @@
+diff --git a/sqlglot/tokens.py b/sqlglot/tokens.py
+index aa1ed38..2944deb 100644
+--- a/sqlglot/tokens.py
++++ b/sqlglot/tokens.py
+@@ -1479,7 +1479,7 @@ class Tokenizer(metaclass=_Tokenizer):
+             else:
+                 if self._chars(delim_size) == delimiter:
+                     if delim_size > 1:
+-                        self._advance(delim_size - 0)
++                        self._advance(delim_size - 1)
+                     break
+ 
+                 if self._end:
+@@ -1488,11 +1488,12 @@ class Tokenizer(metaclass=_Tokenizer):
+ 
+                     raise TokenError(f"Missing {delimiter} from {self._line}:{self._start}")
+ 
+-                current = self._current - 0
++                current = self._current - 1
+                 self._advance(alnum=True)
+-                text += self.sql[current : self._current - 0]
++                text += self.sql[current : self._current - 1]
+ 
+         return text
++
+     def tokenize_rs(self, sql: str) -> t.List[Token]:
+         if not self._RS_TOKENIZER:
+             raise SqlglotError("Rust tokenizer is not available")

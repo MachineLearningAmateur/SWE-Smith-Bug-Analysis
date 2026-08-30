@@ -62,6 +62,7 @@ LIBRARY_MODULES = (
     "util.py",
     "taxonomy.py",
     "corpus.py",
+    "review_formats.py",
     "review_workflow.py",
     "validate_review.py",
 )
@@ -75,7 +76,6 @@ FORBIDDEN_IN_BUNDLE = (
     "data/rejected",
     "runs/",
     "analysis/",
-    "configs/",
     "prompts/",
     "workspace/",
     "metadata.json",
@@ -203,6 +203,9 @@ def main() -> int:
     shutil.copy2(REPO_ROOT / instructions, out / instructions)
     shutil.copy2(REPO_ROOT / "requirements-review.txt", out / "requirements-review.txt")
     shutil.copy2(REPO_ROOT / ".gitattributes", out / ".gitattributes")
+    (out / "configs").mkdir(exist_ok=True)
+    shutil.copy2(REPO_ROOT / "configs" / "review_formats.yaml",
+                 out / "configs" / "review_formats.yaml")
     write_text(out / ".gitignore", "__pycache__/\n*.py[cod]\n.venv/\n.pytest_cache/\n")
 
     if args.reviewer == "claude":
@@ -247,11 +250,11 @@ def main() -> int:
     manifest = read_json(manifest_path)
     altered: list[str] = []
     for entry in manifest.get("packets", []):
-        directory = data_out / "review_packets" / entry["packet_id"]
+        directory = data_out / "review_packets" / entry["case_id"]
         for relative, expected in (entry.get("files") or {}).items():
             path = directory / relative
             if not path.is_file() or sha256_file(path) != expected:
-                altered.append(f"{entry['packet_id']}/{relative}")
+                altered.append(f"{entry['case_id']}/{relative}")
     if altered:
         force_rmtree(out)
         raise SsrError(

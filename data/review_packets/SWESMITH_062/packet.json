@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 3,
+    "lines_deleted": 4,
+    "path": "bug_diff.diff",
+    "sha256": "a98ca6322647b32b5308fd68bd564a6e7bb0fdd0ce6ca933f6d2a4f347b31fe9"
+  },
+  "case_id": "SWESMITH_062",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_tokens.py",
+      "repo_path": "sqlglot/tokens.py",
+      "sha256": "456db036b56b534e7df01f1e1016169264b6905ea17762de9834333cf0d77ef3"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 6,
+    "path": "test_evidence.md",
+    "sha256": "86c826956a8423e13a0fe2c72b5b5c0b3470149b2a53212af2e81c441ca48b66",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_tokens.py",
+        "test_name": "tests/test_tokens.py::TestTokens::test_jinja"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "bc812ab63811274587a1675e1800d9b8f6e4d5fc4c5e1c80e95fbd78a40ea348"
+  },
+  "repository": {
+    "language": "python",
+    "name": "tobymao/sqlglot"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

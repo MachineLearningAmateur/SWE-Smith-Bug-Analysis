@@ -1,0 +1,87 @@
+diff --git a/astroid/nodes/_base_nodes.py b/astroid/nodes/_base_nodes.py
+index 65b703d..5e8e404 100644
+--- a/astroid/nodes/_base_nodes.py
++++ b/astroid/nodes/_base_nodes.py
+@@ -501,15 +501,10 @@ class OperatorNode(NodeNG):
+         return type1.qname() == type2.qname()
+ 
+     @staticmethod
+-    def _get_aug_flow(
+-        left: InferenceResult,
+-        left_type: InferenceResult | None,
+-        aug_opnode: nodes.AugAssign,
+-        right: InferenceResult,
+-        right_type: InferenceResult | None,
+-        context: InferenceContext,
+-        reverse_context: InferenceContext,
+-    ) -> list[partial[Generator[InferenceResult]]]:
++    def _get_aug_flow(left: InferenceResult, left_type: InferenceResult | None
++        , aug_opnode: nodes.AugAssign, right: InferenceResult, right_type: 
++        InferenceResult | None, context: InferenceContext, reverse_context:
++        InferenceContext) ->list[partial[Generator[InferenceResult]]]:
+         """Get the flow for augmented binary operations.
+ 
+         The rules are a bit messy:
+@@ -526,37 +521,38 @@ class OperatorNode(NodeNG):
+             left.__op__(right)
+         """
+         from astroid import helpers  # pylint: disable=import-outside-toplevel
+-
+-        bin_op = aug_opnode.op.strip("=")
+-        aug_op = aug_opnode.op
++    
++        op = aug_opnode.op
++        methods = []
++    
++        # Always try the augmented operation first
++        methods.append(OperatorNode._aug_op(left, aug_opnode, op, right, context))
++    
++        # Then follow the rules based on type relationships
+         if OperatorNode._same_type(left_type, right_type):
+-            methods = [
+-                OperatorNode._aug_op(left, aug_opnode, aug_op, right, context),
+-                OperatorNode._bin_op(left, aug_opnode, bin_op, right, context),
+-            ]
++            # Same type: try left.__op__(right)
++            methods.append(OperatorNode._bin_op(left, aug_opnode, op, right, context))
+         elif helpers.is_subtype(left_type, right_type):
+-            methods = [
+-                OperatorNode._aug_op(left, aug_opnode, aug_op, right, context),
+-                OperatorNode._bin_op(left, aug_opnode, bin_op, right, context),
+-            ]
++            # Left is subtype of right: try left.__op__(right)
++            methods.append(OperatorNode._bin_op(left, aug_opnode, op, right, context))
+         elif helpers.is_supertype(left_type, right_type):
+-            methods = [
+-                OperatorNode._aug_op(left, aug_opnode, aug_op, right, context),
++            # Left is supertype of right: try right.__rop__(left) then left.__op__(right)
++            methods.append(
+                 OperatorNode._bin_op(
+-                    right, aug_opnode, bin_op, left, reverse_context, reverse=True
+-                ),
+-                OperatorNode._bin_op(left, aug_opnode, bin_op, right, context),
+-            ]
++                    right, aug_opnode, op, left, reverse_context, reverse=True
++                )
++            )
++            methods.append(OperatorNode._bin_op(left, aug_opnode, op, right, context))
+         else:
+-            methods = [
+-                OperatorNode._aug_op(left, aug_opnode, aug_op, right, context),
+-                OperatorNode._bin_op(left, aug_opnode, bin_op, right, context),
++            # Unrelated types: try left.__op__(right) then right.__rop__(left)
++            methods.append(OperatorNode._bin_op(left, aug_opnode, op, right, context))
++            methods.append(
+                 OperatorNode._bin_op(
+-                    right, aug_opnode, bin_op, left, reverse_context, reverse=True
+-                ),
+-            ]
++                    right, aug_opnode, op, left, reverse_context, reverse=True
++                )
++            )
++    
+         return methods
+-
+     @staticmethod
+     def _get_binop_flow(
+         left: InferenceResult,

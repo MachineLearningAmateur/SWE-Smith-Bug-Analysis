@@ -1,0 +1,35 @@
+diff --git a/schema/__init__.py b/schema/__init__.py
+index 31bd71b..88fe123 100644
+--- a/schema/__init__.py
++++ b/schema/__init__.py
+@@ -839,19 +839,19 @@ class Optional(Schema):
+ 
+     _MARKER = object()
+ 
+-    def __init__(self, *args: Any, **kwargs: Any) -> None:
+-        default: Any = kwargs.pop("default", self._MARKER)
+-        super(Optional, self).__init__(*args, **kwargs)
++    def __init__(self, schema: Any, default: Any = _MARKER, **kwargs: Any) -> None:
++        """Initialize an optional schema with an optional default value.
++    
++        :param schema: The schema that is optional.
++        :param default: The default value to be used if the key is missing.
++        :param kwargs: Additional keyword arguments to pass to the Schema constructor.
++        """
++        self._schema = schema
+         if default is not self._MARKER:
+-            if _priority(self._schema) != COMPARABLE:
+-                raise TypeError(
+-                    "Optional keys with defaults must have simple, "
+-                    "predictable values, like literal strings or ints. "
+-                    f'"{self._schema!r}" is too complex.'
+-                )
+             self.default = default
+-            self.key = str(self._schema)
+-
++        kwargs.setdefault('error', None)
++        super(Optional, self).__init__(schema, **kwargs)
++        self.key = schema
+     def __hash__(self) -> int:
+         return hash(self._schema)
+ 

@@ -1,0 +1,75 @@
+diff --git a/moto/guardduty/models.py b/moto/guardduty/models.py
+index a92345a..04ba546 100644
+--- a/moto/guardduty/models.py
++++ b/moto/guardduty/models.py
+@@ -14,6 +14,9 @@ class GuardDutyBackend(BaseBackend):
+         super().__init__(region_name, account_id)
+         self.admin_account_ids: List[str] = []
+         self.detectors: Dict[str, Detector] = {}
++        self.admin_accounts: Dict[
++            str, Detector
++        ] = {}  # Store admin accounts by detector_id
+ 
+     def create_detector(
+         self,
+@@ -86,6 +89,20 @@ class GuardDutyBackend(BaseBackend):
+             raise DetectorNotFoundException
+         return self.detectors[detector_id]
+ 
++    def get_administrator_account(self, detector_id: str) -> Dict[str, Any]:
++        """Get administrator account details."""
++        self.get_detector(detector_id)
++
++        if not self.admin_account_ids:
++            return {}
++
++        return {
++            "Administrator": {
++                "AccountId": self.admin_account_ids[0],
++                "RelationshipStatus": "ENABLED",
++            }
++        }
++
+     def get_filter(self, detector_id: str, filter_name: str) -> "Filter":
+         detector = self.get_detector(detector_id)
+         return detector.get_filter(filter_name)
+@@ -262,4 +279,4 @@ class Detector(BaseModel):
+         }
+ 
+ 
+-guardduty_backends = BackendDict(GuardDutyBackend, "guardduty")
+\ No newline at end of file
++guardduty_backends = BackendDict(GuardDutyBackend, "guardduty")
+diff --git a/moto/guardduty/responses.py b/moto/guardduty/responses.py
+index b90c789..b7dc016 100644
+--- a/moto/guardduty/responses.py
++++ b/moto/guardduty/responses.py
+@@ -113,4 +113,10 @@ class GuardDutyResponse(BaseResponse):
+             finding_criteria=finding_criteria,
+             rank=rank,
+         )
+-        return json.dumps({"name": filter_name})
+\ No newline at end of file
++        return json.dumps({"name": filter_name})
++
++    def get_administrator_account(self) -> str:
++        """Get administrator account details."""
++        detector_id = self.path.split("/")[-2]
++        result = self.guardduty_backend.get_administrator_account(detector_id)
++        return json.dumps(result)
+diff --git a/moto/guardduty/urls.py b/moto/guardduty/urls.py
+index fe28b9e..9c20aca 100644
+--- a/moto/guardduty/urls.py
++++ b/moto/guardduty/urls.py
+@@ -8,8 +8,9 @@ url_bases = [
+ url_paths = {
+     "{0}/detector$": GuardDutyResponse.dispatch,
+     "{0}/detector/(?P<detector_id>[^/]+)$": GuardDutyResponse.dispatch,
++    "{0}/detector/(?P<detector_id>[^/]+)/administrator$": GuardDutyResponse.dispatch,
+     "{0}/detector/(?P<detector_id>[^/]+)/filter$": GuardDutyResponse.dispatch,
+     "{0}/detector/(?P<detector_id>[^/]+)/filter/(?P<filter_name>[^/]+)$": GuardDutyResponse.dispatch,
+     "{0}/admin/enable$": GuardDutyResponse.dispatch,
+     "{0}/admin$": GuardDutyResponse.dispatch,
+-}
+\ No newline at end of file
++}

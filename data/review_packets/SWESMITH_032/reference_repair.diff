@@ -1,0 +1,39 @@
+diff --git a/mido/sockets.py b/mido/sockets.py
+index 2ae5015..78d98bb 100644
+--- a/mido/sockets.py
++++ b/mido/sockets.py
+@@ -142,20 +142,22 @@ def parse_address(address):
+     Returns a tuple (host, port). Raises ValueError if format is
+     invalid or port is not an integer or out of range.
+     """
+-    if ':' not in address:
+-        raise ValueError('Address must be on format "host:port"')
+-    
+-    host, port_str = address.rsplit(':', 1)
+-    
++    words = address.split(':')
++    if len(words) != 2:
++        raise ValueError('address must contain exactly one colon')
++
++    host, port = words
+     try:
+-        port = int(port_str)
+-    except ValueError:
+-        raise ValueError('Port must be an integer')
+-    
+-    if port < 0 or port > 65535:
+-        raise ValueError('Port must be in the range 0-65535')
+-    
++        port = int(port)
++    except ValueError as ve:
++        raise ValueError('port number must be an integer') from ve
++
++    # Note: port 0 is not allowed.
++    if not 0 < port < (2**16):
++        raise ValueError('port number out of range')
++
+     return (host, port)
+ 
++
+ def format_address(host, portno):
+     return f'{host}{portno:d}'

@@ -1,0 +1,90 @@
+diff --git a/wordcloud/wordcloud.py b/wordcloud/wordcloud.py
+index 4914fdc..1622c03 100644
+--- a/wordcloud/wordcloud.py
++++ b/wordcloud/wordcloud.py
+@@ -826,6 +826,12 @@ class WordCloud(object):
+             font_weight = 'bold'
+         else:
+             font_weight = 'normal'
++        if 'italic' in raw_font_style:
++            font_style = 'italic'
++        elif 'oblique' in raw_font_style:
++            font_style = 'oblique'
++        else:
++            font_style = 'normal'
+ 
+         # Add header
+         result.append(
+@@ -840,6 +846,64 @@ class WordCloud(object):
+             )
+         )
+ 
++        # Embed font, if requested
++        if embed_font:
++
++            # Import here, to avoid hard dependency on fonttools
++            import fontTools
++            import fontTools.subset
++
++            # Subset options
++            options = fontTools.subset.Options(
++
++                # Small impact on character shapes, but reduce size a lot
++                hinting=not optimize_embedded_font,
++
++                # On small subsets, can improve size
++                desubroutinize=optimize_embedded_font,
++
++                # Try to be lenient
++                ignore_missing_glyphs=True,
++            )
++
++            # Load and subset font
++            ttf = fontTools.subset.load_font(self.font_path, options)
++            subsetter = fontTools.subset.Subsetter(options)
++            characters = {c for item in self.layout_ for c in item[0][0]}
++            text = ''.join(characters)
++            subsetter.populate(text=text)
++            subsetter.subset(ttf)
++
++            # Export as WOFF
++            # TODO is there a better method, i.e. directly export to WOFF?
++            buffer = io.BytesIO()
++            ttf.saveXML(buffer)
++            buffer.seek(0)
++            woff = fontTools.ttLib.TTFont(flavor='woff')
++            woff.importXML(buffer)
++
++            # Create stylesheet with embedded font face
++            buffer = io.BytesIO()
++            woff.save(buffer)
++            data = base64.b64encode(buffer.getbuffer()).decode('ascii')
++            url = 'data:application/font-woff;charset=utf-8;base64,' + data
++            result.append(
++                '<style>'
++                '@font-face{{'
++                'font-family:{};'
++                'font-weight:{};'
++                'font-style:{};'
++                'src:url("{}")format("woff");'
++                '}}'
++                '</style>'
++                .format(
++                    font_family,
++                    font_weight,
++                    font_style,
++                    url
++                )
++            )
++
+         # Select global style
+         result.append(
+             '<style>'
+@@ -932,6 +996,7 @@ class WordCloud(object):
+         # Complete SVG file
+         result.append('</svg>')
+         return '\n'.join(result)
++
+     def _get_bolean_mask(self, mask):
+         """Cast to two dimensional boolean mask."""
+         if mask.dtype.kind == 'f':

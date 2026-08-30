@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 2,
+    "path": "bug_diff.diff",
+    "sha256": "6676f38fdd1159f566ac3bd0ee8c9ba0102fbb3430dfc49a4849cacbfd1dd45a"
+  },
+  "case_id": "SWESMITH_076",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_tokenize.py",
+      "repo_path": "parso/python/tokenize.py",
+      "sha256": "2408153220ddac450668599111a15a2dddb2cdf7d747ba5bed1281dd53dc15e0"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 129,
+    "passing_count": 671,
+    "path": "test_evidence.md",
+    "sha256": "c9aa3b5cc60d191984575de289b914a427b71a2713a8f310faea5aa7a11b2190",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/test_error_recovery.py",
+        "test_name": "test/test_error_recovery.py::test_invalid_token_in_fstr"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "test/test_file_python_errors.py",
+        "test_name": "test/test_file_python_errors.py::test_on_itself[3.10]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "test/test_file_python_errors.py",
+        "test_name": "test/test_file_python_errors.py::test_on_itself[3.6]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "test/test_file_python_errors.py",
+        "test_name": "test/test_file_python_errors.py::test_on_itself[3.7]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "test/test_file_python_errors.py",
+        "test_name": "test/test_file_python_errors.py::test_on_itself[3.8]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "test/test_file_python_errors.py",
+        "test_name": "test/test_file_python_errors.py::test_on_itself[3.9]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"\"\"//N{NO/nENTRY}\"\"\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"\"\"{\"\"\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"\"\"}\"\"\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{!:}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{!a}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{!{a}}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{!}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{1!{a}}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{1:{:}}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{1:{}}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{1=!{a}}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{:1}\"]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "test/test_fstring.py",
+        "test_name": "test/test_fstring.py::test_invalid[f\"{:}\"]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "f3b3aea7319145016ca0c808e25da51dd77880b203b7b3db47090234e9c4ffc6"
+  },
+  "repository": {
+    "language": "python",
+    "name": "davidhalter/parso"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

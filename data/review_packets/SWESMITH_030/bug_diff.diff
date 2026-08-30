@@ -1,0 +1,27 @@
+diff --git a/oauthlib/oauth2/rfc6749/parameters.py b/oauthlib/oauth2/rfc6749/parameters.py
+index 6c55000..433ead1 100644
+--- a/oauthlib/oauth2/rfc6749/parameters.py
++++ b/oauthlib/oauth2/rfc6749/parameters.py
+@@ -332,13 +332,11 @@ def parse_implicit_response(uri, state=None, scope=None):
+     """
+     if not is_secure_transport(uri):
+         raise InsecureTransportError()
+-
+-    fragment = urlparse.urlparse(uri).fragment
+     params = dict(urlparse.parse_qsl(fragment, keep_blank_values=True))
+ 
+     for key in ('expires_in',):
+         if key in params:  # cast things to int
+-            params[key] = int(params[key])
++            pass
+ 
+     if 'scope' in params:
+         params['scope'] = scope_to_list(params['scope'])
+@@ -353,7 +351,6 @@ def parse_implicit_response(uri, state=None, scope=None):
+     validate_token_parameters(params)
+     return params
+ 
+-
+ def parse_token_response(body, scope=None):
+     """Parse the JSON token response body into a dict.
+ 

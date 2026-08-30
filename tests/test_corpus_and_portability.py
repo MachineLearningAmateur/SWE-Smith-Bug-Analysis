@@ -11,7 +11,6 @@ import sys
 from pathlib import Path
 
 from ssr.corpus import REHEARSAL, RESEARCH, CorpusStatus, classify, isolation_of
-from ssr.packets import PacketBuilder, PacketSource, normalise_test_id, posix
 from ssr.paths import REPO_ROOT
 
 REPO_ROOT_PATH = Path(REPO_ROOT)
@@ -105,71 +104,6 @@ def test_status_dataclass_round_trips():
 
 
 # ----------------------------------------------------------------------
-# cross-platform packet content
-# ----------------------------------------------------------------------
-def test_posix_normalises_windows_separators():
-    assert posix("tests\\test_core.py") == "tests/test_core.py"
-
-
-def test_test_id_file_part_is_normalised():
-    assert normalise_test_id("tests\\test_core.py::test_clamp") == "tests/test_core.py::test_clamp"
-
-
-def test_a_parametrised_case_name_is_left_alone():
-    """Only the part before :: is a path."""
-    assert normalise_test_id("tests\\t.py::test_x[a\\b]") == "tests/t.py::test_x[a\\b]"
-
-
-DIFF = """\
-diff --git a/src/core.py b/src/core.py
---- a/src/core.py
-+++ b/src/core.py
-@@ -1,3 +1,2 @@
--    if value > high:
--        return high
-     return value
-"""
-
-
-def build_packet(tmp_path, **overrides):
-    defaults = dict(
-        packet_id="SSR_001",
-        repo_name="acme/widget",
-        language="python",
-        repo_commit="abc123",
-        repo_size_bin="MEDIUM",
-        bug_diff=DIFF,
-        test_command="pytest tests/test_core.py -v",
-        clean_counts={"passed": 8, "failed": 0, "errored": 0, "skipped": 0},
-        bug_counts={"passed": 7, "failed": 1, "errored": 0, "skipped": 0},
-        fail_to_pass=["tests\\test_core.py::test_clamp_above"],
-        oracle_outputs={"tests\\test_core.py::test_clamp_above": "assert 50 == 10"},
-        code_context={"src\\core.py": "def clamp(): pass\n"},
-    )
-    defaults.update(overrides)
-    return PacketBuilder(tmp_path).build(PacketSource(**defaults))
-
-
-def test_a_packet_built_with_windows_paths_is_stored_posix(tmp_path):
-    packet = build_packet(tmp_path)["packet"]
-    assert packet["oracle_tests"][0]["test_name"] == "tests/test_core.py::test_clamp_above"
-    assert packet["oracle_tests"][0]["test_file"] == "tests/test_core.py"
-    assert packet["test_results"]["newly_failing"] == ["tests/test_core.py::test_clamp_above"]
-    assert packet["code_context"][0]["repo_path"] == "src/core.py"
-
-
-def test_no_backslash_survives_into_packet_metadata(tmp_path):
-    packet = build_packet(tmp_path)["packet"]
-    flat = json.dumps(packet)
-    assert "\\\\" not in flat
-
-
-def test_packet_files_use_forward_slashes(tmp_path):
-    files = build_packet(tmp_path)["files"]
-    assert all("\\" not in name for name in files)
-
-
-# ----------------------------------------------------------------------
 # bundle exclusions
 # ----------------------------------------------------------------------
 def test_bundle_excludes_every_hidden_artifact_kind():
@@ -180,7 +114,6 @@ def test_bundle_excludes_every_hidden_artifact_kind():
         "data/validated_pool",
         "data/generated_pool",
         "analysis/",
-        "configs/",
         "prompts/",
         "metadata.json",
         "trajectory.jsonl",
@@ -189,9 +122,18 @@ def test_bundle_excludes_every_hidden_artifact_kind():
         assert term in FORBIDDEN_IN_BUNDLE, f"{term} must never reach a reviewer bundle"
 
     # A bundle must not carry the generation library.
-    for module in ("generation.py", "solving.py", "model.py", "agent_loop.py", "exec_env.py",
-                   "sampling.py", "dedup.py", "pool.py", "packets.py"):
+    for module in ("generation.py", "solving.py", "model.py", "agent_loop.py",
+                   "exec_env.py", "swesmith_sampling.py", "packets.py", "swesmith.py"):
         assert module not in LIBRARY_MODULES, f"{module} must not be shipped to a reviewer"
+
+
+def test_bundle_ships_only_the_review_format_config():
+    """configs/ is otherwise hidden. review_formats.yaml has to travel: the
+    reviewer's tooling needs to know which format that reviewer writes."""
+    source = (REPO_ROOT_PATH / "scripts" / "make_review_bundle.py").read_text(encoding="utf-8")
+    assert 'configs" / "review_formats.yaml"' in source
+    for other in ("sampling.yaml", "generator.yaml", "solver.yaml"):
+        assert f'"{other}"' not in source
 
 
 def test_bundle_library_modules_all_exist():
@@ -259,7 +201,10 @@ def test_each_brief_points_at_its_own_review_directory():
         assert f"**Only `reviews/{reviewer}/**`.**" in text
         assert f"--reviewer {reviewer}" in text
         assert f"--reviewer {other}" not in text
-        assert f"reviews/{reviewer}/cases/SSR_nnn.json" in text
+        from ssr.review_formats import codec_for
+
+        extension = codec_for(reviewer).extension
+        assert f"reviews/{reviewer}/cases/SWESMITH_nnn{extension}" in text
 
 
 def test_no_brief_tells_a_reviewer_to_avoid_itself():
@@ -289,11 +234,28 @@ def normalise_roles(text: str, own: str, other: str) -> str:
     return text.replace("AGENTS.md", "<BRIEF>").replace("CLAUDE.md", "<BRIEF>")
 
 
+def strip_serialisation(text: str) -> str:
+    """Remove the parts that are allowed to differ: the fenced record
+    examples and the sentence naming the format."""
+    text = re.sub(r"```(?:json|yaml)\n.*?```", "<RECORD EXAMPLE>", text, flags=re.S)
+    text = re.sub(r"You write \*\*[A-Z]+\*\*\.",
+                  "You write <FORMAT>.", text)
+    text = re.sub(r"One \*\*[A-Z]+\*\* file per case, at `[^`]+`:",
+                  "One <FORMAT> file per case, at <PATH>:", text)
+    return text
+
+
 def test_briefs_are_otherwise_identical():
-    """Only the reviewer names differ. Any other divergence is drift."""
-    codex = normalise_roles(brief("codex"), "codex", "claude")
-    claude = normalise_roles(brief("claude"), "claude", "codex")
+    """The two briefs differ in exactly two ways: the reviewer names, and the
+    serialisation format. Any third divergence is drift."""
+    codex = strip_serialisation(normalise_roles(brief("codex"), "codex", "claude"))
+    claude = strip_serialisation(normalise_roles(brief("claude"), "claude", "codex"))
     assert codex == claude
+
+
+def test_the_briefs_really_do_differ_before_that_is_stripped():
+    """Guard against the normaliser above hiding a real difference."""
+    assert normalise_roles(brief("codex"), "codex", "claude") !=         normalise_roles(brief("claude"), "claude", "codex")
 
 
 def test_both_briefs_open_with_the_preflight_command():
@@ -361,7 +323,8 @@ def test_briefs_document_the_scope_and_fit_values():
 def test_briefs_list_the_packet_evidence_ids():
     for reviewer in BRIEFS:
         text = brief(reviewer)
-        for evidence_id in ("BUG_DIFF", "CODE_CONTEXT_NN", "ORACLE_TEST_NN", "TEST_RESULTS"):
+        for evidence_id in ("BUG_DIFF", "CODE_CONTEXT_NN", "TEST_FAILURE_NN",
+                            "SPECIFICATION", "REFERENCE_REPAIR"):
             assert evidence_id in text
 
 
@@ -374,12 +337,12 @@ def readme() -> str:
 
 def test_readme_carries_a_prompt_for_the_reviewer():
     text = readme()
-    assert "## The prompt to hand the reviewer" in text
-    for command in (
-        "scripts/check_review_ready.py --reviewer <claude|codex>",
-        "scripts/validate_review_output.py --reviewer <claude|codex> --finalise",
-    ):
-        assert command in text, f"the hand-off prompt no longer names {command}"
+    assert "## Running the blind reviews" in text
+    for reviewer in ("codex", "claude"):
+        assert f"scripts/check_review_ready.py --reviewer {reviewer}" in text
+        assert f"scripts/validate_review_output.py --reviewer {reviewer} --finalise" in text
+    # The two-branch isolation setup.
+    assert "codex-review" in text and "claude-review" in text
 
 
 def test_the_prompt_states_every_rule_that_can_void_a_review():
@@ -397,10 +360,11 @@ def test_the_prompt_states_every_rule_that_can_void_a_review():
 
 def test_the_prompt_names_the_directories_a_reviewer_must_not_open():
     text = readme()
-    for forbidden in ("data/sampling/", "analysis/", "metadata.json", "trajectory.jsonl"):
+    for forbidden in ("reviews/claude/", "reviews/codex/", "data/hidden/",
+                      "data/population/", "analysis/", "archive/"):
         assert forbidden in text
 
 
-def test_quickstart_points_at_the_prompt():
+def test_quickstart_points_at_the_prompts():
     text = (REPO_ROOT_PATH / "QUICKSTART.md").read_text(encoding="utf-8")
-    assert "The prompt to" in text and "README.md" in text
+    assert "Running the blind reviews" in text and "README.md" in text

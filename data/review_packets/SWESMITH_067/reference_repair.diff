@@ -1,0 +1,30 @@
+diff --git a/src/flake8/api/legacy.py b/src/flake8/api/legacy.py
+index b3402b8..446df29 100644
+--- a/src/flake8/api/legacy.py
++++ b/src/flake8/api/legacy.py
+@@ -127,9 +127,22 @@ class StyleGuide:
+         :returns:
+             True if the filename is excluded, False otherwise.
+         """
+-        if parent:
+-            filename = os.path.join(parent, filename)
+-        return self._file_checker_manager.is_path_excluded(filename)
++
++        def excluded(path: str) -> bool:
++            paths = tuple(
++                expand_paths(
++                    paths=[path],
++                    stdin_display_name=self.options.stdin_display_name,
++                    filename_patterns=self.options.filename,
++                    exclude=self.options.exclude,
++                )
++            )
++            return not paths
++
++        return excluded(filename) or (
++            parent is not None and excluded(os.path.join(parent, filename))
++        )
++
+     def init_report(
+         self,
+         reporter: type[formatter.BaseFormatter] | None = None,

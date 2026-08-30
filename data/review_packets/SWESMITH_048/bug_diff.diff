@@ -1,0 +1,22 @@
+diff --git a/faker/generator.py b/faker/generator.py
+index 5eda964..9162c34 100644
+--- a/faker/generator.py
++++ b/faker/generator.py
+@@ -65,16 +65,10 @@ class Generator:
+     def random(self, value: random_module.Random) -> None:
+         self.__random = value
+ 
+-    def seed_instance(self, seed: Optional[SeedType] = None) -> "Generator":
++    def seed_instance(self, seed: Optional[SeedType]=None) ->'Generator':
+         """Calls random.seed"""
+-        if self.__random == random:
+-            # create per-instance random obj when first time seed_instance() is
+-            # called
+-            self.__random = random_module.Random()
+         self.__random.seed(seed)
+-        self._is_seeded = True
+         return self
+-
+     @classmethod
+     def seed(cls, seed: Optional[SeedType] = None) -> None:
+         random.seed(seed)

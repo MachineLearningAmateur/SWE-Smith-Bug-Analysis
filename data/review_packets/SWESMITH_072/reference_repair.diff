@@ -1,0 +1,14 @@
+diff --git a/mypy/semanal.py b/mypy/semanal.py
+index 283a075..a0cfdcc 100644
+--- a/mypy/semanal.py
++++ b/mypy/semanal.py
+@@ -4258,9 +4258,6 @@ class SemanticAnalyzer(
+                 self.fail("Unexpected type declaration", lval)
+             lval.accept(self)
+         elif isinstance(lval, TupleExpr):
+-            items = lval.items
+-            if len(items) == 0 and isinstance(lval, TupleExpr):
+-                self.fail("can't assign to ()", lval)
+             self.analyze_tuple_or_list_lvalue(lval, explicit_type)
+         elif isinstance(lval, StarExpr):
+             if nested:

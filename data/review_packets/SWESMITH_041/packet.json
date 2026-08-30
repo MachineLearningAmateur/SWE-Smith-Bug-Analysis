@@ -1,0 +1,77 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 17,
+    "lines_deleted": 30,
+    "path": "bug_diff.diff",
+    "sha256": "091e6c17ebb514fd8a61e78804e6bdc5759772e07bf5bd905117e88eb2e2c370"
+  },
+  "case_id": "SWESMITH_041",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_linted_file.py",
+      "repo_path": "src/sqlfluff/core/linter/linted_file.py",
+      "sha256": "b10cad231ec5d249d29ca5775416be946453749174a3c1192394d3ea3b68586e"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 4,
+    "passing_count": 6,
+    "path": "test_evidence.md",
+    "sha256": "fccd4afbbe921f8cbcc3ccca570044591bb5f14b5ef9aa556840959c1a77bda9",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/core/linter/linted_file_test.py",
+        "test_name": "test/core/linter/linted_file_test.py::test__linted_file__build_up_fixed_source_string[source_slices0-source_patches0-a-a]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "test/core/linter/linted_file_test.py",
+        "test_name": "test/core/linter/linted_file_test.py::test__linted_file__build_up_fixed_source_string[source_slices1-source_patches1-abc-adc]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "test/core/linter/linted_file_test.py",
+        "test_name": "test/core/linter/linted_file_test.py::test__linted_file__build_up_fixed_source_string[source_slices2-source_patches2-ac-abc]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "test/core/linter/linted_file_test.py",
+        "test_name": "test/core/linter/linted_file_test.py::test__linted_file__build_up_fixed_source_string[source_slices3-source_patches3-abc-ac]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "241c46bd530ffe28a48bba4ff4e5ad23075f33f96e2b0bbab2e51edc529898bc"
+  },
+  "repository": {
+    "language": "python",
+    "name": "sqlfluff/sqlfluff"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "ecc790306ffe5c341bb5c912052b6e5ca0f0c1cbf973f6fb24c928e53c453042"
+  }
+}

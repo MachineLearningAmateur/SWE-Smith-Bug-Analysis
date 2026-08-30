@@ -1,0 +1,31 @@
+diff --git a/src/dotenv/main.py b/src/dotenv/main.py
+index 8ef4680..052de05 100644
+--- a/src/dotenv/main.py
++++ b/src/dotenv/main.py
+@@ -65,14 +65,20 @@ class DotEnv:
+                 )
+             yield io.StringIO('')
+ 
+-    def dict(self) ->Dict[str, Optional[str]]:
++    def dict(self) -> Dict[str, Optional[str]]:
+         """Return dotenv as dict"""
+-        if self._dict is None:
+-            values = OrderedDict(self.parse())
+-            if self.interpolate:
+-                values = resolve_variables(values.items(), self.override)
+-            self._dict = values
++        if self._dict:
++            return self._dict
++
++        raw_values = self.parse()
++
++        if self.interpolate:
++            self._dict = OrderedDict(resolve_variables(raw_values, override=self.override))
++        else:
++            self._dict = OrderedDict(raw_values)
++
+         return self._dict
++
+     def parse(self) -> Iterator[Tuple[str, Optional[str]]]:
+         with self._get_stream() as stream:
+             for mapping in with_warn_for_invalid_lines(parse_stream(stream)):

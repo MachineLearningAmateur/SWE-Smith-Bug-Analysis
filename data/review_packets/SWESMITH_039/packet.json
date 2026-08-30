@@ -1,0 +1,143 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 10,
+    "lines_deleted": 15,
+    "path": "bug_diff.diff",
+    "sha256": "3f48e90d94a449ca052c2990788cade3607e1c6a762f99f426f764ef724f29da"
+  },
+  "case_id": "SWESMITH_039",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_decode.py",
+      "repo_path": "mido/messages/decode.py",
+      "sha256": "d4d3111179b967400095477c1f8732c0b652910c8bd3413dea8ec22421ad20a9"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 15,
+    "passing_count": 107,
+    "path": "test_evidence.md",
+    "sha256": "a6e69181577a19b9f607892a87d019e88f81b919c66a79e62ccb0163d80594a9",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "../dev/tests/messages/test_decode.py",
+        "test_name": "../dev/tests/messages/test_decode.py::test_channel"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "../dev/tests/messages/test_decode.py",
+        "test_name": "../dev/tests/messages/test_decode.py::test_sysex"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "../dev/tests/messages/test_decode.py",
+        "test_name": "../dev/tests/messages/test_decode.py::test_sysex_end"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "../dev/tests/messages/test_decode.py",
+        "test_name": "../dev/tests/messages/test_decode.py::test_sysex_without_stop_byte"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "../dev/tests/messages/test_encode.py",
+        "test_name": "../dev/tests/messages/test_encode.py::test_encode_decode_all"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "../dev/tests/messages/test_messages.py",
+        "test_name": "../dev/tests/messages/test_messages.py::test_decode_pitchwheel"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "../dev/tests/messages/test_messages.py",
+        "test_name": "../dev/tests/messages/test_messages.py::test_decode_songpos"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "../dev/tests/midifiles/test_midifiles.py",
+        "test_name": "../dev/tests/midifiles/test_midifiles.py::test_invalid_data_byte_with_clipping_high"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "../dev/tests/midifiles/test_midifiles.py",
+        "test_name": "../dev/tests/midifiles/test_midifiles.py::test_single_message"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "../dev/tests/test_parser.py",
+        "test_name": "../dev/tests/test_parser.py::test_encode_and_parse"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "../dev/tests/test_parser.py",
+        "test_name": "../dev/tests/test_parser.py::test_encode_and_parse_all"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "../dev/tests/test_parser.py",
+        "test_name": "../dev/tests/test_parser.py::test_parse"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "../dev/tests/test_parser.py",
+        "test_name": "../dev/tests/test_parser.py::test_parse_channel"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "../dev/tests/test_syx.py",
+        "test_name": "../dev/tests/test_syx.py::test_handle_any_whitespace"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "../dev/tests/test_syx.py",
+        "test_name": "../dev/tests/test_syx.py::test_read"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "ffc5a0d1d8d744ce5ce1cc19798d260930e2b4a0968d9eac080e7936b2009713"
+  },
+  "repository": {
+    "language": "python",
+    "name": "mido/mido"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "961150ed7dfd8d2881e3995115312f0b362b3d830be7c3d64a020e270d2e90ef"
+  }
+}

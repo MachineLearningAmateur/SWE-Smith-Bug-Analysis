@@ -1,0 +1,46 @@
+diff --git a/src/click/decorators.py b/src/click/decorators.py
+index 901f831..fd7d29c 100644
+--- a/src/click/decorators.py
++++ b/src/click/decorators.py
+@@ -98,9 +98,8 @@ def make_pass_decorator(
+     return decorator
+ 
+ 
+-def pass_meta_key(
+-    key: str, *, doc_description: str | None = None
+-) -> t.Callable[[t.Callable[te.Concatenate[T, P], R]], t.Callable[P, R]]:
++def pass_meta_key(key: str, *, doc_description: (str | None)=None
++    ) ->t.Callable[[t.Callable[te.Concatenate[T, P], R]], t.Callable[P, R]]:
+     """Create a decorator that passes a key from
+     :attr:`click.Context.meta` as the first argument to the decorated
+     function.
+@@ -112,25 +111,19 @@ def pass_meta_key(
+ 
+     .. versionadded:: 8.0
+     """
++    if doc_description is None:
++        doc_description = f"the {key!r} key from Context.meta"
+ 
+     def decorator(f: t.Callable[te.Concatenate[T, P], R]) -> t.Callable[P, R]:
+         def new_func(*args: P.args, **kwargs: P.kwargs) -> R:
+             ctx = get_current_context()
+-            obj = ctx.meta[key]
+-            return ctx.invoke(f, obj, *args, **kwargs)
++            return f(ctx.meta[key], *args, **kwargs)
+ 
++        new_func.__doc__ = f"Decorator that passes {doc_description} as first argument."
+         return update_wrapper(new_func, f)
+ 
+-    if doc_description is None:
+-        doc_description = f"the {key!r} key from :attr:`click.Context.meta`"
+-
+-    decorator.__doc__ = (
+-        f"Decorator that passes {doc_description} as the first argument"
+-        " to the decorated function."
+-    )
+     return decorator
+ 
+-
+ CmdType = t.TypeVar("CmdType", bound=Command)
+ 
+ 

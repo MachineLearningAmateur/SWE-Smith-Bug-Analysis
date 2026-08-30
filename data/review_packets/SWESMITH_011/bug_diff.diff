@@ -1,0 +1,35 @@
+diff --git a/starlette/schemas.py b/starlette/schemas.py
+index bfc40e2..76e0c1d 100644
+--- a/starlette/schemas.py
++++ b/starlette/schemas.py
+@@ -6,7 +6,7 @@ import typing
+ 
+ from starlette.requests import Request
+ from starlette.responses import Response
+-from starlette.routing import BaseRoute, Host, Mount, Route
++from starlette.routing import BaseRoute, Mount, Route
+ 
+ try:
+     import yaml
+@@ -50,12 +50,8 @@ class BaseSchemaGenerator:
+         endpoints_info: list[EndpointInfo] = []
+ 
+         for route in routes:
+-            if isinstance(route, (Mount, Host)):
+-                routes = route.routes or []
+-                if isinstance(route, Mount):
+-                    path = self._remove_converter(route.path)
+-                else:
+-                    path = ""
++            if isinstance(route, Mount):
++                path = self._remove_converter(route.path)
+                 sub_endpoints = [
+                     EndpointInfo(
+                         path="".join((path, sub_endpoint.path)),
+@@ -144,4 +140,4 @@ class SchemaGenerator(BaseSchemaGenerator):
+ 
+             schema["paths"][endpoint.path][endpoint.http_method] = parsed
+ 
+-        return schema
++        return schema
+\ No newline at end of file

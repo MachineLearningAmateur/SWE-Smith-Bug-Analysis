@@ -110,7 +110,8 @@ def main() -> int:
     # Imported here: they need the packages checked above.
     from ssr.corpus import read_status, status_banner  # noqa: E402
     from ssr.paths import REVIEWERS, REVIEW_PACKETS, REVIEW_SNAPSHOT_MANIFEST  # noqa: E402
-    from ssr.review_workflow import ReviewerPaths, expected_bug_ids  # noqa: E402
+    from ssr.review_formats import codec_for  # noqa: E402
+    from ssr.review_workflow import ReviewerPaths, expected_case_ids  # noqa: E402
     from ssr.taxonomy import verify_provenance  # noqa: E402
     from ssr.util import SsrError, read_json, sha256_file  # noqa: E402
 
@@ -169,16 +170,16 @@ def main() -> int:
         altered: list[str] = []
         checked = 0
         for entry in packets:
-            directory = REVIEW_PACKETS / entry["packet_id"]
+            directory = REVIEW_PACKETS / entry["case_id"]
             if not directory.is_dir():
-                missing.append(entry["packet_id"])
+                missing.append(entry["case_id"])
                 continue
             if args.skip_packet_hashes:
                 continue
             for relative, expected in (entry.get("files") or {}).items():
                 path = directory / relative
                 if not path.is_file() or sha256_file(path) != expected:
-                    altered.append(f"{entry['packet_id']}/{relative}")
+                    altered.append(f"{entry['case_id']}/{relative}")
                     break
                 checked += 1
 
@@ -206,24 +207,28 @@ def main() -> int:
     for reviewer in reviewers:
         paths = ReviewerPaths(reviewer)
         try:
-            expected = expected_bug_ids()
+            expected = expected_case_ids()
         except SsrError:
             break
-        done = sorted(path.stem for path in paths.cases.glob("SSR_*.json")) if paths.cases.is_dir() else []
-        remaining = [bug_id for bug_id in expected if bug_id not in set(done)]
+        codec = codec_for(reviewer)
+        done = sorted(codec.case_id_of(path.name) for path in paths.case_files())
+        remaining = [case_id for case_id in expected if case_id not in set(done)]
         if paths.complete.is_file():
-            report.add(f"reviewer {reviewer}", OK, f"COMPLETE, {len(done)} case(s) recorded")
+            report.add(f"reviewer {reviewer}", OK,
+                       f"COMPLETE, {len(done)} case(s) recorded in {codec.name} format")
         elif done:
             report.add(
                 f"reviewer {reviewer}",
                 OK,
-                f"in progress, {len(done)} of {len(expected)} done, next {remaining[0] if remaining else '(none)'}",
+                f"in progress, {len(done)} of {len(expected)} done, next "
+                f"{remaining[0] if remaining else '(none)'}{codec.extension}",
             )
         else:
             report.add(
                 f"reviewer {reviewer}",
                 OK,
-                f"not started, {len(expected)} case(s) to do, first {expected[0] if expected else '(none)'}",
+                f"not started, {len(expected)} case(s) to do in {codec.name} format, "
+                f"first {expected[0] if expected else '(none)'}{codec.extension}",
             )
 
     if args.json:
@@ -242,7 +247,15 @@ def main() -> int:
     instructions = "AGENTS.md" if args.reviewer == "codex" else "CLAUDE.md" if args.reviewer == "claude" else "AGENTS.md (Codex) or CLAUDE.md (Claude)"
     print("This checkout is ready for review.")
     print(f"  1. Read taxonomy/frozen_failure_taxonomy_v1.md, then {instructions}.")
-    print(f"  2. Work through the cases, saving one JSON file each under reviews/{who}/cases/.")
+    if args.reviewer:
+        codec = codec_for(args.reviewer)
+        shape = f"one {codec.name} file each (SWESMITH_nnn{codec.extension})"
+    else:
+        shapes = ", ".join(
+            f"{name} writes {codec_for(name).name}" for name in REVIEWERS
+        )
+        shape = f"one file per case in your own format ({shapes})"
+    print(f"  2. Work through the cases, saving {shape}, under reviews/{who}/cases/.")
     print(f"  3. Finish with: python scripts/validate_review_output.py --reviewer {who} --finalise")
     return 0
 

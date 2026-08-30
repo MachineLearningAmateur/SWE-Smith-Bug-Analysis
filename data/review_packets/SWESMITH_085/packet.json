@@ -1,0 +1,89 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 3,
+    "lines_deleted": 14,
+    "path": "bug_diff.diff",
+    "sha256": "e551a722b440ea7a90a232371004bfdb28e247c250f5ed49de0b2f39925835ed"
+  },
+  "case_id": "SWESMITH_085",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_isoduration.py",
+      "repo_path": "src/isodate/isoduration.py",
+      "sha256": "fc1d126ee6a5daa6dd01355ceeaa9c5e67d5d02abaf08207d716a3cee761e744"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 6,
+    "passing_count": 272,
+    "path": "test_evidence.md",
+    "sha256": "6d6be844c7120aa479d66791fe196ddc308c78599a10f4157a4609fe9b979c00",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_duration.py",
+        "test_name": "tests/test_duration.py::test_format"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_duration.py",
+        "test_name": "tests/test_duration.py::test_format_parse[-P1DT2H3M4S-expectation24-P%P-None]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_duration.py",
+        "test_name": "tests/test_duration.py::test_format_parse[-P2.2W-expectation12-P%P--P15DT9H36M]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_duration.py",
+        "test_name": "tests/test_duration.py::test_format_parse[-P2W-expectation11-P%p-None]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_duration.py",
+        "test_name": "tests/test_duration.py::test_format_parse[-P2Y-expectation22-P%P-None]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_duration.py",
+        "test_name": "tests/test_duration.py::test_format_parse[-P3Y6M4DT12H30M5S-expectation23-P%P-None]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "8e2e55dac8738dcb4b5159868429161084342564790639b87c7c3b972443eee0"
+  },
+  "repository": {
+    "language": "python",
+    "name": "gweis/isodate"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "ac240cbf923029b574d8c0087a3271e5f77fd38ed26a96162a1d5df056196139"
+  }
+}

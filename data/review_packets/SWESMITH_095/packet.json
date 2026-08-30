@@ -1,0 +1,77 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 7,
+    "lines_deleted": 8,
+    "path": "bug_diff.diff",
+    "sha256": "f74ce79078f6b766b3eacf209ddbf241900e5a063045c22f181c00f961c27e9c"
+  },
+  "case_id": "SWESMITH_095",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_package.py",
+      "repo_path": "src/pptx/opc/package.py",
+      "sha256": "6bc0d168c7c675afc9ae2fb409b58bf0fd2ce7b48eba6869f152fc9c6daf0f0f"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 4,
+    "passing_count": 2653,
+    "path": "test_evidence.md",
+    "sha256": "9ced1f6b71e407160ac02c2b64bd42fbc86a2ebe0c52f7be127e07dfe2e8c064",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/opc/test_package.py",
+        "test_name": "tests/opc/test_package.py::Describe_Relationships::and_it_raises_ValueError_when_there_is_more_than_one_part_with_reltype"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/opc/test_package.py",
+        "test_name": "tests/opc/test_package.py::Describe_Relationships::but_it_raises_KeyError_when_there_is_no_such_part"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/opc/test_package.py",
+        "test_name": "tests/opc/test_package.py::Describe_Relationships::it_can_find_a_part_with_reltype"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_package.py",
+        "test_name": "tests/test_package.py::DescribePackage::it_provides_access_to_its_core_properties_part"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "1cac088e8558c84d0a7712911f875ef5332ff4e9b7cc8c66bd8d60b864a330df"
+  },
+  "repository": {
+    "language": "python",
+    "name": "scanny/python-pptx"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

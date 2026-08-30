@@ -1,0 +1,71 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 4,
+    "lines_deleted": 16,
+    "path": "bug_diff.diff",
+    "sha256": "49ae53874cc54bd2424877246d32cd57a917f4931ff7add963aa9407cca2f552"
+  },
+  "case_id": "SWESMITH_070",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_gpx.py",
+      "repo_path": "gpxpy/gpx.py",
+      "sha256": "ea9e185ea475cda50cf5cd25714671329307a464d574971ec62d7960cd094ce5"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 3,
+    "passing_count": 140,
+    "path": "test_evidence.md",
+    "sha256": "97eb915474d2eff05dbaab438b4b7762e2c77fef385ae285d3ea48c0b1c58183",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test.py",
+        "test_name": "test.py::GPXTests::test_add_missing_speeds"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "test.py",
+        "test_name": "test.py::GPXTests::test_subsecond_speed"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "test.py",
+        "test_name": "test.py::GPXTests::test_time_difference"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "c45ff499318fa19bddade3a8d810015e466d20b4aa028e13232fba3635bbdedc"
+  },
+  "repository": {
+    "language": "python",
+    "name": "tkrajina/gpxpy"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "7867d5f2424a2683f6a539186f1749742a35518868ee65018dc199a831f345ed"
+  }
+}

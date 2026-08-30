@@ -1,0 +1,31 @@
+diff --git a/src/isodate/isoduration.py b/src/isodate/isoduration.py
+index 89f7933..eacb15b 100644
+--- a/src/isodate/isoduration.py
++++ b/src/isodate/isoduration.py
+@@ -127,11 +127,22 @@ def parse_duration(
+     return ret
+ 
+ 
+-def duration_isoformat(tduration: Union[timedelta, Duration, time, date],
+-    format: str=D_DEFAULT) ->str:
++def duration_isoformat(
++    tduration: Union[timedelta, Duration, time, date], format: str = D_DEFAULT
++) -> str:
+     """Format duration strings.
+ 
+     This method is just a wrapper around isodate.isostrf.strftime and uses
+     P%P (D_DEFAULT) as default format.
+     """
+-    return strftime(tduration, format)
+\ No newline at end of file
++    # TODO: implement better decision for negative Durations.
++    #       should be done in Duration class in consistent way with timedelta.
++    if (
++        isinstance(tduration, Duration)
++        and (tduration.years < 0 or tduration.months < 0 or tduration.tdelta < timedelta(0))
++    ) or (isinstance(tduration, timedelta) and (tduration < timedelta(0))):
++        ret = "-"
++    else:
++        ret = ""
++    ret += strftime(tduration, format)
++    return ret

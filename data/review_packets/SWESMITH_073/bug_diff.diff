@@ -1,0 +1,65 @@
+diff --git a/gspread/worksheet.py b/gspread/worksheet.py
+index 883e3a2..7ff1c30 100644
+--- a/gspread/worksheet.py
++++ b/gspread/worksheet.py
+@@ -1249,14 +1249,12 @@ class Worksheet:
+         return response
+ 
+     def batch_update(
+-        self,
+-        data: Iterable[MutableMapping[str, Any]],
+-        raw: bool = True,
+-        value_input_option: Optional[ValueInputOption] = None,
+-        include_values_in_response: Optional[bool] = None,
+-        response_value_render_option: Optional[ValueRenderOption] = None,
+-        response_date_time_render_option: Optional[DateTimeOption] = None,
+-    ) -> JSONResponse:
++        self, data: Iterable[MutableMapping[str, Any]], raw: bool=
++        True, value_input_option: Optional[ValueInputOption]=None,
++        include_values_in_response: Optional[bool]=None,
++        response_value_render_option: Optional[ValueRenderOption]=None,
++        response_date_time_render_option: Optional[DateTimeOption]=None
++        ) -> JSONResponse:
+         """Sets values in one or more cell ranges of the sheet at once.
+ 
+         :param list data: List of dictionaries in the form of
+@@ -1350,21 +1348,33 @@ class Worksheet:
+                 ValueInputOption.raw if raw is True else ValueInputOption.user_entered
+             )
+ 
+-        for values in data:
+-            values["range"] = absolute_range_name(self.title, values["range"])
++        data_dict = []
++
++        for d in data:
++            range_name = absolute_range_name(self.title, d['range'])
++            data_dict.append({
++                'range': range_name,
++                'values': d['values']
++            })
+ 
+-        body: MutableMapping[str, Any] = {
++        params: ParamsType = {
+             "valueInputOption": value_input_option,
+             "includeValuesInResponse": include_values_in_response,
+             "responseValueRenderOption": response_value_render_option,
+             "responseDateTimeRenderOption": response_date_time_render_option,
+-            "data": data,
+         }
+ 
+-        response = self.client.values_batch_update(self.spreadsheet_id, body=body)
++        body = {
++            "data": data_dict
++        }
+ 
+-        return response
++        response = self.client.values_batch_update(
++            self.spreadsheet_id,
++            params=params,
++            body=body
++        )
+ 
++        return response
+     def batch_format(self, formats: List[CellFormat]) -> JSONResponse:
+         """Formats cells in batch.
+ 

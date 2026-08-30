@@ -1,0 +1,29 @@
+diff --git a/pydantic/v1/validators.py b/pydantic/v1/validators.py
+index be7a93b..c0940e8 100644
+--- a/pydantic/v1/validators.py
++++ b/pydantic/v1/validators.py
+@@ -748,11 +748,21 @@ def find_validators(  # noqa: C901 (ignore complexity)
+         return
+ 
+     for val_type, validators in _VALIDATORS:
+-        pass
++        try:
++            if issubclass(type_, val_type):
++                for v in validators:
++                    if isinstance(v, IfConfig):
++                        if v.check(config):
++                            yield v.validator
++                    else:
++                        yield v
++                return
++        except TypeError:
++            raise RuntimeError(f'error checking inheritance of {type_!r} (type: {display_as_type(type_)})')
+ 
+     if config.arbitrary_types_allowed:
+         yield make_arbitrary_type_validator(type_)
+     else:
+         if hasattr(type_, '__pydantic_core_schema__'):
+             warn(f'Mixing V1 and V2 models is not supported. `{type_.__name__}` is a V2 model.', UserWarning)
+-        raise RuntimeError(f'no validator found for {type_}, see `arbitrary_types_allowed` in Config')
+\ No newline at end of file
++        raise RuntimeError(f'no validator found for {type_}, see `arbitrary_types_allowed` in Config')

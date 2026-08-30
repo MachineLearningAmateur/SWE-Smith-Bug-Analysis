@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 14,
+    "lines_deleted": 12,
+    "path": "bug_diff.diff",
+    "sha256": "350b671d161172eee55b9fd5ac3bc5eb0817aad48024275e9233395b7b5c25c9"
+  },
+  "case_id": "SWESMITH_086",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_dependencies.py",
+      "repo_path": "safety/scan/ecosystems/python/dependencies.py",
+      "sha256": "1ef0569d0688a24b05c9fd63a85d9206977af1e9535d1c55fa457803d0144400"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 117,
+    "path": "test_evidence.md",
+    "sha256": "95892960300d619ec7b973b0d14b7a1f393257baea465d3a275284a1d8dd30f3",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::TestSafetyCLI::test_debug_flag"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "8402bb9dc86c452dafa3d9e08fc122c8e0c27d4a1a77e901a1a16d2044bf81da"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pyupio/safety"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "cdc8db5f25f0cc4f13c519a4db2a48e323f51b6653091e1928b31eaa83fc3c05"
+  }
+}

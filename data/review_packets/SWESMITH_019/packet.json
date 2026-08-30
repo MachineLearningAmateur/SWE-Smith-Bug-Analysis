@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 17,
+    "lines_deleted": 18,
+    "path": "bug_diff.diff",
+    "sha256": "d0bc22f848942c19832f621a2e95d1e630a3ae100c005c8dece7b0d1864364d7"
+  },
+  "case_id": "SWESMITH_019",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_main.py",
+      "repo_path": "hydra/main.py",
+      "sha256": "2aa6031e8da55f1f09ffe92992a04aeeaf6ac7518aa41ac5b74846e51fc34724"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 105,
+    "passing_count": 44,
+    "path": "test_evidence.md",
+    "sha256": "b077d514079f092c2b40e08d37aa0298ea004f5f0fd2d7f06c21377eb5c091d7",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::TestVariousRuns::test_command_line_interpolations_evaluated_lazily[cmd_base0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::TestVariousRuns::test_multirun_config_overrides_evaluated_lazily[cmd_base0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::TestVariousRuns::test_multirun_defaults_override[cmd_base0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::TestVariousRuns::test_run_pass_list[cmd_base0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::TestVariousRuns::test_run_with_missing_default[run-cmd_base0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::TestVariousRuns::test_run_with_missing_default[sweep-cmd_base0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_app_with_error_exception_sanitized"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_app_with_unicode_config"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg[--cfg=all-expected_keys0-False]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg[--cfg=all-expected_keys0-True]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg[--cfg=hydra-expected_keys1-False]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg[--cfg=hydra-expected_keys1-True]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg[--cfg=job-expected_keys2-False]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg[--cfg=job-expected_keys2-True]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg_resolve_interpolation[cfg]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg_resolve_interpolation[resolve]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg_resolve_interpolation[resolve_hydra_config]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg_with_package[no-package-False]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg_with_package[no-package-True]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/test_hydra.py",
+        "test_name": "tests/test_hydra.py::test_cfg_with_package[package=_global_-False]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "11c30630f551889bf627f32af04b602963b3572f465371f174f85261a66b8611"
+  },
+  "repository": {
+    "language": "python",
+    "name": "facebookresearch/hydra"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "1e967c3f19a3fadaa47b6c947fc56a0128cc9d164dce670d246edfb7d04aa193"
+  }
+}

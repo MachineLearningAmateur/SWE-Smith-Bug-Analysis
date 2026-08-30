@@ -1,0 +1,30 @@
+{
+  "count": 4,
+  "generated_at_utc": "2026-08-30T08:01:28Z",
+  "instances": [
+    {
+      "instance_id": "pallets__flask.bc098406.combine_file__3s67h7m2",
+      "mirror_repo": "pallets__flask.bc098406",
+      "reason": "not present in the pinned task dataset revision",
+      "trajectory_count": 1
+    },
+    {
+      "instance_id": "pallets__flask.bc098406.combine_file__d4iatse7",
+      "mirror_repo": "pallets__flask.bc098406",
+      "reason": "not present in the pinned task dataset revision",
+      "trajectory_count": 1
+    },
+    {
+      "instance_id": "pallets__flask.bc098406.combine_file__wwgav588",
+      "mirror_repo": "pallets__flask.bc098406",
+      "reason": "not present in the pinned task dataset revision",
+      "trajectory_count": 2
+    },
+    {
+      "instance_id": "pallets__flask.bc098406.pr_4045",
+      "mirror_repo": "pallets__flask.bc098406",
+      "reason": "not present in the pinned task dataset revision",
+      "trajectory_count": 1
+    }
+  ]
+}

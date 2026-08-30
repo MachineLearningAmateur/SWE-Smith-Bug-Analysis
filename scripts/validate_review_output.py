@@ -2,7 +2,7 @@
 """Validate a reviewer's output, and finalise the review when it is complete.
 
     python scripts/validate_review_output.py --reviewer claude
-    python scripts/validate_review_output.py --reviewer claude --case SSR_007
+    python scripts/validate_review_output.py --reviewer claude --case SWESMITH_007
     python scripts/validate_review_output.py --reviewer claude --finalise
 
 Checks, in order:
@@ -30,7 +30,7 @@ from ssr.paths import REVIEWERS  # noqa: E402
 from ssr.review_workflow import (  # noqa: E402
     ReviewerPaths,
     collect_cases,
-    expected_bug_ids,
+    expected_case_ids,
     finalise,
     update_progress,
 )
@@ -41,7 +41,7 @@ from ssr.validate_review import validate_result, validate_results  # noqa: E402
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--reviewer", required=True, choices=list(REVIEWERS))
-    parser.add_argument("--case", action="append", default=[], help="validate one case id; repeatable")
+    parser.add_argument("--case", action="append", default=[], help="validate one case id, e.g. SWESMITH_007; repeatable")
     parser.add_argument("--finalise", action="store_true", help="build the JSONL and mark COMPLETE")
     parser.add_argument("--strict", action="store_true", help="treat advisory warnings as failures")
     parser.add_argument("--verbose", action="store_true")
@@ -52,8 +52,8 @@ def main() -> int:
 
     if args.case:
         warnings: list[str] = []
-        for bug_id in args.case:
-            path = paths.case_file(bug_id)
+        for case_id in args.case:
+            path = paths.case_file(case_id)
             if not path.is_file():
                 raise SsrError(f"{path} does not exist")
             warnings.extend(validate_result(read_json(path)))
@@ -63,8 +63,8 @@ def main() -> int:
         return 0
 
     results = collect_cases(args.reviewer)
-    expected = expected_bug_ids()
-    found = {record["bug_id"] for record in results}
+    expected = expected_case_ids()
+    found = {record["case_id"] for record in results}
     missing = sorted(set(expected) - found)
 
     warnings = validate_results(results)
@@ -92,7 +92,7 @@ def main() -> int:
         "validated_cases": len(results),
         "expected": len(expected),
         "missing": len(missing),
-        "next_bug_id": progress.get("next_bug_id"),
+        "next_case_id": progress.get("next_case_id"),
         "warnings": len(warnings),
     }, indent=2))
     return 0

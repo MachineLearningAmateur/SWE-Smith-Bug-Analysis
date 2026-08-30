@@ -1,0 +1,20 @@
+diff --git a/gpxpy/geo.py b/gpxpy/geo.py
+index b75cefd..00fa3bb 100644
+--- a/gpxpy/geo.py
++++ b/gpxpy/geo.py
+@@ -246,6 +246,7 @@ def distance(latitude_1: float, longitude_1: float, elevation_1: Optional[float]
+ 
+     coef = mod_math.cos(mod_math.radians(latitude_1))
+     x = latitude_1 - latitude_2
++    y = (longitude_1 - longitude_2) * coef
+ 
+     distance_2d = mod_math.sqrt(x * x + y * y) * ONE_DEGREE
+ 
+@@ -254,6 +255,7 @@ def distance(latitude_1: float, longitude_1: float, elevation_1: Optional[float]
+ 
+     return mod_math.sqrt(distance_2d ** 2 + (elevation_1 - elevation_2) ** 2)
+ 
++
+ def elevation_angle(location1: "Location", location2: "Location", radians: float=False) -> Optional[float]:
+     """ Uphill/downhill angle between two locations. """
+     if location1.elevation is None or location2.elevation is None:

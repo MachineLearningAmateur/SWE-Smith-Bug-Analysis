@@ -1,0 +1,29 @@
+diff --git a/src/sqlfluff/core/linter/patch.py b/src/sqlfluff/core/linter/patch.py
+index 0262713..fb9f198 100644
+--- a/src/sqlfluff/core/linter/patch.py
++++ b/src/sqlfluff/core/linter/patch.py
+@@ -105,11 +105,6 @@ def _iter_templated_patches(
+         )
+     # Can we go deeper?
+     elif not segment.segments:
+-        # It's not literal, but it's also a raw segment. If we're going
+-        # to yield a change, we would have done it from the parent, so
+-        # we just abort from here.
+-        return  # pragma: no cover TODO?
+-    else:
+         # This segment isn't a literal, but has changed, we need to go deeper.
+ 
+         # If there's an end of file segment or indent, ignore them just for the
+@@ -215,7 +210,11 @@ def _iter_templated_patches(
+                 templated_str=templated_file.templated_str[templated_slice],
+                 source_str=templated_file.source_str[source_slice],
+             )
+-
++    else:
++        # It's not literal, but it's also a raw segment. If we're going
++        # to yield a change, we would have done it from the parent, so
++        # we just abort from here.
++        return  # pragma: no cover TODO?
+ 
+ def _log_hints(patch: FixPatch, templated_file: TemplatedFile) -> None:
+     """Log hints for debugging during patch generation."""

@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 17,
+    "lines_deleted": 8,
+    "path": "bug_diff.diff",
+    "sha256": "0ce2a6b0bf3936c0fc7037724a01df007ddccccba743aad909bcf5fba862ee13"
+  },
+  "case_id": "SWESMITH_091",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_scope.py",
+      "repo_path": "sqlglot/optimizer/scope.py",
+      "sha256": "ab87df68a7415a71b7484e6514fd922e7fd431a01e371abf4a86735dac04e09a"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 54,
+    "path": "test_evidence.md",
+    "sha256": "eecf18d34a4bc5c4398b891b0b64dcc1e0a818af38b9864685d38e4b2757a2ff",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_optimizer.py",
+        "test_name": "tests/test_optimizer.py::TestOptimizer::test_eliminate_ctes"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_optimizer.py",
+        "test_name": "tests/test_optimizer.py::TestOptimizer::test_optimize"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "b3e5b9f8aea97c74ab015ce48208809128f41fdb27ef62a9a3e742a736a9070a"
+  },
+  "repository": {
+    "language": "python",
+    "name": "tobymao/sqlglot"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "3ee5ebf93dac0173c0ef0c472889c466b9ef4eedf88651503c7e26f85f0a8830"
+  }
+}

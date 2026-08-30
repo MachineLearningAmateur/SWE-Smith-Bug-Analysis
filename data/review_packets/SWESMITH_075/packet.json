@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 4,
+    "lines_deleted": 6,
+    "path": "bug_diff.diff",
+    "sha256": "021e504ff95a11c9bdd0850eeda184573415dd845b0f8943f1aa508b8dedcf50"
+  },
+  "case_id": "SWESMITH_075",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_html.py",
+      "repo_path": "pygments/formatters/html.py",
+      "sha256": "9e4214a435a201e71b28d4e26e501e189c10988910af03cd79288754ebd848c2"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 5059,
+    "path": "test_evidence.md",
+    "sha256": "9f35266ac6452576fb5a62e6874817869cb76ca488affd49f40ca6a31121c4f1",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_cmdline.py",
+        "test_name": "tests/test_cmdline.py::test_F_opt"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "4a4b23c65a058ea4185d135d939e7cbd180453ec2a59f6a0d393873de52e249e"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pygments/pygments"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "0e14fae7023ef12ae5eff5a4c68550c3cb570380225030e2a32890c2e4fffc16"
+  }
+}

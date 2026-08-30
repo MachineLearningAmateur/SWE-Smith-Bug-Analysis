@@ -1,0 +1,180 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 3,
+    "lines_added": 107,
+    "lines_deleted": 560,
+    "path": "bug_diff.diff",
+    "sha256": "082ce0f99d3ef7740b27c0de045359eeffee01314237853bc6fe8a7cf18c86cb"
+  },
+  "case_id": "SWESMITH_045",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01__mapping.py",
+      "repo_path": "pygments/lexers/_mapping.py",
+      "sha256": "5d808029e60305377b79eb8bf35e2a3e977894596659e0da61cddc4efc58f8bd"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_02",
+      "path": "context/02_theorem.py",
+      "repo_path": "pygments/lexers/theorem.py",
+      "sha256": "10a7c5820115e0a78fa6c686cc9a82b0c3f4cf6dda50383935b662a5197274a7"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "CODE_CONTEXT_02",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 5060,
+    "passing_count": 0,
+    "path": "test_evidence.md",
+    "sha256": "14bf78b8b4a9efe31d41f7906c89e367467343ecc4199f04acb571be97a0638f",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/contrast/test_contrasts.py",
+        "test_name": "tests/contrast/test_contrasts.py::test_contrasts"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/examplefiles/abnf/abnf_example1.abnf",
+        "test_name": "tests/examplefiles/abnf/abnf_example1.abnf::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/examplefiles/abnf/abnf_example2.abnf",
+        "test_name": "tests/examplefiles/abnf/abnf_example2.abnf::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/examplefiles/ada/test.adb",
+        "test_name": "tests/examplefiles/ada/test.adb::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/examplefiles/ada/test_ada2022.adb",
+        "test_name": "tests/examplefiles/ada/test_ada2022.adb::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/examplefiles/ada/test_ada_aspects.ads",
+        "test_name": "tests/examplefiles/ada/test_ada_aspects.ads::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/examplefiles/adl/test.adls",
+        "test_name": "tests/examplefiles/adl/test.adls::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/examplefiles/adl/test_basic.adls",
+        "test_name": "tests/examplefiles/adl/test_basic.adls::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/examplefiles/agda/test.agda",
+        "test_name": "tests/examplefiles/agda/test.agda::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/examplefiles/aheui/durexmania.aheui",
+        "test_name": "tests/examplefiles/aheui/durexmania.aheui::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/examplefiles/aheui/fibonacci.tokigun.aheui",
+        "test_name": "tests/examplefiles/aheui/fibonacci.tokigun.aheui::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/examplefiles/aheui/hello-world.puzzlet.aheui",
+        "test_name": "tests/examplefiles/aheui/hello-world.puzzlet.aheui::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/examplefiles/ahk/demo.ahk",
+        "test_name": "tests/examplefiles/ahk/demo.ahk::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/examplefiles/alloy/example.als",
+        "test_name": "tests/examplefiles/alloy/example.als::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/examplefiles/amdgpu/amdgpu.isa",
+        "test_name": "tests/examplefiles/amdgpu/amdgpu.isa::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/examplefiles/antlr/antlr_ANTLRv3.g",
+        "test_name": "tests/examplefiles/antlr/antlr_ANTLRv3.g::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/examplefiles/antlr/antlr_throws",
+        "test_name": "tests/examplefiles/antlr/antlr_throws::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/examplefiles/apacheconf/apache2.conf",
+        "test_name": "tests/examplefiles/apacheconf/apache2.conf::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/examplefiles/apdl/example1apdl.ans",
+        "test_name": "tests/examplefiles/apdl/example1apdl.ans::"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/examplefiles/apdl/example2apdl.ans",
+        "test_name": "tests/examplefiles/apdl/example2apdl.ans::"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "d0edb36229b59a11d14fb2226c349318488ce8f13bf22428044516f9540919a4"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pygments/pygments"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "6903db906595f52e8707573cfd1cbcc3c8b87e32eedb6da3b6e8c451c108d908"
+  }
+}

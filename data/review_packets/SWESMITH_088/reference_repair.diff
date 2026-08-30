@@ -1,0 +1,203 @@
+diff --git a/pydantic/_internal/_known_annotated_metadata.py b/pydantic/_internal/_known_annotated_metadata.py
+index 1d00fbd..463d8a7 100644
+--- a/pydantic/_internal/_known_annotated_metadata.py
++++ b/pydantic/_internal/_known_annotated_metadata.py
+@@ -187,7 +187,7 @@ def apply_known_metadata(annotation: Any, schema: CoreSchema) -> CoreSchema | No
+     """
+     import annotated_types as at
+ 
+-    from ._validators import forbid_inf_nan_check, get_constraint_validator
++    from ._validators import NUMERIC_VALIDATOR_LOOKUP, forbid_inf_nan_check
+ 
+     schema = schema.copy()
+     schema_update, other_metadata = collect_known_metadata([annotation])
+@@ -252,15 +252,33 @@ def apply_known_metadata(annotation: Any, schema: CoreSchema) -> CoreSchema | No
+                     _apply_constraint_with_incompatibility_info, cs.str_schema(**{constraint: value})
+                 )
+             )
+-        elif constraint in {*NUMERIC_CONSTRAINTS, *LENGTH_CONSTRAINTS}:
+-            if constraint in NUMERIC_CONSTRAINTS:
+-                json_schema_constraint = constraint
+-            elif constraint in LENGTH_CONSTRAINTS:
+-                json_schema_constraint = 'minItems' if constraint == 'min_length' else 'maxItems'
++        elif constraint in NUMERIC_VALIDATOR_LOOKUP:
++            if constraint in LENGTH_CONSTRAINTS:
++                inner_schema = schema
++                while inner_schema['type'] in {'function-before', 'function-wrap', 'function-after'}:
++                    inner_schema = inner_schema['schema']  # type: ignore
++                inner_schema_type = inner_schema['type']
++                if inner_schema_type == 'list' or (
++                    inner_schema_type == 'json-or-python' and inner_schema['json_schema']['type'] == 'list'  # type: ignore
++                ):
++                    js_constraint_key = 'minItems' if constraint == 'min_length' else 'maxItems'
++                else:
++                    js_constraint_key = 'minLength' if constraint == 'min_length' else 'maxLength'
++            else:
++                js_constraint_key = constraint
++
+             schema = cs.no_info_after_validator_function(
+-                partial(get_constraint_validator(constraint), **{constraint: value}), schema
++                partial(NUMERIC_VALIDATOR_LOOKUP[constraint], **{constraint: value}), schema
+             )
+-            add_js_update_schema(schema, lambda: {json_schema_constraint: as_jsonable_value(value)})  # noqa: B023
++            metadata = schema.get('metadata', {})
++            if (existing_json_schema_updates := metadata.get('pydantic_js_updates')) is not None:
++                metadata['pydantic_js_updates'] = {
++                    **existing_json_schema_updates,
++                    **{js_constraint_key: as_jsonable_value(value)},
++                }
++            else:
++                metadata['pydantic_js_updates'] = {js_constraint_key: as_jsonable_value(value)}
++            schema['metadata'] = metadata
+         elif constraint == 'allow_inf_nan' and value is False:
+             schema = cs.no_info_after_validator_function(
+                 forbid_inf_nan_check,
+@@ -274,8 +292,11 @@ def apply_known_metadata(annotation: Any, schema: CoreSchema) -> CoreSchema | No
+     for annotation in other_metadata:
+         if (annotation_type := type(annotation)) in (at_to_constraint_map := _get_at_to_constraint_map()):
+             constraint = at_to_constraint_map[annotation_type]
++            validator = NUMERIC_VALIDATOR_LOOKUP.get(constraint)
++            if validator is None:
++                raise ValueError(f'Unknown constraint {constraint}')
+             schema = cs.no_info_after_validator_function(
+-                partial(get_constraint_validator(constraint), {constraint: getattr(annotation, constraint)}), schema
++                partial(validator, {constraint: getattr(annotation, constraint)}), schema
+             )
+             continue
+         elif isinstance(annotation, (at.Predicate, at.Not)):
+@@ -373,4 +394,4 @@ def check_metadata(metadata: dict[str, Any], allowed: Iterable[str], source_type
+     if unknown:
+         raise TypeError(
+             f'The following constraints cannot be applied to {source_type!r}: {", ".join([f"{k!r}" for k in unknown])}'
+-        )
+\ No newline at end of file
++        )
+diff --git a/pydantic/_internal/_validators.py b/pydantic/_internal/_validators.py
+index 470180c..8261c98 100644
+--- a/pydantic/_internal/_validators.py
++++ b/pydantic/_internal/_validators.py
+@@ -9,6 +9,7 @@ import collections.abc
+ import math
+ import re
+ import typing
++from decimal import Decimal
+ from fractions import Fraction
+ from ipaddress import IPv4Address, IPv4Interface, IPv4Network, IPv6Address, IPv6Interface, IPv6Network
+ from typing import Any, Callable, TypeVar, Union, cast, get_origin
+@@ -337,23 +338,76 @@ def max_length_validator(x: Any, max_length: Any) -> Any:
+         raise TypeError(f"Unable to apply constraint 'max_length' to supplied value {x}")
+ 
+ 
+-_CONSTRAINT_TO_VALIDATOR_LOOKUP: dict[str, Callable] = {
+-    'gt': greater_than_validator,
+-    'ge': greater_than_or_equal_validator,
+-    'lt': less_than_validator,
+-    'le': less_than_or_equal_validator,
+-    'multiple_of': multiple_of_validator,
+-    'min_length': min_length_validator,
+-    'max_length': max_length_validator,
+-}
++def _extract_decimal_digits_info(decimal: Decimal) -> tuple[int, int]:
++    """Compute the total number of digits and decimal places for a given [`Decimal`][decimal.Decimal] instance.
++
++    This function handles both normalized and non-normalized Decimal instances.
++    Example: Decimal('1.230') -> 4 digits, 3 decimal places
++
++    Args:
++        decimal (Decimal): The decimal number to analyze.
+ 
++    Returns:
++        tuple[int, int]: A tuple containing the number of decimal places and total digits.
+ 
+-def get_constraint_validator(constraint: str) -> Callable:
+-    """Fetch the validator function for the given constraint."""
++    Though this could be divided into two separate functions, the logic is easier to follow if we couple the computation
++    of the number of decimals and digits together.
++    """
+     try:
+-        return _CONSTRAINT_TO_VALIDATOR_LOOKUP[constraint]
+-    except KeyError:
+-        raise TypeError(f'Unknown constraint {constraint}')
++        decimal_tuple = decimal.as_tuple()
++
++        assert isinstance(decimal_tuple.exponent, int)
++
++        exponent = decimal_tuple.exponent
++        num_digits = len(decimal_tuple.digits)
++
++        if exponent >= 0:
++            # A positive exponent adds that many trailing zeros
++            # Ex: digit_tuple=(1, 2, 3), exponent=2 -> 12300 -> 0 decimal places, 5 digits
++            num_digits += exponent
++            decimal_places = 0
++        else:
++            # If the absolute value of the negative exponent is larger than the
++            # number of digits, then it's the same as the number of digits,
++            # because it'll consume all the digits in digit_tuple and then
++            # add abs(exponent) - len(digit_tuple) leading zeros after the decimal point.
++            # Ex: digit_tuple=(1, 2, 3), exponent=-2 -> 1.23 -> 2 decimal places, 3 digits
++            # Ex: digit_tuple=(1, 2, 3), exponent=-4 -> 0.0123 -> 4 decimal places, 4 digits
++            decimal_places = abs(exponent)
++            num_digits = max(num_digits, decimal_places)
++
++        return decimal_places, num_digits
++    except (AssertionError, AttributeError):
++        raise TypeError(f'Unable to extract decimal digits info from supplied value {decimal}')
++
++
++def max_digits_validator(x: Any, max_digits: Any) -> Any:
++    try:
++        _, num_digits = _extract_decimal_digits_info(x)
++        _, normalized_num_digits = _extract_decimal_digits_info(x.normalize())
++        if (num_digits > max_digits) and (normalized_num_digits > max_digits):
++            raise PydanticKnownError(
++                'decimal_max_digits',
++                {'max_digits': max_digits},
++            )
++        return x
++    except TypeError:
++        raise TypeError(f"Unable to apply constraint 'max_digits' to supplied value {x}")
++
++
++def decimal_places_validator(x: Any, decimal_places: Any) -> Any:
++    try:
++        decimal_places_, _ = _extract_decimal_digits_info(x)
++        if decimal_places_ > decimal_places:
++            normalized_decimal_places, _ = _extract_decimal_digits_info(x.normalize())
++            if normalized_decimal_places > decimal_places:
++                raise PydanticKnownError(
++                    'decimal_max_places',
++                    {'decimal_places': decimal_places},
++                )
++        return x
++    except TypeError:
++        raise TypeError(f"Unable to apply constraint 'decimal_places' to supplied value {x}")
+ 
+ 
+ def deque_validator(input_value: Any, handler: core_schema.ValidatorFunctionWrapHandler) -> collections.deque[Any]:
+@@ -436,6 +490,18 @@ def validate_str_is_valid_iana_tz(value: Any, /) -> ZoneInfo:
+         raise PydanticCustomError('zoneinfo_str', 'invalid timezone: {value}', {'value': value})
+ 
+ 
++NUMERIC_VALIDATOR_LOOKUP: dict[str, Callable] = {
++    'gt': greater_than_validator,
++    'ge': greater_than_or_equal_validator,
++    'lt': less_than_validator,
++    'le': less_than_or_equal_validator,
++    'multiple_of': multiple_of_validator,
++    'min_length': min_length_validator,
++    'max_length': max_length_validator,
++    'max_digits': max_digits_validator,
++    'decimal_places': decimal_places_validator,
++}
++
+ IpType = Union[IPv4Address, IPv6Address, IPv4Network, IPv6Network, IPv4Interface, IPv6Interface]
+ 
+ IP_VALIDATOR_LOOKUP: dict[type[IpType], Callable] = {
+@@ -461,4 +527,4 @@ MAPPING_ORIGIN_MAP: dict[Any, Any] = {
+     # parametrized typing.{Mutable}Mapping creates one of these
+     collections.abc.Mapping: dict,
+     collections.abc.MutableMapping: dict,
+-}
+\ No newline at end of file
++}

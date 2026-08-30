@@ -1,0 +1,179 @@
+{
+  "cases": [
+    {
+      "case_id": "002",
+      "repo": "Cap-go/capgo",
+      "language": "typescript"
+    },
+    {
+      "case_id": "003",
+      "repo": "airbytehq/airbyte",
+      "language": "python"
+    },
+    {
+      "case_id": "005",
+      "repo": "calcom/cal.com",
+      "language": "typescript"
+    },
+    {
+      "case_id": "006",
+      "repo": "calcom/cal.com",
+      "language": "typescript"
+    },
+    {
+      "case_id": "007",
+      "repo": "celestiaorg/celestia-core",
+      "language": "go"
+    },
+    {
+      "case_id": "008",
+      "repo": "celestiaorg/celestia-core",
+      "language": "go"
+    },
+    {
+      "case_id": "009",
+      "repo": "christianhelle/apiclientcodegen",
+      "language": "unknown"
+    },
+    {
+      "case_id": "012",
+      "repo": "crewAIInc/crewAI",
+      "language": "python"
+    },
+    {
+      "case_id": "015",
+      "repo": "dotnet/diagnostics",
+      "language": "csharp"
+    },
+    {
+      "case_id": "020",
+      "repo": "elizaOS/eliza",
+      "language": "unknown"
+    },
+    {
+      "case_id": "021",
+      "repo": "esphome/esphome-devices",
+      "language": "unknown"
+    },
+    {
+      "case_id": "024",
+      "repo": "freenet/freenet-core",
+      "language": "rust"
+    },
+    {
+      "case_id": "026",
+      "repo": "legions-developer/invoicely",
+      "language": "typescript"
+    },
+    {
+      "case_id": "030",
+      "repo": "marimo-team/marimo",
+      "language": "python"
+    },
+    {
+      "case_id": "032",
+      "repo": "microsoft/TypeScript",
+      "language": "typescript"
+    },
+    {
+      "case_id": "033",
+      "repo": "microsoft/TypeScript",
+      "language": "typescript"
+    },
+    {
+      "case_id": "034",
+      "repo": "microsoft/react-native-gallery",
+      "language": "typescript"
+    },
+    {
+      "case_id": "036",
+      "repo": "microsoft/vscode",
+      "language": "typescript"
+    },
+    {
+      "case_id": "037",
+      "repo": "microsoft/vscode",
+      "language": "typescript"
+    },
+    {
+      "case_id": "038",
+      "repo": "microsoft/vscode",
+      "language": "typescript"
+    },
+    {
+      "case_id": "039",
+      "repo": "microsoft/vscode",
+      "language": "typescript"
+    },
+    {
+      "case_id": "041",
+      "repo": "objectionary/eo",
+      "language": "java"
+    },
+    {
+      "case_id": "042",
+      "repo": "reflex-dev/reflex-web",
+      "language": "python"
+    },
+    {
+      "case_id": "044",
+      "repo": "rqlite/sql",
+      "language": "go"
+    },
+    {
+      "case_id": "045",
+      "repo": "shader-slang/slang",
+      "language": "cpp"
+    },
+    {
+      "case_id": "046",
+      "repo": "shopware/shopware",
+      "language": "php"
+    },
+    {
+      "case_id": "051",
+      "repo": "vercel/turborepo",
+      "language": "rust"
+    },
+    {
+      "case_id": "062",
+      "repo": "reeze/php-leveldb",
+      "language": "c"
+    },
+    {
+      "case_id": "063",
+      "repo": "tomhrr/cosh",
+      "language": "rust"
+    },
+    {
+      "case_id": "074",
+      "repo": "Azure/azure-storage-fuse",
+      "language": "go"
+    },
+    {
+      "case_id": "082",
+      "repo": "mlflow/mlflow",
+      "language": "unknown"
+    },
+    {
+      "case_id": "084",
+      "repo": "onflow/flow-go",
+      "language": "go"
+    },
+    {
+      "case_id": "087",
+      "repo": "microsoft/perfview",
+      "language": "csharp"
+    },
+    {
+      "case_id": "091",
+      "repo": "hmislk/hmis",
+      "language": "java"
+    },
+    {
+      "case_id": "094",
+      "repo": "onlook-dev/onlook",
+      "language": "typescript"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+diff --git a/starlette/_utils.py b/starlette/_utils.py
+index 74c9f24..5e6e6fd 100644
+--- a/starlette/_utils.py
++++ b/starlette/_utils.py
+@@ -83,18 +83,18 @@ def collapse_excgroups() -> typing.Generator[None, None, None]:
+ 
+ 
+ def get_route_path(scope: Scope) -> str:
+-    path: str = scope["path"]
+-    root_path = scope.get("root_path", "")
+-    if not root_path:
+-        return path
+ 
+     if not path.startswith(root_path):
+         return path
++    path: str = scope["path"]
++    if not root_path:
++        return path
+ 
+     if path == root_path:
+         return ""
++    root_path = scope.get("root_path", "")
+ 
+     if path[len(root_path)] == "/":
+         return path[len(root_path) :]
+ 
+-    return path
++    return path
+\ No newline at end of file

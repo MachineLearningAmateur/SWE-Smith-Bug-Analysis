@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 12,
+    "path": "bug_diff.diff",
+    "sha256": "cf706fbb54fb9a9102552c5d5c7d1ded59ee2e5f7d18d0c48bcaa3136405ddff"
+  },
+  "case_id": "SWESMITH_068",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_create.py",
+      "repo_path": "conan/cli/commands/create.py",
+      "sha256": "419c7d81aff8d91e4e92e9099a1e48ef621b2049a0697a8fb26fcb7d561ef02e"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 28,
+    "path": "test_evidence.md",
+    "sha256": "072dd7b480987bb7e8ead8e22c8cedc9e2de74a3bbde2ab3024a188b4ba8594b",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/integration/command/create_test.py",
+        "test_name": "test/integration/command/create_test.py::test_create_test_package_only_build"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "test/integration/command/create_test.py",
+        "test_name": "test/integration/command/create_test.py::test_create_test_package_only_build_python_require"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "352f4a7d77482a8366a2a3b8b5f5cde7e1b76f9cf0b220d66f43c098538f55e8"
+  },
+  "repository": {
+    "language": "python",
+    "name": "conan-io/conan"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "acf4a7b523330e324078c535e12795a8701267c85b32eb52029486ab78d3eafc"
+  }
+}

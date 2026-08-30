@@ -1,0 +1,19 @@
+diff --git a/conan/tools/files/files.py b/conan/tools/files/files.py
+index 7212173..66a2a43 100644
+--- a/conan/tools/files/files.py
++++ b/conan/tools/files/files.py
+@@ -204,6 +204,7 @@ def download(conanfile, url, filename, verify=True, retry=None, retry_wait=None,
+     retry = config.get("tools.files.download:retry", check_type=int, default=retry)
+     retry_wait = retry_wait if retry_wait is not None else 5
+     retry_wait = config.get("tools.files.download:retry_wait", check_type=int, default=retry_wait)
++    verify = config.get("tools.files.download:verify", check_type=bool, default=verify)
+ 
+     filename = os.path.abspath(filename)
+     downloader = SourcesCachingDownloader(conanfile)
+@@ -538,4 +539,4 @@ def move_folder_contents(conanfile, src_folder, dst_folder):
+     try:
+         os.rmdir(src_folder)
+     except OSError:
+-        pass
+\ No newline at end of file
++        pass

@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 12,
+    "lines_deleted": 4,
+    "path": "bug_diff.diff",
+    "sha256": "ab1b1d37ad912b7c1bfd6a3a190ede90a62ec5ae202f2629f73813da3641fd27"
+  },
+  "case_id": "SWESMITH_018",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_build_helpers.py",
+      "repo_path": "build_helpers/build_helpers.py",
+      "sha256": "b02e64d1eabbdc3e5719c067a9577f2eb0c2d8a125878affbdd77e65e8d2a900"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 11,
+    "path": "test_evidence.md",
+    "sha256": "8d5c45e095bd9b3c9d87c9de182299ad059f88780f1e95258f506897b4cc7a7c",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "build_helpers/test_helpers.py",
+        "test_name": "build_helpers/test_helpers.py::test_matches[patterns1-a//-True]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "build_helpers/test_helpers.py",
+        "test_name": "build_helpers/test_helpers.py::test_matches[patterns3-//foo//bar/blag-True]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "0a12916231988a86ff3f959ff2d679ea8a7db7eff2a98293259632002fe07063"
+  },
+  "repository": {
+    "language": "python",
+    "name": "facebookresearch/hydra"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "387dfdbd024fe83cf9872485993c6761fb5cb28af02baa6a3a9a2a3d145fcd11"
+  }
+}

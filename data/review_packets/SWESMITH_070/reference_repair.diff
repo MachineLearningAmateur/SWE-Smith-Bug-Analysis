@@ -1,0 +1,39 @@
+diff --git a/gpxpy/gpx.py b/gpxpy/gpx.py
+index 267e486..73e2024 100644
+--- a/gpxpy/gpx.py
++++ b/gpxpy/gpx.py
+@@ -577,7 +577,7 @@ class GPXTrackPoint(mod_geo.Location):
+         """ Will remove time metadata. """
+         self.time = None
+ 
+-    def time_difference(self, track_point: 'GPXTrackPoint') -> Optional[float]:
++    def time_difference(self, track_point: "GPXTrackPoint") -> Optional[float]:
+         """
+         Get time difference between specified point and this point.
+ 
+@@ -590,10 +590,22 @@ class GPXTrackPoint(mod_geo.Location):
+         time_difference : float
+             Time difference returned in seconds
+         """
+-        if not track_point or not self.time or not track_point.time:
++        if not self.time or not track_point or not track_point.time:
+             return None
+-        
+-        return mod_utils.total_seconds(self.time - track_point.time)
++
++        time_1 = self.time
++        time_2 = track_point.time
++
++        if time_1 == time_2:
++            return 0
++
++        if time_1 > time_2:
++            delta = time_1 - time_2
++        else:
++            delta = time_2 - time_1
++
++        return mod_utils.total_seconds(delta)
++
+     def speed_between(self, track_point: "GPXTrackPoint") -> Optional[float]:
+         """
+         Compute the speed between specified point and this point.

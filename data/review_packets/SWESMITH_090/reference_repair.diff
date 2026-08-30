@@ -1,0 +1,50 @@
+diff --git a/sqlglot/tokens.py b/sqlglot/tokens.py
+index 59531f1..2944deb 100644
+--- a/sqlglot/tokens.py
++++ b/sqlglot/tokens.py
+@@ -1182,6 +1182,37 @@ class Tokenizer(metaclass=_Tokenizer):
+         trie = self._KEYWORD_TRIE
+         single_token = char in self.SINGLE_TOKENS
+ 
++        while chars:
++            if skip:
++                result = TrieResult.PREFIX
++            else:
++                result, trie = in_trie(trie, char.upper())
++
++            if result == TrieResult.FAILED:
++                break
++            if result == TrieResult.EXISTS:
++                word = chars
++
++            end = self._current + size
++            size += 1
++
++            if end < self.size:
++                char = self.sql[end]
++                single_token = single_token or char in self.SINGLE_TOKENS
++                is_space = char.isspace()
++
++                if not is_space or not prev_space:
++                    if is_space:
++                        char = " "
++                    chars += char
++                    prev_space = is_space
++                    skip = False
++                else:
++                    skip = True
++            else:
++                char = ""
++                break
++
+         if word:
+             if self._scan_string(word):
+                 return
+@@ -1198,6 +1229,7 @@ class Tokenizer(metaclass=_Tokenizer):
+             return
+ 
+         self._scan_var()
++
+     def _scan_comment(self, comment_start: str) -> bool:
+         if comment_start not in self._COMMENTS:
+             return False

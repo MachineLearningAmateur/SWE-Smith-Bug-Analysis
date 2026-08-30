@@ -1,15 +1,18 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "_comment": [
+    "Deny rules are a convenience guard for a reviewer who opens the full",
+    "repository. They are NOT the isolation guarantee: a review bundle",
+    "(scripts/make_review_bundle.py) physically excludes the hidden material,",
+    "and that is what an independent reviewer should be given.",
+    "Kept narrow on purpose. data/population/ and analysis/ are outputs the",
+    "study operator has to write, and denying them here only obstructs that;",
+    "both briefs forbid a reviewer from opening them."
+  ],
   "permissions": {
     "deny": [
-      "Read(./data/sampling/**)",
-      "Read(./data/validated_pool/**)",
-      "Read(./data/generated_pool/**)",
-      "Read(./data/rejected/**)",
-      "Read(./runs/**)",
-      "Read(./analysis/**)",
-      "Read(./reviews/codex/**)",
-      "Read(./workspace/**)"
+      "Read(./data/hidden/**)",
+      "Read(./reviews/codex/**)"
     ],
     "allow": [
       "Read(./data/review_packets/**)",

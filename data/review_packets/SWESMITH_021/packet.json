@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 22,
+    "lines_deleted": 17,
+    "path": "bug_diff.diff",
+    "sha256": "0108786d2809035ca6db77113fb99126506966329bfc44bc79e6e7d83b7c8e66"
+  },
+  "case_id": "SWESMITH_021",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_metrics.py",
+      "repo_path": "radon/metrics.py",
+      "sha256": "c2ff70c3984e7fd281b3e371a8d18d8c01dbd62be8193a1ed17653fbddcb70b0"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 268,
+    "path": "test_evidence.md",
+    "sha256": "31a689830cbdddfc0c34c223e561e54374981b32bbac3c581c70a82e67e0dd21",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "radon/tests/test_other_metrics.py",
+        "test_name": "radon/tests/test_other_metrics.py::test_mi_compute[values2-81.75051711476864]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "radon/tests/test_other_metrics.py",
+        "test_name": "radon/tests/test_other_metrics.py::test_mi_compute[values3-70.0321877686122]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "2cc5bd9a7c6f862aaca8e9d992608a9ba30b44e905ff231f2d5b1c13b2e76802"
+  },
+  "repository": {
+    "language": "python",
+    "name": "rubik/radon"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "3851a034a73403cd10d4b37a073397ffade7881ca4566a4f17e034ffffd95bc6"
+  }
+}

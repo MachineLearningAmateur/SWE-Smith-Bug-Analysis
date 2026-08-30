@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 6,
+    "lines_deleted": 12,
+    "path": "bug_diff.diff",
+    "sha256": "32d3ed9058dc443f8c563b39003ff65d76b44fa83b8f76344bdcd8a9d4d5fa9d"
+  },
+  "case_id": "SWESMITH_031",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_main.py",
+      "repo_path": "src/dotenv/main.py",
+      "sha256": "99d22cd9faed84b354d23ca9902c69bc9c1c362d9231d8695deb5ef8f372bbc0"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 120,
+    "path": "test_evidence.md",
+    "sha256": "cb731b07a8953b500a3aa404909e8c78bcdd61398584a0c47c269d730de36d8c",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_main.py",
+        "test_name": "tests/test_main.py::test_dotenv_values_string_io[env19-a=b/nc=${a}/nd=e/nc=${d}-True-expected19]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "0aa3e4b704887642a83004e9fb2830625a39b2608096dd1eb2afd070bbcdff41"
+  },
+  "repository": {
+    "language": "python",
+    "name": "theskumar/python-dotenv"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "a6acf3a436d557260a142355d18626ef522615d34d1c7556bc659ee0beb54e48"
+  }
+}

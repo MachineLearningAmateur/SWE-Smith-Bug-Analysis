@@ -1,0 +1,79 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 3,
+    "lines_added": 3,
+    "lines_deleted": 27,
+    "path": "bug_diff.diff",
+    "sha256": "cba894f29acedea0b6d0548e03365bbe1f58689b36cfce30251413ddbe596927"
+  },
+  "case_id": "SWESMITH_046",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_models.py",
+      "repo_path": "moto/guardduty/models.py",
+      "sha256": "93e153596801372ba7c28d93ff61c377a241e5c3ff40cf2a5c9f052fdc65e1a9"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_02",
+      "path": "context/02_responses.py",
+      "repo_path": "moto/guardduty/responses.py",
+      "sha256": "90f170c0541ae5486bf4f1683e7146857473d56c70317d5aecadc811dcc60a57"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_03",
+      "path": "context/03_urls.py",
+      "repo_path": "moto/guardduty/urls.py",
+      "sha256": "cc4b58512c3b2710f989fc3e10740a1780ce274d592d7e03c3a213653618a4e3"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "CODE_CONTEXT_02",
+    "CODE_CONTEXT_03",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 9,
+    "path": "test_evidence.md",
+    "sha256": "1025f526a654c5c42feb056456eda52d1b94791f20646308ff0abb085fcab79a",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_guardduty/test_guardduty.py",
+        "test_name": "tests/test_guardduty/test_guardduty.py::test_get_administrator_account"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_guardduty/test_guardduty.py",
+        "test_name": "tests/test_guardduty/test_guardduty.py::test_no_administrator_account"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "e4da996d408eb7465671dbb9350e57ce77c4896d4d95495163689ec62aec1b77"
+  },
+  "repository": {
+    "language": "python",
+    "name": "getmoto/moto"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "b1e9f0145f1edc571a542d4478dbe7c676b112a6dae56d53bdff3fc9ab7f7b62"
+  }
+}

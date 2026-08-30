@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 43,
+    "lines_deleted": 21,
+    "path": "bug_diff.diff",
+    "sha256": "97d207e7f9d4b4d54e8fe4d9b5139d79d47534f4d1242013490cde35cfbe3588"
+  },
+  "case_id": "SWESMITH_022",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_test.py",
+      "repo_path": "test.py",
+      "sha256": "36c39312a68ea4095efa84bac02c6a0e0e74f69b573fccc4edf8ca7a399b591a"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 142,
+    "path": "test_evidence.md",
+    "sha256": "c8cf747896b17559744f01078e5ac65aa2bba0efd93c400e55543ae7d1347ff3",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test.py",
+        "test_name": "test.py::GPXTests::test_parse_time"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "9596cdf1712eb23b02ace9751294f59e3a4c2aff5e4035b5306d5f8917b5c551"
+  },
+  "repository": {
+    "language": "python",
+    "name": "tkrajina/gpxpy"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "901339500bff9f7a87ce05c902c3d485efc722dc7ba89a9a3409f484e41c0f06"
+  }
+}

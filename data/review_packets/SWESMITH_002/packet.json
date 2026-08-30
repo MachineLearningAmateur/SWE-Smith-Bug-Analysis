@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 0,
+    "lines_deleted": 65,
+    "path": "bug_diff.diff",
+    "sha256": "ca979abd17ede81f83770375d7092359636c9f099b1da8a8312f80bf8221002b"
+  },
+  "case_id": "SWESMITH_002",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_wordcloud.py",
+      "repo_path": "wordcloud/wordcloud.py",
+      "sha256": "331c95d9c71c2db4ffddb8f99f5ffa5b08ae5fe60050d8258a63a9b0f47061f8"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 72,
+    "path": "test_evidence.md",
+    "sha256": "490a978a4eb5557870cb9e2042d3a470f9d84de163eb579f3e03f9eddb5a29ab",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/test_wordcloud.py",
+        "test_name": "test/test_wordcloud.py::test_svg_syntax"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "03b637f1a0503311a78912c92f60b8f95fc8b60b86bf52d4127e604b665e5981"
+  },
+  "repository": {
+    "language": "python",
+    "name": "amueller/word_cloud"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

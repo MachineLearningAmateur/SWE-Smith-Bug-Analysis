@@ -1,0 +1,168 @@
+diff --git a/moto/identitystore/models.py b/moto/identitystore/models.py
+index a0472f9..0117104 100644
+--- a/moto/identitystore/models.py
++++ b/moto/identitystore/models.py
+@@ -17,6 +17,14 @@ if TYPE_CHECKING:
+     from typing_extensions import Self
+ 
+ 
++class Group(NamedTuple):
++    GroupId: str
++    DisplayName: str
++    ExternalIds: List[Optional[Dict[str, str]]]
++    Description: str
++    IdentityStoreId: str
++
++
+ class Name(NamedTuple):
+     Formatted: Optional[str]
+     FamilyName: Optional[str]
+@@ -59,7 +67,7 @@ class User(NamedTuple):
+ 
+ class IdentityStoreData:
+     def __init__(self) -> None:
+-        self.groups: Dict[str, Dict[str, str]] = {}
++        self.groups: Dict[str, Group] = {}
+         self.users: Dict[str, User] = {}
+         self.group_memberships: Dict[str, Any] = {}
+ 
+@@ -104,7 +112,7 @@ class IdentityStoreBackend(BaseBackend):
+         identity_store = self.__get_identity_store(identity_store_id)
+ 
+         matching = [
+-            g for g in identity_store.groups.values() if g["DisplayName"] == display_name
++            g for g in identity_store.groups.values() if g.DisplayName == display_name
+         ]
+         if len(matching) > 0:
+             raise ConflictException(
+@@ -113,13 +121,14 @@ class IdentityStoreBackend(BaseBackend):
+             )
+ 
+         group_id = str(mock_random.uuid4())
+-        group_dict = {
+-            "GroupId": group_id,
+-            "IdentityStoreId": identity_store_id,
+-            "DisplayName": display_name,
+-            "Description": description,
+-        }
+-        identity_store.groups[group_id] = group_dict
++        group = Group(
++            group_id,
++            display_name,
++            [],
++            description,
++            identity_store_id,
++        )
++        identity_store.groups[group_id] = group
+         return group_id, identity_store_id
+ 
+     def get_group_id(
+@@ -137,17 +146,32 @@ class IdentityStoreBackend(BaseBackend):
+             ):
+                 for g in identity_store.groups.values():
+                     if (
+-                        g["DisplayName"]
++                        g.DisplayName
+                         == alternate_identifier["UniqueAttribute"]["AttributeValue"]
+                     ):
+-                        return g["GroupId"], identity_store_id
+-        elif "ExternalId" in alternate_identifier:
+-            warnings.warn("ExternalId has not been implemented.")
++                        return g.GroupId, identity_store_id
+ 
+         raise ResourceNotFoundException(
+             message="GROUP not found.", resource_type="GROUP"
+         )
+ 
++    def describe_group(self, identity_store_id: str, group_id: str) -> Group:
++        identity_store = self.__get_identity_store(identity_store_id)
++        if group_id in identity_store.groups:
++            g = identity_store.groups[group_id]
++            # External Ids are not implemented
++            external_ids: List[Any] = []
++            return Group(
++                g.GroupId,
++                g.DisplayName,
++                external_ids,
++                g.Description,
++                identity_store_id,
++            )
++        raise ResourceNotFoundException(
++            message="GROUP not found.", resource_type="GROUP"
++        )
++
+     def delete_group(self, identity_store_id: str, group_id: str) -> None:
+         identity_store = self.__get_identity_store(identity_store_id)
+         if group_id in identity_store.groups:
+@@ -263,7 +287,7 @@ class IdentityStoreBackend(BaseBackend):
+     @paginate(pagination_model=PAGINATION_MODEL)
+     def list_groups(
+         self, identity_store_id: str, filters: List[Dict[str, str]]
+-    ) -> List[Dict[str, str]]:
++    ) -> List[Group]:
+         identity_store = self.__get_identity_store(identity_store_id)
+ 
+         if filters:
+@@ -272,12 +296,12 @@ class IdentityStoreBackend(BaseBackend):
+                 return [
+                     m
+                     for m in identity_store.groups.values()
+-                    if m["DisplayName"] == displayname
++                    if m.DisplayName == displayname
+                 ]
+ 
+         return [m for m in identity_store.groups.values()]
+ 
+-    @paginate(pagination_model=PAGINATION_MODEL)  # type: ignore
++    @paginate(pagination_model=PAGINATION_MODEL)
+     def list_users(
+         self, identity_store_id: str, filters: List[Dict[str, str]]
+     ) -> List[Dict[str, str]]:
+@@ -352,4 +376,4 @@ class IdentityStoreBackend(BaseBackend):
+             )
+ 
+ 
+-identitystore_backends = BackendDict(IdentityStoreBackend, "identitystore")
+\ No newline at end of file
++identitystore_backends = BackendDict(IdentityStoreBackend, "identitystore")
+diff --git a/moto/identitystore/responses.py b/moto/identitystore/responses.py
+index dbf4cef..db057d5 100644
+--- a/moto/identitystore/responses.py
++++ b/moto/identitystore/responses.py
+@@ -176,6 +176,29 @@ class IdentityStoreResponse(BaseResponse):
+             dict(Groups=[g._asdict() for g in groups], NextToken=next_token)
+         )
+ 
++    def describe_group(self) -> str:
++        identity_store_id = self._get_param("IdentityStoreId")
++        group_id = self._get_param("GroupId")
++        (
++            group_id,
++            display_name,
++            external_ids,
++            description,
++            identity_store_id,
++        ) = self.identitystore_backend.describe_group(
++            identity_store_id=identity_store_id,
++            group_id=group_id,
++        )
++        return json.dumps(
++            dict(
++                GroupId=group_id,
++                DisplayName=display_name,
++                ExternalIds=external_ids,
++                Description=description,
++                IdentityStoreId=identity_store_id,
++            )
++        )
++
+     def list_users(self) -> str:
+         identity_store_id = self._get_param("IdentityStoreId")
+         max_results = self._get_param("MaxResults")
+@@ -225,4 +248,4 @@ class IdentityStoreResponse(BaseResponse):
+     ) -> Optional[Dict[str, Any]]:
+         if value:
+             return value._asdict()
+-        return None
+\ No newline at end of file
++        return None

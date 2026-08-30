@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 3,
+    "path": "bug_diff.diff",
+    "sha256": "cb320e645bf8ea48a66dd7bf3efcf37ef647ee41b898b9c79bb0c2caebfe1b28"
+  },
+  "case_id": "SWESMITH_081",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_body.py",
+      "repo_path": "gunicorn/http/body.py",
+      "sha256": "121f1d30bad0d4aad895ecd8ace612b07f8aa69a7d3de226a2ebdf3ba5a88960"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 246,
+    "path": "test_evidence.md",
+    "sha256": "7a2f292d9eff72f0eaab184f0ffd4b59f3d32e533b5133267f62ff7d6ec65426",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_invalid_requests.py",
+        "test_name": "tests/test_invalid_requests.py::test_http_parser[/testbed/tests/requests/invalid/chunked_12.http]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_invalid_requests.py",
+        "test_name": "tests/test_invalid_requests.py::test_http_parser[/testbed/tests/requests/invalid/chunked_13.http]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "65760545ea413873baad7571a4117978abeabb3ffe592fd678a5d9808f166f95"
+  },
+  "repository": {
+    "language": "python",
+    "name": "benoitc/gunicorn"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "8eab4681c5c9c517cd7e15bb660d9f78b8bb37f5a97275cb5cdd699c02f18afb"
+  }
+}

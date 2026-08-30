@@ -1,0 +1,40 @@
+diff --git a/pdfplumber/structure.py b/pdfplumber/structure.py
+index d6c3fb9..88749d7 100644
+--- a/pdfplumber/structure.py
++++ b/pdfplumber/structure.py
+@@ -131,23 +131,18 @@ class PDFStructElement(Findable):
+ 
+     def to_dict(self) -> Dict[str, Any]:
+         """Return a compacted dict representation."""
+-        result = {
+-            "children": [child.to_dict() for child in self.children]
+-        }
+-    
+-        # Add optional attributes if they exist
+-        if hasattr(self, "role_map") and self.role_map:
+-            result["role_map"] = self.role_map
+-    
+-        if hasattr(self, "class_map") and self.class_map:
+-            result["class_map"] = self.class_map
+-    
+-        # Prune empty values
+-        for k in list(result.keys()):
+-            if result[k] is None or result[k] == [] or result[k] == {}:
+-                del result[k]
+-            
+-        return result
++        r = asdict(self)
++        # Prune empty values (does not matter in which order)
++        d = deque([r])
++        while d:
++            el = d.popleft()
++            for k in list(el.keys()):
++                if el[k] is None or el[k] == [] or el[k] == {}:
++                    del el[k]
++            if "children" in el:
++                d.extend(el["children"])
++        return r
++
+ 
+ class StructTreeMissing(ValueError):
+     pass

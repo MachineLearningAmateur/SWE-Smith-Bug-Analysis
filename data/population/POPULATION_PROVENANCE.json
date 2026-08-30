@@ -1,0 +1,63 @@
+{
+  "counts": {
+    "documented_trajectory_claim": 5017,
+    "duplicate_trajectory_rows": 805,
+    "resolved_task_instances": 4207,
+    "trajectory_rows_in_pinned_revision": 5016,
+    "unique_task_instances": 4211,
+    "unresolved_task_instances": 4
+  },
+  "distribution": {
+    "generation_method": {
+      "combine_file": 75,
+      "combine_module": 4,
+      "func_basic": 7,
+      "func_pm_class_rm_base": 65,
+      "func_pm_class_rm_funcs": 83,
+      "func_pm_class_shuffle_funcs": 6,
+      "func_pm_ctrl_invert_if": 219,
+      "func_pm_ctrl_shuffle": 505,
+      "func_pm_op_break_chains": 13,
+      "func_pm_op_change": 39,
+      "func_pm_op_change_const": 25,
+      "func_pm_op_swap": 53,
+      "func_pm_remove_assign": 224,
+      "func_pm_remove_cond": 122,
+      "func_pm_remove_loop": 54,
+      "func_pm_remove_wrapper": 23,
+      "lm_rewrite": 1529,
+      "pr_mirror": 1161
+    },
+    "largest_repository_share": 0.0535,
+    "method_family": {
+      "combine": 79,
+      "llm": 1529,
+      "mirror": 1161,
+      "procedural": 1438
+    },
+    "trajectories_per_task": {
+      "1": 3717,
+      "2": 176,
+      "3": 314
+    },
+    "unique_upstream_repositories": 122
+  },
+  "documented_trajectory_claim": 5017,
+  "generated_at_utc": "2026-08-30T08:01:28Z",
+  "notes": [
+    "The trajectory dataset card prose says 5017; the shipped data at the pinned revision has 5016 rows. The count is reported, not reconciled.",
+    "One population row per unique task instance. Tasks with several training trajectories keep the count in trajectory_count.",
+    "Language is recorded as python for every row: the task corpus at this revision is Python-only."
+  ],
+  "outputs": {
+    "csv": "swesmith_training_tasks.csv",
+    "csv_sha256": "256b2efce1136be96a568bd8aede4f2d0721db53abba7982708abc0c137c8358",
+    "parquet": "swesmith_training_tasks.parquet"
+  },
+  "task_dataset": "SWE-bench/SWE-smith",
+  "task_dataset_revision": "9f2a10465194",
+  "task_revision_note": "The 2025-04-29 upload, made the same day as the trajectory release. 50,137 rows, and unlike the current main it still carries base_commit and created_at.",
+  "trajectory_dataset": "SWE-bench/SWE-smith-trajectories",
+  "trajectory_dataset_revision": "f6b6d7e01f2b",
+  "trajectory_revision_note": "Last revision before the 2025-07-18/19 expansion. Its dataset card declares a single train split with num_examples 5016, and its prose states these are the trajectories used to fine-tune SWE-agent-LM-32B."
+}

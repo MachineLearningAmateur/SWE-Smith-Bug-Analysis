@@ -23,7 +23,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from ssr.paths import REVIEWERS  # noqa: E402
-from ssr.review_workflow import ReviewerPaths, expected_bug_ids, init_metadata, save_case  # noqa: E402
+from ssr.review_workflow import ReviewerPaths, expected_case_ids, init_metadata, save_case  # noqa: E402
 from ssr.taxonomy import FINE_LABELS, PROCESS_LABELS  # noqa: E402
 from ssr.util import SsrError  # noqa: E402
 from ssr.validate_review import packet_evidence_ids  # noqa: E402
@@ -50,15 +50,15 @@ def draw(rng: random.Random) -> str:
     return rng.choices(labels, weights=[WEIGHTS[label] for label in labels], k=1)[0]
 
 
-def record(bug_id: str, pattern: str, rng: random.Random) -> dict:
-    available = sorted(packet_evidence_ids(bug_id))
-    cited = [item for item in available if item in ("BUG_DIFF", "TEST_RESULTS")] or available[:1]
-    if any(item.startswith("ORACLE_TEST") for item in available):
-        cited.append(next(item for item in available if item.startswith("ORACLE_TEST")))
+def record(case_id: str, pattern: str, rng: random.Random) -> dict:
+    available = sorted(packet_evidence_ids(case_id))
+    cited = [item for item in available if item in ("BUG_DIFF", "SPECIFICATION")] or available[:1]
+    if any(item.startswith("TEST_FAILURE") for item in available):
+        cited.append(next(item for item in available if item.startswith("TEST_FAILURE")))
     # Code-state precedence: a process label may not be paired with BOTH.
     scope = "REPAIR_PROCESS" if pattern in PROCESS_LABELS else rng.choice(["CODE_STATE", "CODE_STATE", "BOTH"])
     return {
-        "bug_id": bug_id,
+        "case_id": case_id,
         "failure_pattern": pattern,
         "pattern_confidence": rng.choice(["HIGH", "HIGH", "MEDIUM", "LOW"]),
         "failure_scope": scope,
@@ -84,25 +84,25 @@ def main() -> int:
 
     for reviewer in REVIEWERS:
         paths = ReviewerPaths(reviewer)
-        if paths.cases.is_dir() and any(paths.cases.glob("SSR_*.json")):
+        if paths.case_files():
             raise SsrError(
                 f"reviews/{reviewer}/cases is not empty. Refusing to overwrite a review. "
                 "Clear it first if this really is a rehearsal."
             )
 
-    bug_ids = expected_bug_ids()
+    case_ids = expected_case_ids()
     rng = random.Random(args.seed)
     for reviewer in REVIEWERS:
         init_metadata(reviewer, model=f"rehearsal-placeholder/{reviewer}", notes="SIMULATED REHEARSAL, NOT A REVIEW")
 
-    for bug_id in bug_ids:
+    for case_id in case_ids:
         base = draw(rng)
         left = base
         right = base if rng.random() > args.disagreement else draw(rng)
-        save_case(REVIEWERS[0], record(bug_id, left, rng))
-        save_case(REVIEWERS[1], record(bug_id, right, rng))
+        save_case(REVIEWERS[0], record(case_id, left, rng))
+        save_case(REVIEWERS[1], record(case_id, right, rng))
 
-    print(f"wrote {len(bug_ids)} placeholder case(s) for each of {', '.join(REVIEWERS)}")
+    print(f"wrote {len(case_ids)} placeholder case(s) for each of {', '.join(REVIEWERS)}")
     return 0
 
 

@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 7,
+    "lines_deleted": 8,
+    "path": "bug_diff.diff",
+    "sha256": "37d8b9eee705b1c18b7cccbf966d68db87b807317e2dfa491e4eff1a39a0e59c"
+  },
+  "case_id": "SWESMITH_069",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_bottle.py",
+      "repo_path": "bottle.py",
+      "sha256": "60cad9960d92202c41ecb1c41028c3b742b2f1c8692b17354eb434c575db8b07"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 364,
+    "path": "test_evidence.md",
+    "sha256": "36bea81367fa983407181d76b1a3c2082a944fcab24ce95e14f347c4ed21254b",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/test_wsgi.py",
+        "test_name": "test/test_wsgi.py::TestWsgi::test_utf8_header"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "09cad1e90b3e148440adda712d890d9c108b576aeaca21e03442ea8a507e4ead"
+  },
+  "repository": {
+    "language": "python",
+    "name": "bottlepy/bottle"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "1331548c5d12c8ceb3e13a3f898fbe23582ad6b82a87074780b790b903b2c820"
+  }
+}

@@ -1,0 +1,85 @@
+diff --git a/src/pydicom/encaps.py b/src/pydicom/encaps.py
+index 3493808..d6cbc77 100644
+--- a/src/pydicom/encaps.py
++++ b/src/pydicom/encaps.py
+@@ -1618,7 +1618,7 @@ def _generate_pixel_data(
+     yield from generate_fragmented_frames(bytestream, number_of_frames=nr_frames)
+ 
+ 
+-def _decode_data_sequence(data: bytes) -> list[bytes]:
++def _decode_data_sequence(data: bytes) ->list[bytes]:
+     """Read encapsulated data and return a list of bytes.
+ 
+     .. deprecated:: 3.0
+@@ -1638,24 +1638,53 @@ def _decode_data_sequence(data: bytes) -> list[bytes]:
+     list of bytes
+         All fragments as a list of ``bytes``.
+     """
+-    # Convert data into a memory-mapped file
+-    with DicomBytesIO(data) as fp:
+-        # DICOM standard requires this
+-        fp.is_little_endian = True
+-        BasicOffsetTable = _read_item(fp)  # NOQA
+-        seq = []
+-
+-        while True:
+-            item = _read_item(fp)
+-
+-            # None is returned if get to Sequence Delimiter
+-            if not item:
+-                break
+-            seq.append(item)
+-
+-        # XXX should
+-        return seq
+-
++    fp = DicomBytesIO(data)
++    fp.is_little_endian = True
++    
++    # Skip the Basic Offset Table
++    tag = fp.read_tag()
++    if tag != 0xFFFEE000:
++        raise ValueError(
++            f"Unexpected tag '{Tag(tag)}' when parsing the Basic Offset Table item"
++        )
++    
++    length = fp.read_UL()
++    if length:
++        fp.seek(length, 1)  # Skip BOT data
++    
++    fragments = []
++    while True:
++        try:
++            tag = fp.read_tag()
++        except EOFError:
++            break
++        
++        # Check for Sequence Delimiter
++        if tag == 0xFFFEE0DD:
++            length = fp.read_UL()
++            if length != 0:
++                warn_and_log(
++                    f"Expected 0x00000000 after delimiter, found 0x{length:x}",
++                    UserWarning
++                )
++            break
++        
++        # Check for Item Tag
++        if tag != 0xFFFEE000:
++            raise ValueError(
++                f"Unexpected tag '{Tag(tag)}' when parsing the pixel data fragment items"
++            )
++        
++        length = fp.read_UL()
++        if length == 0xFFFFFFFF:
++            raise ValueError(
++                f"Undefined item length at offset {fp.tell() - 4} when "
++                "parsing the encapsulated pixel data fragments"
++            )
++        
++        fragments.append(fp.read(length))
++    
++    return fragments
+ 
+ def _defragment_data(data: bytes) -> bytes:
+     """Read encapsulated data and return the fragments as one continuous bytes.

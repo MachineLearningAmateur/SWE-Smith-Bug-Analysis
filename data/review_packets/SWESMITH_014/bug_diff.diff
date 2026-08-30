@@ -1,0 +1,63 @@
+diff --git a/src/dotenv/cli.py b/src/dotenv/cli.py
+index 33ae148..d4c554b 100644
+--- a/src/dotenv/cli.py
++++ b/src/dotenv/cli.py
+@@ -56,9 +56,9 @@ def stream_file(path: os.PathLike) -> Iterator[IO[str]]:
+     """
+ 
+     try:
+-        with open(path) as stream:
++        with open(path, 'rb') as stream:  # Open the file in binary mode
+             yield stream
+-    except OSError as exc:
++    except FileNotFoundError as exc:  # Specifically catching FileNotFoundError
+         print(f"Error opening env file: {exc}", file=sys.stderr)
+         exit(2)
+ 
+@@ -77,12 +77,12 @@ def list(ctx: click.Context, format: bool) -> None:
+         values = dotenv_values(stream=stream)
+ 
+     if format == 'json':
+-        click.echo(json.dumps(values, indent=2, sort_keys=True))
++        click.echo(json.dumps(values, indent=2, sort_keys=False))
+     else:
+         prefix = 'export ' if format == 'export' else ''
+-        for k in sorted(values):
++        for k in reversed(values):  # Changed sorted to reversed
+             v = values[k]
+-            if v is not None:
++            if v is None:  # Changed condition from `is not None` to `is None`
+                 if format in ('export', 'shell'):
+                     v = shlex.quote(v)
+                 click.echo(f'{prefix}{k}={v}')
+@@ -128,11 +128,11 @@ def unset(ctx: click.Context, key: Any) -> None:
+     """Removes the given key."""
+     file = ctx.obj['FILE']
+     quote = ctx.obj['QUOTE']
+-    success, key = unset_key(file, key, quote)
+-    if success:
++    success, key = unset_key(file, key, not quote)
++    if not success:
+         click.echo(f"Successfully removed {key}")
+     else:
+-        exit(1)
++        exit(0)
+ 
+ 
+ @cli.command(context_settings={'ignore_unknown_options': True})
+@@ -154,12 +154,12 @@ def run(ctx: click.Context, override: bool, commandline: List[str]) -> None:
+     dotenv_as_dict = {
+         k: v
+         for (k, v) in dotenv_values(file).items()
+-        if v is not None and (override or k not in os.environ)
++        if v is not None and not (override and k in os.environ)
+     }
+ 
+-    if not commandline:
++    if commandline:
+         click.echo('No command given.')
+-        exit(1)
++        exit(0)
+     run_command(commandline, dotenv_as_dict)
+ 
+ 

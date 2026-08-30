@@ -1,0 +1,42 @@
+diff --git a/conan/api/subapi/remotes.py b/conan/api/subapi/remotes.py
+index 682e3fe..1bb5566 100644
+--- a/conan/api/subapi/remotes.py
++++ b/conan/api/subapi/remotes.py
+@@ -344,4 +344,4 @@ def _check_urls(remotes, url, force, current):
+             if not force:
+                 raise ConanException(msg + " Use '--force' to override.")
+             else:
+-                ConanOutput().warning(msg + " Adding duplicated remote url because '--force'.")
+\ No newline at end of file
++                ConanOutput().warning(msg + " Adding duplicated remote url because '--force'.")
+diff --git a/conan/cli/commands/remote.py b/conan/cli/commands/remote.py
+index 6628b37..a22529f 100644
+--- a/conan/cli/commands/remote.py
++++ b/conan/cli/commands/remote.py
+@@ -73,6 +73,8 @@ def remote_add(conan_api, parser, subparser, *args):
+                            help="Allow insecure server connections when using SSL")
+     subparser.add_argument("--index", action=OnceArgument, type=int,
+                            help="Insert the remote at a specific position in the remote list")
++    subparser.add_argument("-f", "--force", action='store_true',
++                           help="Force the definition of the remote even if duplicated")
+     subparser.add_argument("-ap", "--allowed-packages", action="append", default=None,
+                            help="Add recipe reference pattern to list of allowed packages for "
+                                 "this remote")
+@@ -87,9 +89,7 @@ def remote_add(conan_api, parser, subparser, *args):
+     url = url_folder if remote_type == LOCAL_RECIPES_INDEX else args.url
+     r = Remote(args.name, url, args.secure, disabled=False, remote_type=remote_type,
+                allowed_packages=args.allowed_packages)
+-    conan_api.remotes.add(r)
+-    if args.index is not None:
+-        conan_api.remotes.move(r, args.index)
++    conan_api.remotes.add(r, force=args.force, index=args.index)
+ 
+ 
+ @conan_subcommand(formatters={"text": print_remote_list})
+@@ -313,4 +313,4 @@ def remote_auth(conan_api, parser, subparser, *args):
+ def remote(conan_api, parser, *args):
+     """
+     Manage the remote list and the users authenticated on them.
+-    """
+\ No newline at end of file
++    """

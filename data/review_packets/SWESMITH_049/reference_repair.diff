@@ -1,0 +1,21 @@
+diff --git a/parso/python/tree.py b/parso/python/tree.py
+index 6c138ea..0624e67 100644
+--- a/parso/python/tree.py
++++ b/parso/python/tree.py
+@@ -819,7 +819,7 @@ class Import(PythonBaseNode):
+         return self.children[-1] == '*'
+ 
+ 
+-class ImportFrom():
++class ImportFrom(Import):
+     type = 'import_from'
+     __slots__ = ()
+ 
+@@ -888,6 +888,7 @@ class ImportFrom():
+             return [dotted]
+         return [dotted + [name] for name, alias in self._as_name_tuples()]
+ 
++
+ class ImportName(Import):
+     """For ``import_name`` nodes. Covers normal imports without ``from``."""
+     type = 'import_name'

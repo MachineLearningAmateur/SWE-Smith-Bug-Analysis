@@ -1,0 +1,125 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 11,
+    "lines_deleted": 11,
+    "path": "bug_diff.diff",
+    "sha256": "579b1cef90ddf218fe6953297510f0750fd983930829b4a1ee844ed0fe2d2a8d"
+  },
+  "case_id": "SWESMITH_014",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_cli.py",
+      "repo_path": "src/dotenv/cli.py",
+      "sha256": "80ff665b4c7a9d37d57c3ad9dca92bdb56935c64bca465c3a3fd8a5a439a68be"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 12,
+    "passing_count": 109,
+    "path": "test_evidence.md",
+    "sha256": "1a2590d7173ed7d09bb539ff746c898441d626de8c18755a269a5a960635a251",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_get_default_path"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_get_existing_value"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_get_not_a_file"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_list[shell-x='a/nb/nc'-x='a/nb/nc'/n]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_list_not_a_file"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_run"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_run_with_existing_variable"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_run_with_existing_variable_not_overridden"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_run_with_none_value"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_run_with_other_env"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_unset_existing_value"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_cli.py",
+        "test_name": "tests/test_cli.py::test_unset_non_existent_value"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "2f0ce6815593ed2ea243654822615b8ede59c395d34a403196e38d357c08808f"
+  },
+  "repository": {
+    "language": "python",
+    "name": "theskumar/python-dotenv"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "fbd7c83ef53c653891e0aff0069024f62141ed9a9fb44c511ee164bc422b5b71"
+  }
+}

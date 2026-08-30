@@ -1,0 +1,107 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 31,
+    "lines_deleted": 25,
+    "path": "bug_diff.diff",
+    "sha256": "8a24a37dfda0401716d539bb05308a5a29935bd42c74cdcd44d6a4e788ee5a06"
+  },
+  "case_id": "SWESMITH_047",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_utils.py",
+      "repo_path": "src/pydicom/pixels/utils.py",
+      "sha256": "cf07acd4626b55c757d508fb6e511f4d7228700f6e07453d70cb3b8ba89b2600"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 9,
+    "passing_count": 2320,
+    "path": "test_evidence.md",
+    "sha256": "78eaae7549aa6350f6830dfb950aacce8eabe3f34bea77c0a46c0f6af60eafe5",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape14-8-length14]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape19-16-length19]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape24-32-length24]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape39-8-length39]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape42-16-length42]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape45-32-length45]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape57-8-length57]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape60-16-length60]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/pixels/test_utils.py",
+        "test_name": "tests/pixels/test_utils.py::TestGetExpectedLength::test_length_ybr_422[shape63-32-length63]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "9ef779f7c34fac98422888ed2e98b4a0db62fd8121b4a6e755a0880584566852"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pydicom/pydicom"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "7186eb172edabd0b75369e413b812610fdffb14df94ca1401b190345833f8663"
+  }
+}

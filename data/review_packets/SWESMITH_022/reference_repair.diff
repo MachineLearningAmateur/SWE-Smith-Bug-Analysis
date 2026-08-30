@@ -1,0 +1,75 @@
+diff --git a/test.py b/test.py
+index c684b2b..7dd6f44 100644
+--- a/test.py
++++ b/test.py
+@@ -1720,49 +1720,27 @@ class GPXTests(mod_unittest.TestCase):
+         self.assertEqual(seconds, 60 * 60 * 24 + 60)
+ 
+     def test_parse_time(self) -> None:
+-        """Test the parse_time function with various time formats"""
+-        from gpxpy.gpxfield import parse_time
+-    
+-        # Test basic ISO format
+-        time_str = "2019-01-01T12:30:45Z"
+-        time_obj = parse_time(time_str)
+-        self.assertEqual(time_obj, mod_datetime.datetime(2019, 1, 1, 12, 30, 45, tzinfo=mod_gpxfield.SimpleTZ()))
+-    
+-        # Test ISO format with timezone
+-        time_str = "2019-01-01T12:30:45+02:00"
+-        time_obj = parse_time(time_str)
+-        self.assertEqual(time_obj, mod_datetime.datetime(2019, 1, 1, 12, 30, 45, tzinfo=mod_gpxfield.SimpleTZ('+02')))
+-    
+-        # Test ISO format with microseconds
+-        time_str = "2019-01-01T12:30:45.123456Z"
+-        time_obj = parse_time(time_str)
+-        self.assertEqual(time_obj, mod_datetime.datetime(2019, 1, 1, 12, 30, 45, 123456, tzinfo=mod_gpxfield.SimpleTZ()))
+-    
+-        # Test ISO format with microseconds and timezone
+-        time_str = "2019-01-01T12:30:45.123456+02:00"
+-        time_obj = parse_time(time_str)
+-        self.assertEqual(time_obj, mod_datetime.datetime(2019, 1, 1, 12, 30, 45, 123456, tzinfo=mod_gpxfield.SimpleTZ('+02')))
+-    
+-        # Test ISO format without timezone (should be timezone-naive)
+-        time_str = "2019-01-01T12:30:45"
+-        time_obj = parse_time(time_str)
+-        self.assertEqual(time_obj, mod_datetime.datetime(2019, 1, 1, 12, 30, 45))
+-    
+-        # Test with single-digit month and day
+-        time_str = "2019-1-1T12:30:45Z"
+-        time_obj = parse_time(time_str)
+-        self.assertEqual(time_obj, mod_datetime.datetime(2019, 1, 1, 12, 30, 45, tzinfo=mod_gpxfield.SimpleTZ()))
+-    
+-        # Test with invalid time format
+-        time_str = "not a valid time"
+-        with self.assertRaises(ValueError):
+-            parse_time(time_str)
+-    
+-        # Test with None
+-        self.assertIsNone(parse_time(None))
+-    
+-        # Test with empty string
+-        self.assertIsNone(parse_time(""))
++        timestamps = [
++            '2001-10-26T21:32:52',
++            #'2001-10-26T21:32:52+0200',
++            '2001-10-26T19:32:52Z',
++            #'2001-10-26T19:32:52+00:00',
++            #'-2001-10-26T21:32:52',
++            '2001-10-26T21:32:52.12679',
++            '2001-10-26T21:32:52',
++            #'2001-10-26T21:32:52+02:00',
++            '2001-10-26T19:32:52Z',
++            #'2001-10-26T19:32:52+00:00',
++            #'-2001-10-26T21:32:52',
++            '2001-10-26T21:32:52.12679',
++        ]
++        timestamps_without_tz = [x.replace('T', ' ').replace('Z', '') for x in timestamps]
++        for t in timestamps_without_tz:
++            timestamps.append(t)
++        for timestamp in timestamps:
++            print(f'Parsing: {timestamp}')
++            self.assertTrue(mod_gpxfield.parse_time(timestamp) is not None)
++
+     def test_dst_in_SimpleTZ(self) -> None:
+         # No DST in UTC times.
+         timestamps = ['2001-10-26T19:32:52Z',

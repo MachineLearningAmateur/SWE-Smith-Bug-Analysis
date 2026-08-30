@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 2,
+    "path": "bug_diff.diff",
+    "sha256": "ebac1bafb4f6e14f4da91e98da3dbd849ec579acf1adbf90c710e71dc94da8f2"
+  },
+  "case_id": "SWESMITH_051",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_shortcodes.py",
+      "repo_path": "nikola/shortcodes.py",
+      "sha256": "4b4515073ee6e06130014b84bcd9446f7e8be8a51438799aa69e86ae6db9742b"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 47,
+    "passing_count": 384,
+    "path": "test_evidence.md",
+    "sha256": "2e02ae82a2fdbd5a89f0bd2bf3c12fed4eaf3a7e0667afb6e1359758006c407b",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/integration/test_archive_full.py",
+        "test_name": "tests/integration/test_archive_full.py::test_avoid_double_slash_in_rss"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/integration/test_archive_full.py",
+        "test_name": "tests/integration/test_archive_full.py::test_full_archive[day]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/integration/test_archive_full.py",
+        "test_name": "tests/integration/test_archive_full.py::test_full_archive[month]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/integration/test_archive_full.py",
+        "test_name": "tests/integration/test_archive_full.py::test_full_archive[overall]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/integration/test_archive_full.py",
+        "test_name": "tests/integration/test_archive_full.py::test_full_archive[year]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/integration/test_archive_full.py",
+        "test_name": "tests/integration/test_archive_full.py::test_index_in_sitemap"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/integration/test_archive_per_day.py",
+        "test_name": "tests/integration/test_archive_per_day.py::test_archive_exists"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/integration/test_archive_per_day.py",
+        "test_name": "tests/integration/test_archive_per_day.py::test_avoid_double_slash_in_rss"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/integration/test_archive_per_day.py",
+        "test_name": "tests/integration/test_archive_per_day.py::test_day_archive"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/integration/test_archive_per_day.py",
+        "test_name": "tests/integration/test_archive_per_day.py::test_index_in_sitemap"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/integration/test_archive_per_month.py",
+        "test_name": "tests/integration/test_archive_per_month.py::test_archive_exists"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/integration/test_archive_per_month.py",
+        "test_name": "tests/integration/test_archive_per_month.py::test_avoid_double_slash_in_rss"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/integration/test_archive_per_month.py",
+        "test_name": "tests/integration/test_archive_per_month.py::test_index_in_sitemap"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/integration/test_archive_per_month.py",
+        "test_name": "tests/integration/test_archive_per_month.py::test_monthly_archive"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/integration/test_building_in_subdir.py",
+        "test_name": "tests/integration/test_building_in_subdir.py::test_archive_exists"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/integration/test_building_in_subdir.py",
+        "test_name": "tests/integration/test_building_in_subdir.py::test_avoid_double_slash_in_rss"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/integration/test_building_in_subdir.py",
+        "test_name": "tests/integration/test_building_in_subdir.py::test_index_in_sitemap"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/integration/test_check_absolute_subfolder.py",
+        "test_name": "tests/integration/test_check_absolute_subfolder.py::test_archive_exists"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/integration/test_check_absolute_subfolder.py",
+        "test_name": "tests/integration/test_check_absolute_subfolder.py::test_avoid_double_slash_in_rss"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/integration/test_check_absolute_subfolder.py",
+        "test_name": "tests/integration/test_check_absolute_subfolder.py::test_index_in_sitemap"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "8092ce0684c82affce52a82904515e2b7cc8feceadbc0a7849bdf8777baf6a09"
+  },
+  "repository": {
+    "language": "python",
+    "name": "getnikola/nikola"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 3,
+    "lines_deleted": 3,
+    "path": "bug_diff.diff",
+    "sha256": "8fc34463e2cdd980bd4aa68a4d917fa49fa1a6db30755940ceebb2f3900cdb9c"
+  },
+  "case_id": "SWESMITH_040",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_package_manager.py",
+      "repo_path": "conan/tools/system/package_manager.py",
+      "sha256": "ca8c9b61a887e92441008967604657863432f60c26b10b88f55be682367b6f9e"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 36,
+    "path": "test_evidence.md",
+    "sha256": "e2a0052679df86cbe0d39f1bb455a139c14a5927a2562ca19719db9474e12d5f",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/integration/tools/system/package_manager_test.py",
+        "test_name": "test/integration/tools/system/package_manager_test.py::test_package_manager_distro[nobara-dnf]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "a9672d253e3caafa89775302382aebecb14be9f5c73e107cfb36b42f2350ca3e"
+  },
+  "repository": {
+    "language": "python",
+    "name": "conan-io/conan"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "481aca7c764028861509a6edf59b67d753937e4e78307dc01a61dc3346338119"
+  }
+}

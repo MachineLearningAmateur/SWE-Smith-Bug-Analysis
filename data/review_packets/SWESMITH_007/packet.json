@@ -1,0 +1,71 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 19,
+    "lines_deleted": 30,
+    "path": "bug_diff.diff",
+    "sha256": "499bd148cbd861e24cd73814f1fe0c94df1c38c27b6e77055e9bbe77d6dfa400"
+  },
+  "case_id": "SWESMITH_007",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01___init__.py",
+      "repo_path": "src/environs/__init__.py",
+      "sha256": "e1b50ab19850425fa1e24a0ee314cc670f3ae71e6acac42b1ae218001c4e6aee"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 3,
+    "passing_count": 102,
+    "path": "test_evidence.md",
+    "sha256": "b06f0100f1fa7e3153378e7cf2c2434436893f09582f2d0cafe5d845335c1a9b",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_environs.py",
+        "test_name": "tests/test_environs.py::TestExpandVars::test_default_expands"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_environs.py",
+        "test_name": "tests/test_environs.py::TestExpandVars::test_escaped_expand"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_environs.py",
+        "test_name": "tests/test_environs.py::TestExpandVars::test_full_expand_vars"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "7cbf444955c1a5e5e60c6c18f73cf3817876ac87feca1e9c8facfa48c249d501"
+  },
+  "repository": {
+    "language": "python",
+    "name": "sloria/environs"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "e501a5373a06652535b65cf2b3c39c882545141d87d3d25d9b49683af23e002f"
+  }
+}
