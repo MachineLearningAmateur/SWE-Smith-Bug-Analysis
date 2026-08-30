@@ -136,15 +136,22 @@ afterwards from the history alone.
 ### Set up the two branches
 
 ```bash
-git clone <repository-url> swesmith-review
+git clone git@github.com:MachineLearningAmateur/SWE-Smith-Bug-Analysis.git swesmith-review
 cd swesmith-review
 
-# The frozen pre-review commit. Both branches start here.
-git checkout -b codex-review  ed7d6f1
-git checkout -b claude-review ed7d6f1
+# Both branches start from the same frozen pre-review commit, which is
+# tagged. Use the tag, not a commit hash: the tag is what stays correct.
+git fetch --tags
+git checkout -b codex-review  pre-review-frozen
+git checkout -b claude-review pre-review-frozen
 
 python -m pip install -r requirements-review.txt
 ```
+
+`pre-review-frozen` marks the state in which the 100 packets were frozen and
+the review tooling was last verified. `scripts/check_review_ready.py` re-hashes
+every packet against it, so a reviewer who starts from the wrong commit finds
+out immediately rather than half way through.
 
 Then open **one fresh session per reviewer**, each with its own branch checked
 out. Never run both reviewers in one session.
