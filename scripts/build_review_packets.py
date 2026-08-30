@@ -29,7 +29,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from ssr.corpus import classify, write_status  # noqa: E402
+from ssr.corpus import classify, isolation_of, write_status  # noqa: E402
 from ssr.metrics import split_by_file  # noqa: E402
 from ssr.packets import PacketBuilder, PacketSource, packet_digest, packet_file_hashes  # noqa: E402
 from ssr.paths import (  # noqa: E402
@@ -177,14 +177,19 @@ def main() -> int:
 
     # Mark the corpus. A rehearsal and a research corpus are reviewed the same
     # way, so without this marker their agreement statistics look identical.
-    corpus_kind, reasons = classify(entries[row["bug_id"]] for row in rows)
-    status = write_status(corpus_kind, len(packets))
+    selected = [entries[row["bug_id"]] for row in rows]
+    corpus_kind, reasons = classify(selected)
+    isolation, backends = isolation_of(selected)
+    status = write_status(corpus_kind, len(packets), isolation)
+    if isolation != "CONTAINER":
+        log.warning("environment isolation is %s: %s", isolation, backends)
     if reasons:
         log.warning("this corpus is a REHEARSAL: %s", "; ".join(reasons[:3]))
 
     print(json.dumps({
         "packets_built": len(built),
         "corpus_kind": status.corpus_kind,
+        "environment_isolation": status.environment_isolation,
         "rehearsal_reasons": reasons[:5],
         "snapshot_manifest": str(REVIEW_SNAPSHOT_MANIFEST),
         "snapshot_manifest_sha256": status.snapshot_manifest_sha256,

@@ -10,7 +10,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from ssr.corpus import REHEARSAL, RESEARCH, CorpusStatus, classify
+from ssr.corpus import REHEARSAL, RESEARCH, CorpusStatus, classify, isolation_of
 from ssr.packets import PacketBuilder, PacketSource, normalise_test_id, posix
 from ssr.paths import REPO_ROOT
 
@@ -47,9 +47,32 @@ def test_a_docker_built_pool_is_a_research_corpus():
 
 
 def test_one_local_backend_bug_makes_the_whole_corpus_a_rehearsal():
+    """The local backend runs on the author's own machine and proves the
+    harness only, so it can never carry a research corpus."""
     kind, reasons = classify([FakeEntry("BUG_a"), FakeEntry("BUG_b", backend="local")])
     assert kind == REHEARSAL
     assert any("BUG_b" in reason for reason in reasons)
+
+
+def test_a_host_worktree_corpus_is_still_research():
+    """Weaker isolation is a fidelity limitation, not a fake corpus. These
+    bugs were executed against a real repository and a real test suite."""
+    entries = [FakeEntry("BUG_a", backend="wsl"), FakeEntry("BUG_b", backend="wsl")]
+    kind, reasons = classify(entries)
+    assert kind == RESEARCH
+    assert reasons == []
+    assert isolation_of(entries)[0] == "HOST_WORKTREE"
+
+
+def test_isolation_is_reported_separately_from_corpus_kind():
+    assert isolation_of([FakeEntry("BUG_a")])[0] == "CONTAINER"
+    assert isolation_of([FakeEntry("BUG_a"), FakeEntry("BUG_b", backend="wsl")])[0] == "MIXED"
+
+
+def test_a_scripted_bug_is_a_rehearsal_whatever_the_backend():
+    for backend in ("docker", "wsl", "local"):
+        kind, _ = classify([FakeEntry("BUG_a", backend=backend, scripted=True)])
+        assert kind == REHEARSAL
 
 
 def test_a_scripted_model_makes_the_corpus_a_rehearsal():
@@ -75,6 +98,7 @@ def test_status_dataclass_round_trips():
         built_at_utc="2026-08-30T00:00:00Z",
         harness_version="0.1.0",
         protocol_version="ssr-action-protocol/1",
+        environment_isolation="CONTAINER",
         note="n",
     )
     assert CorpusStatus(**status.to_dict()).is_research

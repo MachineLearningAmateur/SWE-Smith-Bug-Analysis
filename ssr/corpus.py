@@ -36,8 +36,23 @@ REHEARSAL_NOTE = (
 
 RESEARCH_NOTE = (
     "Research corpus. Every packet came from an execution-validated bug state "
-    "produced in an isolated environment by the configured model."
+    "produced by the configured model against a real repository and its real "
+    "test suite. See environment_isolation for the substrate that was used."
 )
+
+ISOLATION_NOTE = {
+    "CONTAINER": "Every environment was a container. This is the intended substrate.",
+    "MIXED": (
+        "Some environments were containers and some were host worktrees. Record the "
+        "split in docs/fidelity_limitations.md."
+    ),
+    "HOST_WORKTREE": (
+        "Environments were host worktrees rather than containers. The bugs are "
+        "execution-validated against real test suites, but the isolation is weaker "
+        "than the design intends: an agent's shell ran on the host. Record this "
+        "substitution in docs/fidelity_limitations.md."
+    ),
+}
 
 
 @dataclass
@@ -50,6 +65,7 @@ class CorpusStatus:
     built_at_utc: str
     harness_version: str
     protocol_version: str
+    environment_isolation: str
     note: str
 
     @property
@@ -66,6 +82,7 @@ class CorpusStatus:
             "built_at_utc": self.built_at_utc,
             "harness_version": self.harness_version,
             "protocol_version": self.protocol_version,
+            "environment_isolation": self.environment_isolation,
             "note": self.note,
         }
 
@@ -73,21 +90,54 @@ class CorpusStatus:
 def classify(entries: Iterable[Any]) -> tuple[str, list[str]]:
     """Decide RESEARCH or REHEARSAL from the pool entries behind the packets.
 
-    Anything that did not come from an isolated environment run by the real
-    model makes the whole corpus a rehearsal. One rehearsal packet in a
-    hundred is enough: the sample is the unit, not the packet.
+    Two different things were once conflated here, and separating them
+    matters: **whether a bug was really executed** and **how isolated the
+    environment was** are independent axes.
+
+    * A scripted or synthetic generator means the bug state was never
+      produced by a real model against a real repository. That is a
+      rehearsal, and one such packet in a hundred makes the whole sample one:
+      the sample is the unit, not the packet.
+    * A non-Docker backend means the environment was a host worktree rather
+      than a container. The bugs are still genuine — real repository, real
+      test suite, real execution validation — so the corpus is still
+      RESEARCH. The weaker isolation is a fidelity limitation, recorded by
+      ``isolation_of`` and reported, not a reason to void the corpus.
+
+    The ``local`` backend is the exception: it runs on the study author's own
+    machine with no separation at all, and exists to prove the harness. It is
+    treated as a rehearsal.
     """
     reasons: list[str] = []
     for entry in entries:
         if getattr(entry, "scripted", False):
             reasons.append(f"{entry.bug_id}: generated with a scripted or synthetic model")
-        backend = getattr(entry, "backend", "unknown")
-        if backend != "docker":
-            reasons.append(f"{entry.bug_id}: built on the {backend!r} backend, which is not isolated")
+        if getattr(entry, "backend", "unknown") == "local":
+            reasons.append(f"{entry.bug_id}: built on the local backend, which proves the harness only")
     return (REHEARSAL if reasons else RESEARCH), sorted(set(reasons))
 
 
-def write_status(corpus_kind: str, packet_count: int) -> CorpusStatus:
+def isolation_of(entries: Iterable[Any]) -> tuple[str, dict[str, int]]:
+    """How isolated the environments behind the packets were.
+
+    Reported beside the corpus kind, never folded into it. ``CONTAINER`` is
+    the intended substrate; anything else is a documented substitution that
+    belongs in docs/fidelity_limitations.md.
+    """
+    from collections import Counter
+
+    counts = Counter(getattr(entry, "backend", "unknown") for entry in entries)
+    if set(counts) == {"docker"}:
+        return "CONTAINER", dict(counts)
+    if "docker" in counts:
+        return "MIXED", dict(counts)
+    return "HOST_WORKTREE", dict(counts)
+
+
+def write_status(
+    corpus_kind: str, packet_count: int, isolation: str = "CONTAINER"
+) -> CorpusStatus:
+    note = RESEARCH_NOTE if corpus_kind == RESEARCH else REHEARSAL_NOTE
     status = CorpusStatus(
         corpus_kind=corpus_kind,
         packet_count=packet_count,
@@ -97,7 +147,8 @@ def write_status(corpus_kind: str, packet_count: int) -> CorpusStatus:
         built_at_utc=utc_now(),
         harness_version=__version__,
         protocol_version=PROTOCOL_VERSION,
-        note=RESEARCH_NOTE if corpus_kind == RESEARCH else REHEARSAL_NOTE,
+        environment_isolation=isolation,
+        note=f"{note} {ISOLATION_NOTE.get(isolation, '')}".strip(),
     )
     write_json(CORPUS_STATUS, status.to_dict())
     return status
@@ -123,7 +174,10 @@ def status_banner() -> str:
     except SsrError:
         return "corpus status: UNKNOWN (data/CORPUS_STATUS.json is absent)"
     if status.is_research:
-        return f"corpus status: RESEARCH, {status.packet_count} packet(s)"
+        return (
+            f"corpus status: RESEARCH, {status.packet_count} packet(s), "
+            f"environment {status.environment_isolation}"
+        )
     return (
         f"!! corpus status: REHEARSAL, {status.packet_count} packet(s). "
         "These numbers are a workflow test, not a research result. !!"
