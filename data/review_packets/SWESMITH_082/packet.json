@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 0,
+    "lines_deleted": 5,
+    "path": "bug_diff.diff",
+    "sha256": "918877d2825e80fe90241b59370c4c27494fb5778ea1f98e6678986893978c2d"
+  },
+  "case_id": "SWESMITH_082",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_responses.py",
+      "repo_path": "moto/iotdata/responses.py",
+      "sha256": "2d9ba965e445f4b545e78cd35dd83831387283e922520a255cf7d339c0ec2e16"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 18,
+    "path": "test_evidence.md",
+    "sha256": "2506c50633738993d85b29c846cb2f2a1d39f79bdae69d4a314511cd5c3c97ca",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_iotdata/test_iotdata.py",
+        "test_name": "tests/test_iotdata/test_iotdata.py::test_publish"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "1ef6f02414c173acd6c5d047991a7405d783d083648d0d1c672804fde712df88"
+  },
+  "repository": {
+    "language": "python",
+    "name": "getmoto/moto"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "c5071f91c10c1f4737213fcb6b70e0387fe49b0cefc3f9427be62ab58c8d46ce"
+  }
+}

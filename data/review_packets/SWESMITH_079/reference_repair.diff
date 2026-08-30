@@ -1,0 +1,23 @@
+diff --git a/pandas/core/window/ewm.py b/pandas/core/window/ewm.py
+index 67eec60..73e4de6 100644
+--- a/pandas/core/window/ewm.py
++++ b/pandas/core/window/ewm.py
+@@ -702,8 +702,6 @@ class ExponentialMovingWindow(BaseWindow):
+         agg_method="var",
+     )
+     def var(self, bias: bool = False, numeric_only: bool = False):
+-
+-        return self._apply(var_func, name="var", numeric_only=numeric_only)
+         if self.times is not None:
+             raise NotImplementedError("var is not implemented with times")
+         window_func = window_aggregations.ewmcov
+@@ -717,6 +715,9 @@ class ExponentialMovingWindow(BaseWindow):
+ 
+         def var_func(values, begin, end, min_periods):
+             return wfunc(values, begin, end, min_periods, values)
++
++        return self._apply(var_func, name="var", numeric_only=numeric_only)
++
+     @doc(
+         template_header,
+         create_section_header("Parameters"),

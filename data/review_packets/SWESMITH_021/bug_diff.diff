@@ -1,0 +1,53 @@
+diff --git a/radon/metrics.py b/radon/metrics.py
+index 7c6ec63..abd6a7c 100644
+--- a/radon/metrics.py
++++ b/radon/metrics.py
+@@ -96,26 +96,31 @@ def halstead_visitor_report(visitor):
+ 
+ 
+ def mi_compute(halstead_volume, complexity, sloc, comments):
+-    '''Compute the Maintainability Index (MI) given the Halstead Volume, the
++    """Compute the Maintainability Index (MI) given the Halstead Volume, the
+     Cyclomatic Complexity, the SLOC number and the number of comment lines.
+     Usually it is not used directly but instead :func:`~radon.metrics.mi_visit`
+     is preferred.
+-    '''
+-    if any(metric <= 0 for metric in (halstead_volume, sloc)):
+-        return 100.0
+-    sloc_scale = math.log(sloc)
+-    volume_scale = math.log(halstead_volume)
+-    comments_scale = math.sqrt(2.46 * math.radians(comments))
+-    # Non-normalized MI
+-    nn_mi = (
+-        171
+-        - 5.2 * volume_scale
+-        - 0.23 * complexity
+-        - 16.2 * sloc_scale
+-        + 50 * math.sin(comments_scale)
+-    )
+-    return min(max(0.0, nn_mi * 100 / 171.0), 100.0)
+-
++    """
++    if sloc == 0:
++        return 100
++    
++    # Calculate MI using the standard formula
++    # The formula is: 171 - 5.2 * ln(HV) - 0.23 * CC - 16.2 * ln(SLOC) + 50 * sin(sqrt(2.4 * comments))
++    
++    # Handle edge cases to avoid math domain errors
++    volume_term = 0 if halstead_volume <= 0 else 5.2 * math.log(halstead_volume)
++    sloc_term = 0 if sloc <= 0 else 16.2 * math.log(sloc)
++    
++    # Calculate the base MI without comments
++    mi_without_comments = 171 - volume_term - 0.23 * complexity - sloc_term
++    
++    # Add the comments contribution
++    comments_term = 50 * math.sin(math.sqrt(2.4 * comments / 100)) if comments > 0 else 0
++    
++    # Normalize the result to a 0-100 scale
++    mi = max(0, min(100, mi_without_comments + comments_term))
++    
++    return mi
+ 
+ def mi_parameters(code, count_multi=True):
+     '''Given a source code snippet, compute the necessary parameters to

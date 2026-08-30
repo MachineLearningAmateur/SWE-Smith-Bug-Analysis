@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 8,
+    "lines_deleted": 15,
+    "path": "bug_diff.diff",
+    "sha256": "242a6d0214a3f138f39c7138b91135dc323926a87b353c771c655e18e684b0df"
+  },
+  "case_id": "SWESMITH_004",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_data_manager.py",
+      "repo_path": "src/pydicom/data/data_manager.py",
+      "sha256": "483c611275a6c21e73068e3056989aed366b97958140887a56277fba5e342588"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 2328,
+    "path": "test_evidence.md",
+    "sha256": "e4a93d8fcef27c07c0d166ddb35393b0183fc1acfe9415ef55912189d6591e5f",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_data_manager.py",
+        "test_name": "tests/test_data_manager.py::test_fetch_data_files_download_failure"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "9f5530ee70cab05b663865464543408afbb78ae5cc1d51e8bc52d2256636a518"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pydicom/pydicom"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "986e971b62caadb1024a0915ca84d4dab546b3f1435980545803999ae64a062c"
+  }
+}

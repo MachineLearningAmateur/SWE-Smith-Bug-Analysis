@@ -1,0 +1,76 @@
+diff --git a/src/pydicom/pixels/utils.py b/src/pydicom/pixels/utils.py
+index 77df7ab..f9a31a8 100644
+--- a/src/pydicom/pixels/utils.py
++++ b/src/pydicom/pixels/utils.py
+@@ -732,7 +732,7 @@ def expand_ybr422(src: Buffer, bits_allocated: int) -> bytes:
+     return bytes(dst)
+ 
+ 
+-def get_expected_length(ds: 'Dataset', unit: str='bytes') ->int:
++def get_expected_length(ds: "Dataset", unit: str = "bytes") -> int:
+     """Return the expected length (in terms of bytes or pixels) of the *Pixel
+     Data*.
+ 
+@@ -771,38 +771,32 @@ def get_expected_length(ds: 'Dataset', unit: str='bytes') ->int:
+         The expected length of the *Pixel Data* in either whole bytes or
+         pixels, excluding the NULL trailing padding byte for odd length data.
+     """
+-    # Get required elements
+-    rows = ds.Rows
+-    columns = ds.Columns
+-    samples_per_pixel = ds.SamplesPerPixel
+-    bits_allocated = ds.BitsAllocated
+-    
+-    # Get number of frames, default to 1 if not present or invalid
+-    nr_frames = getattr(ds, "NumberOfFrames", 1)
+-    if nr_frames in (None, 0):
+-        nr_frames = 1
+-    
+-    # Convert NumberOfFrames from string to int if necessary
+-    if isinstance(nr_frames, str):
+-        nr_frames = int(nr_frames)
+-    
+-    # Calculate total number of pixels
+-    total_pixels = rows * columns * samples_per_pixel * nr_frames
+-    
+-    if unit == 'pixels':
+-        return total_pixels
+-    
+-    # Calculate bytes based on bits allocated
++    rows = cast(int, ds.Rows)
++    columns = cast(int, ds.Columns)
++    samples_per_pixel = cast(int, ds.SamplesPerPixel)
++    bits_allocated = cast(int, ds.BitsAllocated)
++
++    length = rows * columns * samples_per_pixel
++    length *= get_nr_frames(ds)
++
++    if unit == "pixels":
++        return length
++
++    # Correct for the number of bytes per pixel
+     if bits_allocated == 1:
+-        # For bit-packed data: each byte contains 8 pixels
+-        # Round up to the nearest byte
+-        total_bytes = (total_pixels + 7) // 8
++        # Determine the nearest whole number of bytes needed to contain
++        #   1-bit pixel data. e.g. 10 x 10 1-bit pixels is 100 bits, which
++        #   are packed into 12.5 -> 13 bytes
++        length = length // 8 + (length % 8 > 0)
+     else:
+-        # For other data: bytes per pixel = bits_allocated / 8
+-        bytes_per_pixel = bits_allocated // 8
+-        total_bytes = total_pixels * bytes_per_pixel
+-    
+-    return total_bytes
++        length *= bits_allocated // 8
++
++    # DICOM Standard, Part 4, Annex C.7.6.3.1.2
++    if ds.PhotometricInterpretation == "YBR_FULL_422":
++        length = length // 3 * 2
++
++    return length
++
+ 
+ def get_image_pixel_ids(ds: "Dataset") -> dict[str, int]:
+     """Return a dict of the pixel data affecting element's :func:`id` values.

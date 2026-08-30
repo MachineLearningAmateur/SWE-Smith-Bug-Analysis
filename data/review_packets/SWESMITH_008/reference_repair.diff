@@ -1,0 +1,70 @@
+diff --git a/tornado/http1connection.py b/tornado/http1connection.py
+index 2783d67..8dd0c9b 100644
+--- a/tornado/http1connection.py
++++ b/tornado/http1connection.py
+@@ -501,40 +501,36 @@ class HTTP1Connection(httputil.HTTPConnection):
+ 
+     def finish(self) -> None:
+         """Implements `.HTTPConnection.finish`."""
+-        if self._write_finished:
+-            # Only one finish call allowed
+-            return
+-        self._write_finished = True
+-    
+-        chunk = b""
+-        if self._chunking_output:
+-            # If we're using chunked encoding, we need to write the final empty
+-            # chunk (with length 0) followed by CRLF to indicate the end of the body
+-            chunk = b"0\r\n\r\n"
+-        elif self._expected_content_remaining is not None and self._expected_content_remaining != 0:
++        if (
++            self._expected_content_remaining is not None
++            and self._expected_content_remaining != 0
++            and not self.stream.closed()
++        ):
+             self.stream.close()
+             raise httputil.HTTPOutputError(
+-                "Tried to write %d bytes less than Content-Length" % 
+-                self._expected_content_remaining
++                "Tried to write %d bytes less than Content-Length"
++                % self._expected_content_remaining
+             )
+-    
+-        if self.stream.closed():
+-            self._finish_request(None)
+-            return
+-    
+-        future = None
+-        if chunk:
+-            future = self.stream.write(chunk)
+-        self._pending_write = future
+-    
+-        # If we're not waiting for a pending write, schedule the finish
+-        # immediately. Otherwise, the _on_write_complete callback will
+-        # call _finish_request.
+-        if future is None:
++        if self._chunking_output:
++            if not self.stream.closed():
++                self._pending_write = self.stream.write(b"0\r\n\r\n")
++                self._pending_write.add_done_callback(self._on_write_complete)
++        self._write_finished = True
++        # If the app finished the request while we're still reading,
++        # divert any remaining data away from the delegate and
++        # close the connection when we're done sending our response.
++        # Closing the connection is the only way to avoid reading the
++        # whole input body.
++        if not self._read_finished:
++            self._disconnect_on_finish = True
++        # No more data is coming, so instruct TCP to send any remaining
++        # data immediately instead of waiting for a full packet or ack.
++        self.stream.set_nodelay(True)
++        if self._pending_write is None:
+             self._finish_request(None)
+         else:
+-            self._write_callback = lambda: self._finish_request(future)
+-            future_add_done_callback(future, self._on_write_complete)
++            future_add_done_callback(self._pending_write, self._finish_request)
++
+     def _on_write_complete(self, future: "Future[None]") -> None:
+         exc = future.exception()
+         if exc is not None and not isinstance(exc, iostream.StreamClosedError):

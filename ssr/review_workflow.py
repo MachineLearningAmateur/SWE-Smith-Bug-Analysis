@@ -25,7 +25,7 @@ from ssr.paths import REVIEWERS, REVIEWS, REVIEW_SNAPSHOT_MANIFEST, reviewer_dir
 from ssr.taxonomy import taxonomy_fingerprint
 from ssr.util import SsrError, canonical_json, read_json, sha256_file, utc_now, write_json
 
-CASE_FILE_PATTERN = "SSR_*.json"
+CASE_FILE_PATTERN = "SWESMITH_*.json"
 
 
 @dataclass
@@ -56,8 +56,8 @@ class ReviewerPaths:
     def complete(self) -> Path:
         return self.root / "COMPLETE"
 
-    def case_file(self, bug_id: str) -> Path:
-        return self.cases / f"{bug_id}.json"
+    def case_file(self, case_id: str) -> Path:
+        return self.cases / f"{case_id}.json"
 
     def ensure(self) -> "ReviewerPaths":
         self.cases.mkdir(parents=True, exist_ok=True)
@@ -92,15 +92,15 @@ def forbid_peeking(reviewer: str) -> None:
 
 
 # ----------------------------------------------------------------------
-def expected_bug_ids() -> list[str]:
-    """The frozen 100 IDs, taken from the snapshot manifest."""
+def expected_case_ids() -> list[str]:
+    """The frozen 100 case IDs, taken from the snapshot manifest."""
     if not REVIEW_SNAPSHOT_MANIFEST.is_file():
         raise SsrError(
             f"{REVIEW_SNAPSHOT_MANIFEST} does not exist. Build and freeze the review "
             "packets before starting a review."
         )
     manifest = read_json(REVIEW_SNAPSHOT_MANIFEST)
-    return sorted(entry["packet_id"] for entry in manifest["packets"])
+    return sorted(entry["case_id"] for entry in manifest["packets"])
 
 
 def snapshot_manifest_hash() -> str:
@@ -130,7 +130,7 @@ def init_metadata(reviewer: str, *, model: str, notes: str | None = None) -> dic
         # Carried into every downstream report, so a rehearsal review can
         # never be mistaken for a research result.
         "corpus_kind": corpus_kind,
-        "expected_case_count": len(expected_bug_ids()),
+        "expected_case_count": len(expected_case_ids()),
         "notes": notes,
     }
     assert_write_boundary(reviewer, paths.metadata)
@@ -141,10 +141,10 @@ def init_metadata(reviewer: str, *, model: str, notes: str | None = None) -> dic
 def save_case(reviewer: str, result: dict[str, Any]) -> Path:
     """Write one case result immediately (handoff section 23)."""
     paths = ReviewerPaths(reviewer).ensure()
-    bug_id = result.get("bug_id")
-    if not isinstance(bug_id, str):
-        raise SsrError("a review result needs a string bug_id")
-    target = paths.case_file(bug_id)
+    case_id = result.get("case_id")
+    if not isinstance(case_id, str):
+        raise SsrError("a review result needs a string case_id")
+    target = paths.case_file(case_id)
     assert_write_boundary(reviewer, target)
     write_json(target, result)
     update_progress(reviewer)
@@ -158,12 +158,12 @@ def collect_cases(reviewer: str, *, require_all: bool = False) -> list[dict[str,
     results: list[dict[str, Any]] = []
     for path in sorted(paths.cases.glob(CASE_FILE_PATTERN)):
         record = read_json(path)
-        if record.get("bug_id") != path.stem:
-            raise SsrError(f"{path}: bug_id {record.get('bug_id')!r} does not match the file name")
+        if record.get("case_id") != path.stem:
+            raise SsrError(f"{path}: case_id {record.get('case_id')!r} does not match the file name")
         results.append(record)
     if require_all:
-        expected = expected_bug_ids()
-        found = {record["bug_id"] for record in results}
+        expected = expected_case_ids()
+        found = {record["case_id"] for record in results}
         missing = sorted(set(expected) - found)
         unexpected = sorted(found - set(expected))
         if missing:
@@ -175,16 +175,16 @@ def collect_cases(reviewer: str, *, require_all: bool = False) -> list[dict[str,
 
 def update_progress(reviewer: str) -> dict[str, Any]:
     paths = ReviewerPaths(reviewer).ensure()
-    expected = expected_bug_ids()
+    expected = expected_case_ids()
     done = sorted(path.stem for path in paths.cases.glob(CASE_FILE_PATTERN))
-    remaining = [bug_id for bug_id in expected if bug_id not in set(done)]
+    remaining = [case_id for case_id in expected if case_id not in set(done)]
     progress = {
         "reviewer": reviewer,
         "state": "COMPLETE" if not remaining and paths.complete.is_file() else "IN_PROGRESS",
         "completed": len(done),
         "expected": len(expected),
         "remaining_count": len(remaining),
-        "next_bug_id": remaining[0] if remaining else None,
+        "next_case_id": remaining[0] if remaining else None,
         "updated_at_utc": utc_now(),
     }
     assert_write_boundary(reviewer, paths.progress)
@@ -203,7 +203,7 @@ def finalise(reviewer: str) -> dict[str, Any]:
     results = collect_cases(reviewer, require_all=True)
     validate_results(results)
 
-    ordered = sorted(results, key=lambda record: record["bug_id"])
+    ordered = sorted(results, key=lambda record: record["case_id"])
     assert_write_boundary(reviewer, paths.results)
     with open(paths.results, "w", encoding="utf-8", newline="\n") as handle:
         for record in ordered:
@@ -254,7 +254,7 @@ def load_results(reviewer: str) -> list[dict[str, Any]]:
     if not paths.results.is_file():
         raise SsrError(f"{paths.results} does not exist; run the reviewer's finalise step first")
     records = [json.loads(line) for line in paths.results.read_text(encoding="utf-8").splitlines() if line.strip()]
-    return sorted(records, key=lambda record: record["bug_id"])
+    return sorted(records, key=lambda record: record["case_id"])
 
 
 def cross_check_metadata() -> dict[str, Any]:

@@ -1,0 +1,62 @@
+diff --git a/faker/providers/date_time/__init__.py b/faker/providers/date_time/__init__.py
+index f05538e..5cfbf2a 100644
+--- a/faker/providers/date_time/__init__.py
++++ b/faker/providers/date_time/__init__.py
+@@ -2550,12 +2550,8 @@ class Provider(BaseProvider):
+         """
+         return zoneinfo.ZoneInfo(self.timezone(*args, **kwargs))  # type: ignore
+ 
+-    def date_of_birth(
+-        self,
+-        tzinfo: Optional[TzInfo] = None,
+-        minimum_age: int = 0,
+-        maximum_age: int = 115,
+-    ) -> dtdate:
++    def date_of_birth(self, tzinfo: Optional[TzInfo]=None, minimum_age: int=0,
++        maximum_age: int=115) -> dtdate:
+         """
+         Generate a random date of birth represented as a Date object,
+         constrained by optional miminimum_age and maximum_age
+@@ -2568,34 +2564,14 @@ class Provider(BaseProvider):
+         :sample:
+         :sample: minimum_age=30, maximum_age=50
+         """
+-
+-        if not isinstance(minimum_age, int):
+-            raise TypeError("minimum_age must be an integer.")
+-
+-        if not isinstance(maximum_age, int):
+-            raise TypeError("maximum_age must be an integer.")
+-
+-        if maximum_age < 0:
+-            raise ValueError("maximum_age must be greater than or equal to zero.")
+-
+-        if minimum_age < 0:
+-            raise ValueError("minimum_age must be greater than or equal to zero.")
+-
+-        if minimum_age > maximum_age:
+-            raise ValueError("minimum_age must be less than or equal to maximum_age.")
+-
+-        # In order to return the full range of possible dates of birth, add one
+-        # year to the potential age cap and subtract one day if we land on the
+-        # boundary.
+-
+-        now = datetime.now(tzinfo).date()
+-        start_date = change_year(now, -(maximum_age + 1))
+-        end_date = change_year(now, -minimum_age)
+-
+-        dob = self.date_time_ad(tzinfo=tzinfo, start_datetime=start_date, end_datetime=end_date).date()
+-
+-        return dob if dob != start_date else dob + timedelta(days=1)
+-
++        today = datetime.now(tzinfo).date()
++    
++        # Calculate the date range based on minimum and maximum age
++        start_date = change_year(today, -maximum_age)
++        end_date = change_year(today, -minimum_age)
++    
++        # Generate a random date within the range
++        return self.date_between_dates(start_date, end_date)
+ 
+ def convert_timestamp_to_datetime(timestamp: Union[int, float], tzinfo: TzInfo) -> datetime:
+     import datetime as dt

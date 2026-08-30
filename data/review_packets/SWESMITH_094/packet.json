@@ -1,0 +1,89 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 4,
+    "lines_deleted": 3,
+    "path": "bug_diff.diff",
+    "sha256": "84a6a3357e8f98391506fe21b98f85170b8a04ae63c7cd2bf6b2544e82344b91"
+  },
+  "case_id": "SWESMITH_094",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01__openpyxl.py",
+      "repo_path": "pandas/io/excel/_openpyxl.py",
+      "sha256": "c59f11b0e0374c14597daad0290a616b03911460cd31a894a3c77b6aa351870d"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 6,
+    "passing_count": 45,
+    "path": "test_evidence.md",
+    "sha256": "4add9e95de0a3f40a88776903e2a5a0581db2282a77cbd7158d0889a5f154375",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "pandas/tests/io/excel/test_openpyxl.py",
+        "test_name": "pandas/tests/io/excel/test_openpyxl.py::test_engine_kwargs_append_data_only[False-=1+1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "pandas/tests/io/excel/test_openpyxl.py",
+        "test_name": "pandas/tests/io/excel/test_openpyxl.py::test_engine_kwargs_append_data_only[True-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "pandas/tests/io/excel/test_openpyxl.py",
+        "test_name": "pandas/tests/io/excel/test_openpyxl.py::test_engine_kwargs_append_reader[False-data_only]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "pandas/tests/io/excel/test_openpyxl.py",
+        "test_name": "pandas/tests/io/excel/test_openpyxl.py::test_engine_kwargs_append_reader[False-read_only]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "pandas/tests/io/excel/test_openpyxl.py",
+        "test_name": "pandas/tests/io/excel/test_openpyxl.py::test_engine_kwargs_append_reader[True-data_only]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "pandas/tests/io/excel/test_openpyxl.py",
+        "test_name": "pandas/tests/io/excel/test_openpyxl.py::test_engine_kwargs_append_reader[True-read_only]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "97d5182b7037a038da840cd6b2b84c9dca420e143c6a71c0ef9972f9f8d905c6"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pandas-dev/pandas"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "ef09e8d3001eea657e318b690ee5110119a6a88a140e186569a34e6698712e6c"
+  }
+}

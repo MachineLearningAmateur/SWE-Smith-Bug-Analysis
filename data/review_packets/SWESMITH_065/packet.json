@@ -1,0 +1,187 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 3,
+    "lines_added": 143,
+    "lines_deleted": 557,
+    "path": "bug_diff.diff",
+    "sha256": "0294502b497100d4b5e90724fc8b69311ec89b13e4717fa8c467146866b02f4e"
+  },
+  "case_id": "SWESMITH_065",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_gdcm_handler.py",
+      "repo_path": "src/pydicom/pixel_data_handlers/gdcm_handler.py",
+      "sha256": "32098f6024ba90fcc9bdd5f8fbf4aa8781d2f0acf59321a7cdc5f25074abc949"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_02",
+      "path": "context/02_pylibjpeg_handler.py",
+      "repo_path": "src/pydicom/pixel_data_handlers/pylibjpeg_handler.py",
+      "sha256": "505b083e34be6206f3410a6cc55899342677bea81e0b9832ef2669bca97e2a23"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_03",
+      "path": "context/03_uid.py",
+      "repo_path": "src/pydicom/uid.py",
+      "sha256": "4821cc179dae763c2ce4913f6e3a44327b8239b4d10123ef273a18f792c79f6b"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "CODE_CONTEXT_02",
+    "CODE_CONTEXT_03",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2329,
+    "passing_count": 0,
+    "path": "test_evidence.md",
+    "sha256": "57b03c48b4bff1aad0859767dd52c6439619125b20e765b4f44101c4e19012af",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_add_plugin"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_add_plugin_function_missing"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_add_plugin_module_import_failure"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_add_plugin_unavailable"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_init"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_missing_dependencies"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_remove_plugin"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestCoderBase::test_validate_plugins"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_del_option"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape0-1-length0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape1-1-length1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape10-8-length10]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape11-8-length11]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape12-8-length12]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape13-8-length13]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape14-8-length14]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape15-16-length15]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape16-16-length16]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape17-16-length17]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/pixels/test_common.py",
+        "test_name": "tests/pixels/test_common.py::TestRunnerBase::test_frame_length[shape18-16-length18]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "1bc5d74b73a374ca1c3aa3dd71d39de50adfecf48a0a3294e6722f293f639dca"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pydicom/pydicom"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "9ceac0e0c7796fffdc43e26f4c373eebfcacccbe9cfebf742bbe0aacee5eb74f"
+  }
+}

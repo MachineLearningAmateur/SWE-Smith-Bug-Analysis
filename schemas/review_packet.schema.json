@@ -1,130 +1,235 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.invalid/ssr-swesmith-coverage/review_packet.schema.json",
-  "title": "Neutral SSR review packet (reviewer-visible)",
-  "description": "The only artifact a blind reviewer may read for a case. It carries no generation strategy, no bug order, no generator or solver identity, no parent lineage and no source allocation. scripts/build_review_packets.py runs a leakage scan over every generated field and over the file names before a packet is written.",
+  "$id": "https://example.invalid/swesmith-aidev-coverage/review_packet.schema.json",
+  "title": "Neutral SWE-smith review packet (reviewer-visible)",
+  "description": "The only artifact a blind reviewer may read for a case. It carries no generation method, no trajectory, no source model, no attempt count, no population frequency, no mirror repository name and no instance ID. scripts/build_swesmith_packets.py runs a leakage scan before a packet is written.",
   "type": "object",
   "additionalProperties": false,
   "required": [
-    "packet_id",
+    "case_id",
     "packet_version",
     "repository",
     "bug_diff",
+    "reference_repair",
+    "specification",
     "code_context",
-    "oracle_tests",
-    "test_results",
+    "failing_tests",
     "evidence_ids"
   ],
   "properties": {
-    "packet_id": {
+    "case_id": {
       "type": "string",
-      "pattern": "^SSR_(0[0-9][1-9]|0[1-9][0-9]|100)$",
-      "description": "Neutral reviewer-facing identifier, SSR_001 to SSR_100. Assigned by a seeded shuffle so the index carries no allocation information."
+      "pattern": "^SWESMITH_(0[0-9][1-9]|0[1-9][0-9]|100)$"
     },
-    "packet_version": {"type": "integer", "const": 1},
+    "packet_version": {
+      "type": "integer",
+      "const": 2
+    },
     "repository": {
       "type": "object",
-      "description": "Neutral environment facts. Language and size are needed to read the code; they are not failure information.",
       "additionalProperties": false,
-      "required": ["name", "language"],
+      "required": [
+        "name",
+        "language"
+      ],
       "properties": {
-        "name": {"type": "string"},
-        "language": {"type": "string"},
-        "commit": {"type": ["string", "null"]},
-        "repo_size_bin": {"enum": ["SMALL", "MEDIUM", "LARGE", "UNKNOWN"]},
-        "description": {"type": ["string", "null"], "maxLength": 1000}
+        "name": {
+          "type": "string"
+        },
+        "language": {
+          "type": "string"
+        }
       }
     },
     "bug_diff": {
       "type": "object",
-      "description": "The final working-state-to-buggy-state diff. For every case this is a single diff against the clean upstream repository, whatever the number of generation stages behind it.",
       "additionalProperties": false,
-      "required": ["evidence_id", "path", "sha256", "files_changed", "lines_added", "lines_deleted"],
+      "required": [
+        "evidence_id",
+        "path",
+        "sha256",
+        "files_changed",
+        "lines_added",
+        "lines_deleted",
+        "description"
+      ],
       "properties": {
-        "evidence_id": {"const": "BUG_DIFF"},
-        "path": {"type": "string"},
-        "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-        "files_changed": {"type": "integer", "minimum": 0},
-        "lines_added": {"type": "integer", "minimum": 0},
-        "lines_deleted": {"type": "integer", "minimum": 0}
+        "evidence_id": {
+          "const": "BUG_DIFF"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "files_changed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lines_added": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "lines_deleted": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "reference_repair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "path",
+        "sha256",
+        "description"
+      ],
+      "properties": {
+        "evidence_id": {
+          "const": "REFERENCE_REPAIR"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "specification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "evidence_id",
+        "path",
+        "sha256",
+        "description"
+      ],
+      "properties": {
+        "evidence_id": {
+          "const": "SPECIFICATION"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "description": {
+          "type": "string"
+        }
       }
     },
     "code_context": {
       "type": "array",
-      "description": "Surrounding source needed to judge the change. Buggy-state content.",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["evidence_id", "path", "repo_path", "sha256"],
+        "required": [
+          "evidence_id",
+          "path",
+          "repo_path",
+          "sha256"
+        ],
         "properties": {
-          "evidence_id": {"type": "string", "pattern": "^CODE_CONTEXT_[0-9]{2}$"},
-          "path": {"type": "string"},
-          "repo_path": {"type": "string"},
-          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-          "truncated": {"type": "boolean"},
-          "line_range": {
-            "type": ["array", "null"],
-            "items": {"type": "integer"},
-            "minItems": 2,
-            "maxItems": 2
+          "evidence_id": {
+            "type": "string",
+            "pattern": "^CODE_CONTEXT_[0-9]{2}$"
+          },
+          "path": {
+            "type": "string"
+          },
+          "repo_path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
           }
         }
       }
     },
-    "oracle_tests": {
-      "type": "array",
-      "minItems": 1,
-      "description": "The tests that pass on the working state and fail on the buggy state, with their real output.",
-      "items": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": ["evidence_id", "test_name", "output_path", "sha256"],
-        "properties": {
-          "evidence_id": {"type": "string", "pattern": "^ORACLE_TEST_[0-9]{2}$"},
-          "test_name": {"type": "string"},
-          "test_file": {"type": ["string", "null"]},
-          "output_path": {"type": "string"},
-          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-          "truncated": {"type": "boolean"}
-        }
-      }
-    },
-    "test_results": {
+    "failing_tests": {
       "type": "object",
-      "description": "Aggregate fail/pass counts for the working state and the buggy state, plus the command that produced them.",
       "additionalProperties": false,
-      "required": ["evidence_id", "test_command", "working_state", "buggy_state"],
+      "required": [
+        "evidence_id_prefix",
+        "path",
+        "sha256",
+        "failing_count",
+        "passing_count",
+        "tests"
+      ],
       "properties": {
-        "evidence_id": {"const": "TEST_RESULTS"},
-        "test_command": {"type": "string"},
-        "working_state": {"$ref": "#/$defs/counts"},
-        "buggy_state": {"$ref": "#/$defs/counts"},
-        "newly_failing": {"type": "array", "items": {"type": "string"}}
+        "evidence_id_prefix": {
+          "const": "TEST_FAILURE"
+        },
+        "path": {
+          "type": "string"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "failing_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "passing_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "tests": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "evidence_id",
+              "test_name"
+            ],
+            "properties": {
+              "evidence_id": {
+                "type": "string",
+                "pattern": "^TEST_FAILURE_[0-9]{2}$"
+              },
+              "test_name": {
+                "type": "string"
+              },
+              "test_file": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              }
+            }
+          }
+        }
       }
     },
     "evidence_ids": {
       "type": "array",
-      "minItems": 2,
+      "minItems": 3,
       "uniqueItems": true,
-      "items": {"type": "string", "pattern": "^[A-Z][A-Z0-9_]*$"},
-      "description": "Every evidence ID present in this packet. A reviewer may cite only these."
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Z][A-Z0-9_]*$"
+      }
     },
     "reviewer_question": {
-      "type": "string",
-      "description": "The single question put to the reviewer. Identical in every packet."
-    }
-  },
-  "$defs": {
-    "counts": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": ["passed", "failed"],
-      "properties": {
-        "passed": {"type": "integer", "minimum": 0},
-        "failed": {"type": "integer", "minimum": 0},
-        "errored": {"type": "integer", "minimum": 0},
-        "skipped": {"type": "integer", "minimum": 0}
-      }
+      "type": "string"
     }
   }
 }

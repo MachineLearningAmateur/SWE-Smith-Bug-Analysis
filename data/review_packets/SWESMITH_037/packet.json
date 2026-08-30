@@ -1,0 +1,83 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 2,
+    "lines_deleted": 12,
+    "path": "bug_diff.diff",
+    "sha256": "b3101b89a11eb64ffe448d8eabef5135086f19a4d1d30fc2d24ef57ea5e018fd"
+  },
+  "case_id": "SWESMITH_037",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_validators.py",
+      "repo_path": "pydantic/v1/validators.py",
+      "sha256": "119633f96808d1cf963fcab1e00f0b5fee7c20ef36cae995c9f12d5d99ec1bdc"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 5,
+    "passing_count": 5433,
+    "path": "test_evidence.md",
+    "sha256": "15d7debfa312ce68c5abfd82d2af9b30af7ccd7e41b94bd9ffc1416e96cd396c",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_docs.py",
+        "test_name": "tests/test_docs.py::test_docs_examples[docs/migration.md:191-216]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_docs.py",
+        "test_name": "tests/test_docs.py::test_docs_examples[docs/migration.md:221-254]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_main.py",
+        "test_name": "tests/test_main.py::test_nested_v1_model_warns"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_v1.py",
+        "test_name": "tests/test_v1.py::test_isinstance_does_not_raise_deprecation_warnings"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_v1.py",
+        "test_name": "tests/test_v1.py::test_root_validator"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "4eeedff137446cdeb267b04d1eb1f4b204d5e10bfe7cfb26298d9d32d9ceafd7"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pydantic/pydantic"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

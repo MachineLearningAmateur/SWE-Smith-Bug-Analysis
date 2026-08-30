@@ -1,0 +1,71 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 11,
+    "lines_deleted": 6,
+    "path": "bug_diff.diff",
+    "sha256": "d3a78acb107db7dbeb0f8960cd4c0730e6113a01bbb5395ca322c63d41163e10"
+  },
+  "case_id": "SWESMITH_010",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_queries.py",
+      "repo_path": "pypika/queries.py",
+      "sha256": "2c9e013b9f4283b0ce1d1edc8f644629a599882008daf0505d14308a410d17b4"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 3,
+    "passing_count": 1058,
+    "path": "test_evidence.md",
+    "sha256": "664faf617c504f863989e8e59966cc9ef21f1aa3f0ee5966543cb2a2cb587ade",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "pypika/tests/test_inserts.py",
+        "test_name": "pypika/tests/test_inserts.py::SelectIntoTests::test_select_columns_into"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "pypika/tests/test_inserts.py",
+        "test_name": "pypika/tests/test_inserts.py::SelectIntoTests::test_select_columns_into_with_join"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "pypika/tests/test_inserts.py",
+        "test_name": "pypika/tests/test_inserts.py::SelectIntoTests::test_select_star_into"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "bda5c76f8825b2077ebc2952ff365759a3667092ab27a43057d8a1cedb3bda4e"
+  },
+  "repository": {
+    "language": "python",
+    "name": "kayak/pypika"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "3b287de605ff406e19bd3a7adf3c909a646b62798cbe3053a1ecf8799039fe03"
+  }
+}

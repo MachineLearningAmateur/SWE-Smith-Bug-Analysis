@@ -1,7 +1,7 @@
 # CLAUDE.md — instructions for Claude
 
 You are one of two independent blind reviewers in this study. Codex is the
-other. Your job is to classify 100 validated buggy repository states using a
+other. Your job is to classify 100 validated synthetic buggy repository states using a
 frozen taxonomy, without ever learning how any of them were made and without
 ever seeing Codex's answers.
 
@@ -30,8 +30,12 @@ same way, but say so in your final message: its numbers are not results.
 
 For each of the 100 packets, answer one question:
 
-> What kind of technical failure does this validated buggy repository state
-> represent?
+> Based only on the frozen evidence in this packet, what kind of technical
+> failure does this synthetic buggy repository state represent?
+
+You are classifying **the synthetic bug itself**. You are not grading a repair
+attempt, an agent's reasoning, the quality of the issue text, or whether the
+task is easy or hard. None of that is in front of you.
 
 ## Before you start
 
@@ -43,7 +47,7 @@ fine-grained label and the decision rules. Then read `docs/review_protocol.md`.
 * `taxonomy/frozen_failure_taxonomy_v1.md`
 * `docs/review_protocol.md`
 * `data/review_manifest.csv`
-* `data/review_packets/SSR_nnn/` — the packet for the case you are on
+* `data/review_packets/SWESMITH_nnn/` — the packet for the case you are on
 * `reviews/claude/**` — your own directory
 * `schemas/review_result.schema.json`
 
@@ -51,12 +55,11 @@ fine-grained label and the decision rules. Then read `docs/review_protocol.md`.
 
 * `reviews/codex/**` — Codex's work. Not before, not during, not after,
   until both `COMPLETE` markers exist.
-* `data/sampling/**` — the crosswalk there reveals each bug's source and
-  order.
-* Any `metadata.json`, `trajectory.jsonl`, `solver_trajectory.jsonl`,
-  `solver_result.json` or `pred_patch.diff` under `data/validated_pool/` or
-  `data/generated_pool/`. That is hidden generation metadata.
-* `analysis/**`.
+* `data/hidden/**` — the sample metadata there names each task's generation
+  method and the instance it came from.
+* `data/population/**` — the population manifest, which carries the same.
+* `analysis/**` — population frequencies and the AIDev comparison.
+* `archive/**` — a paused, unrelated line of work.
 
 If you find yourself wanting to know how a bug was made, that is the feeling
 the protocol exists to defeat. Classify what is in front of you.
@@ -124,53 +127,68 @@ criterion and does not affect any statistic. Report what you actually think.
 
 ## What is in a packet
 
-`data/review_packets/SSR_nnn/` holds these, and nothing else:
+`data/review_packets/SWESMITH_nnn/` holds these, and nothing else:
 
 | File | Evidence ID | What it is |
 |---|---|---|
-| `packet.json` | — | the manifest: repository, language, counts, and the full list of evidence IDs you may cite |
-| `bug_diff.diff` | `BUG_DIFF` | the single diff from the working repository to the buggy one |
-| `context/NN_<file>` | `CODE_CONTEXT_NN` | buggy-state source around the change |
-| `oracle/NN.txt` | `ORACLE_TEST_NN` | the real output of one test that passes before the change and fails after |
-| `test_results.txt` | `TEST_RESULTS` | pass/fail counts for both states, and the test command |
+| `packet.json` | — | the manifest: repository, language, and every evidence ID you may cite |
+| `bug_diff.diff` | `BUG_DIFF` | the change that INTRODUCED the defect, applied to working code |
+| `context/NN_<file>` | `CODE_CONTEXT_NN` | the touched files as they stand in the buggy state |
+| `specification.md` | `SPECIFICATION` | the issue text supplied with the task |
+| `test_evidence.md` | `TEST_FAILURE_NN` | tests that pass on the working state and fail on this one |
+| `reference_repair.diff` | `REFERENCE_REPAIR` | the reverse of the bug diff: it restores the working code |
 
-Cite only IDs that appear in that packet's `evidence_ids`. The validator
-checks every one, so a typo fails fast rather than surviving into the data.
+Three things about this evidence are worth stating plainly.
+
+**`BUG_DIFF` is the bug, not a repair.** It is the diff that broke the code.
+`REFERENCE_REPAIR` is its exact reverse. Reading them the wrong way round
+inverts every judgement you make.
+
+**`SPECIFICATION` is a description, not evidence.** It was generated to
+describe the defect, and it can be inaccurate or incomplete. Where it disagrees
+with `BUG_DIFF`, the diff wins.
+
+**The failing test files are not in the packet.** They were removed when the
+task was built, so the defect must be judged from the code, not from reading
+the assertions.
+
+Cite only IDs that appear in that packet's `evidence_ids`. The validator checks
+every one, so a typo fails fast rather than surviving into the data.
 
 ## A worked case
 
-The diff removes an upper-bound check from `clamp`, one oracle test fails,
-and the rest of the suite still passes. The removed behaviour was the whole
-point of the function, and nothing else was changed to compensate.
+`BUG_DIFF` removes an upper-bound check from a clamp function.
+`TEST_FAILURE_01` names a test that passed before and fails now.
+`REFERENCE_REPAIR` puts the check back. Nothing else changed to compensate.
 
 ```json
 {
-  "bug_id": "SSR_001",
+  "case_id": "SWESMITH_001",
   "failure_pattern": "broke_existing_contract_or_behavior",
   "pattern_confidence": "HIGH",
   "failure_scope": "CODE_STATE",
   "taxonomy_fit": "DIRECT",
-  "supporting_evidence_ids": ["BUG_DIFF", "ORACLE_TEST_01"],
-  "reasoning_summary": "BUG_DIFF drops the upper-bound branch of clamp; ORACLE_TEST_01 shows clamp(50, 0, 10) now returns 50 instead of 10, so behaviour the suite already promised is gone.",
+  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF drops the upper-bound branch of clamp; TEST_FAILURE_01 covers exactly that bound, so behaviour the suite already promised is gone.",
   "proposed_other_pattern": null
 }
 ```
 
-Note what the summary does: it names the evidence, says what the code now
-does, and stops. It is not a transcript of your reasoning.
+Note what the summary does: it names the evidence, says what the code now does,
+and stops. It is not a transcript of your reasoning.
 
 ## How to record a case
 
-One JSON file per bug, at `reviews/claude/cases/SSR_nnn.json`:
+One JSON file per case, at `reviews/claude/cases/SWESMITH_nnn.json`:
 
 ```json
 {
-  "bug_id": "SSR_001",
+  "case_id": "SWESMITH_001",
   "failure_pattern": "incomplete_change_propagation",
   "pattern_confidence": "HIGH",
   "failure_scope": "CODE_STATE",
   "taxonomy_fit": "DIRECT",
-  "supporting_evidence_ids": ["BUG_DIFF", "ORACLE_TEST_01"],
+  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01"],
   "reasoning_summary": "Short evidence-based justification.",
   "proposed_other_pattern": null
 }
@@ -191,10 +209,15 @@ Rules for the record:
    `OTHER_TECHNICAL_PATTERN` with `taxonomy_fit: OTHER` and describe it in
    `proposed_other_pattern`. Do not force a poor fit into a defined label:
    those cases are the coverage question's actual answer.
-4. **Cite only evidence IDs listed in that packet.** The validator checks.
-5. **No private chain-of-thought.** `reasoning_summary` is a short
+4. **Two labels will rarely fit here.** `vacuous_verification` and
+   `unverified_trial_and_error` describe a repair *process*. A static
+   synthetic bug shows you no repair process at all. Do not invent one, and do
+   not treat the system that generated the bug as though it were an agent
+   attempting a fix. If the evidence does not show it, it is not there.
+5. **Cite only evidence IDs listed in that packet.** The validator checks.
+6. **No private chain-of-thought.** `reasoning_summary` is a short
    evidence-based justification, not a transcript of your reasoning.
-6. **Save immediately, one file at a time.** Never batch. A session that dies
+7. **Save immediately, one file at a time.** Never batch. A session that dies
    mid-run must lose one case, not fifty.
 
 ## Working loop
@@ -204,7 +227,7 @@ Rules for the record:
 python scripts/validate_review_output.py --reviewer claude
 
 # after each case
-python scripts/validate_review_output.py --reviewer claude --case SSR_007
+python scripts/validate_review_output.py --reviewer claude --case SWESMITH_007
 
 # when all 100 exist
 python scripts/validate_review_output.py --reviewer claude --finalise

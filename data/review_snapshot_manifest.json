@@ -1,0 +1,1324 @@
+{
+  "frozen_at_utc": "2026-08-30T08:32:54Z",
+  "note": "Every reviewer records this file's SHA-256. If it changes during a review, that review is void.",
+  "packet_count": 100,
+  "packets": [
+    {
+      "case_id": "SWESMITH_001",
+      "digest": "84a9d4299584915cd0316b9a181f6f8c46d44a961cc343d0fa05f76b4a17ac0e",
+      "files": {
+        "bug_diff.diff": "6e1ed1aabdfe1f61756a6b0a00cf1cfbccecd2f2864483f055034359260c2bcb",
+        "context/01_optimal_string_alignment.py": "84e8c40f913122a18f2305672614647a9465514c9306c94d9bd331c0360afda3",
+        "packet.json": "04ea69059f01dc05c1db5e4014be3c81119bf95b4adb51abc5707e5f32858533",
+        "reference_repair.diff": "eff8f4e2e7240a9cbb64028096250a3e2772c9fb0cc5b8b4f81533d82bce0bd4",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "88d688e3f382eece9c4ec68d0f6e26729db2b3ad4a88a544655b4f2b63a85b92"
+      },
+      "path": "data/review_packets/SWESMITH_001"
+    },
+    {
+      "case_id": "SWESMITH_002",
+      "digest": "5a2fca6f573fc2b26c52ab24843c2f3ba9377b7d667c6bf28b0a3101d3da2f3f",
+      "files": {
+        "bug_diff.diff": "ca979abd17ede81f83770375d7092359636c9f099b1da8a8312f80bf8221002b",
+        "context/01_wordcloud.py": "331c95d9c71c2db4ffddb8f99f5ffa5b08ae5fe60050d8258a63a9b0f47061f8",
+        "packet.json": "a3204ee17aaa80e5f72d4a74d598f668bda11cf22ed982edadb73a45a1aa9d49",
+        "reference_repair.diff": "03b637f1a0503311a78912c92f60b8f95fc8b60b86bf52d4127e604b665e5981",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "490a978a4eb5557870cb9e2042d3a470f9d84de163eb579f3e03f9eddb5a29ab"
+      },
+      "path": "data/review_packets/SWESMITH_002"
+    },
+    {
+      "case_id": "SWESMITH_003",
+      "digest": "8783522b35b14fe971c37d434562e9c9a0beb5be26f49503c7f9a8d2c8bf50c2",
+      "files": {
+        "bug_diff.diff": "595f9b228ab45fdfe0f0e16b0be52c0ed17d706b1d4190e26ab7095c4f70030e",
+        "context/01_brain_attrs.py": "1f9b3b1cbfa7284381fe361ee0c42f9bef0d844552de98e7b91a756224f754da",
+        "packet.json": "4e4e388cc3ed20fbc98f8c14189018310689198dbf879b4a6d434d80b2b2c444",
+        "reference_repair.diff": "4d03cef1caa2b07a0464ee41f939190bb64261ded1e1aee1fea682b54753f7aa",
+        "specification.md": "3b0f80edb7c414d25be88c90471534a2d0d091cb4df242ffc9b97a651d5a4dac",
+        "test_evidence.md": "cdd8d3f223f90c66a57535e12d7c1c5e6f1dc8b4435005dce9f015a99eb99dcb"
+      },
+      "path": "data/review_packets/SWESMITH_003"
+    },
+    {
+      "case_id": "SWESMITH_004",
+      "digest": "83b07c939d7e5cbd9f3aaf59c212b1e474c6faea5a7e296c2b27ed068597854f",
+      "files": {
+        "bug_diff.diff": "242a6d0214a3f138f39c7138b91135dc323926a87b353c771c655e18e684b0df",
+        "context/01_data_manager.py": "483c611275a6c21e73068e3056989aed366b97958140887a56277fba5e342588",
+        "packet.json": "109c2162ac2975d6284de8233fde4eaf28dd77afc6d2c6005964819eb2918666",
+        "reference_repair.diff": "9f5530ee70cab05b663865464543408afbb78ae5cc1d51e8bc52d2256636a518",
+        "specification.md": "986e971b62caadb1024a0915ca84d4dab546b3f1435980545803999ae64a062c",
+        "test_evidence.md": "e4a93d8fcef27c07c0d166ddb35393b0183fc1acfe9415ef55912189d6591e5f"
+      },
+      "path": "data/review_packets/SWESMITH_004"
+    },
+    {
+      "case_id": "SWESMITH_005",
+      "digest": "f892a5eabdab3b4f30b41c7c57b96c07ad5cb19d5b13a4ddad26654e16e1d2f5",
+      "files": {
+        "bug_diff.diff": "267542013456f2137c335ef25323aef8c1ccab6a551d6a055e8522caafe71fa9",
+        "context/01_deephash.py": "1ad0092ebd93ddb5ef013a3b9d1daad2e9538304bf91224b85e15291ad5aaea5",
+        "packet.json": "ed5950095bacc6ad9cb64faad0217c861173716fe2f49454c903d90e1224bd0b",
+        "reference_repair.diff": "ab29f1b968c0cf0476bfee81d7d4868cdf24269bf6683fbd63fb5da33a151d0c",
+        "specification.md": "26a72fd36ac195f4330045ce42e68e75919a8afbd3f32bddc9e2e343d7c70dbe",
+        "test_evidence.md": "8a88d7565936dc236818be88ccb4fb317b2c833dcceb7ee76abbffdf4372e1e7"
+      },
+      "path": "data/review_packets/SWESMITH_005"
+    },
+    {
+      "case_id": "SWESMITH_006",
+      "digest": "1da94ff6a3c6715941824dbb9dd822c11a016279f3738b31e76ddf8c3e4de388",
+      "files": {
+        "bug_diff.diff": "7f7a06e259ed6d6c8b25ccfe70e2f6d1bc679e203edfa498e6cad6642d43c1c4",
+        "context/01_errors.py": "e0d169ffe9b258c9e61b6b58f0cae74fa3eb93c5ef362849191c0f4bf0eaedf4",
+        "packet.json": "0d4825516b144c3250172d7a974aee0699e328934f7925f4797682bf2b58afef",
+        "reference_repair.diff": "4d33a7612340ca8bd083f7837c0e25fe8d3287a37aae9467f07bd4bd95fd9e1f",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "0facba2e164f6862dbf66f320286d78439755e11e3e7b48172dabce7dc413227"
+      },
+      "path": "data/review_packets/SWESMITH_006"
+    },
+    {
+      "case_id": "SWESMITH_007",
+      "digest": "2ac5c143f530db35998709fb9041b2c8ed79e617b53d1d4e01089d057de04a29",
+      "files": {
+        "bug_diff.diff": "499bd148cbd861e24cd73814f1fe0c94df1c38c27b6e77055e9bbe77d6dfa400",
+        "context/01___init__.py": "e1b50ab19850425fa1e24a0ee314cc670f3ae71e6acac42b1ae218001c4e6aee",
+        "packet.json": "5d8ed57b2a0d5a521232ed0eb174d448ac5e64bc3c106d7e12a57070cbafa6b3",
+        "reference_repair.diff": "7cbf444955c1a5e5e60c6c18f73cf3817876ac87feca1e9c8facfa48c249d501",
+        "specification.md": "e501a5373a06652535b65cf2b3c39c882545141d87d3d25d9b49683af23e002f",
+        "test_evidence.md": "b06f0100f1fa7e3153378e7cf2c2434436893f09582f2d0cafe5d845335c1a9b"
+      },
+      "path": "data/review_packets/SWESMITH_007"
+    },
+    {
+      "case_id": "SWESMITH_008",
+      "digest": "5656279188e3eacf107d532f5e7ab9ca6d7e6e7f18eba060726d5062585a71ee",
+      "files": {
+        "bug_diff.diff": "51fa34a786e9f4e80df3cfd3df986fce505c0fc72feb2e632dfd252e7e3ea6a2",
+        "context/01_http1connection.py": "bd84b10f235cbf3badf6c4b660beef84805e94cfeec22f3be598f56967b4da27",
+        "packet.json": "e2ec8ba6f9cac02b5457acc28f8a08afb82d92299b98f408623996057d9ff49c",
+        "reference_repair.diff": "12bdd07701805d8ce8fb348e29941ba84dfe85673eb24d51a72b32714af0f4b0",
+        "specification.md": "99f4154de4da084544660f1ee2df34fc75cd8444946a44dfe7c32b22a8dd7a5c",
+        "test_evidence.md": "46809a62d61cfa7e92551d29fad1ce500b4af64fd25f6e91f81735ae784b9ea7"
+      },
+      "path": "data/review_packets/SWESMITH_008"
+    },
+    {
+      "case_id": "SWESMITH_009",
+      "digest": "6086e5486158389963a63b8023e794b359863e1a8cfcbb1a34fd6ececdf16def",
+      "files": {
+        "bug_diff.diff": "7dd4824a1db838a063431f679dea3b90ebf8c3bc2e35570552eca44c5c4a12a8",
+        "context/01__base_nodes.py": "cf581bf6e2d546fa600414453fe83a2e345178fdf01e28a3ffb30e2a6bf1e28e",
+        "packet.json": "99653d562901361e02586199c54ce18e0b1cb50ce45530c92eee7781f5dfc182",
+        "reference_repair.diff": "1809a718e18e284643cca2d8aba15d97ce068d3cfeaff2609c6e86990f5dee64",
+        "specification.md": "0801af2751b4cc3eb9ece1f256645fbf042fdbb2115ff7b0dc05fac695063254",
+        "test_evidence.md": "05d57b95a9ae3f9e341e92b2d2d68cf661e97e74fadd935717b58b3cd0ecfaf0"
+      },
+      "path": "data/review_packets/SWESMITH_009"
+    },
+    {
+      "case_id": "SWESMITH_010",
+      "digest": "796c84fb7aabdd0a8d9b2967b20db7b7cca233b8d1f6dbeba5b4b47426071b49",
+      "files": {
+        "bug_diff.diff": "d3a78acb107db7dbeb0f8960cd4c0730e6113a01bbb5395ca322c63d41163e10",
+        "context/01_queries.py": "2c9e013b9f4283b0ce1d1edc8f644629a599882008daf0505d14308a410d17b4",
+        "packet.json": "9094b7a607122014c7d30eea9b21be081b53fc9471ee51967db7b80c2b30d3e5",
+        "reference_repair.diff": "bda5c76f8825b2077ebc2952ff365759a3667092ab27a43057d8a1cedb3bda4e",
+        "specification.md": "3b287de605ff406e19bd3a7adf3c909a646b62798cbe3053a1ecf8799039fe03",
+        "test_evidence.md": "664faf617c504f863989e8e59966cc9ef21f1aa3f0ee5966543cb2a2cb587ade"
+      },
+      "path": "data/review_packets/SWESMITH_010"
+    },
+    {
+      "case_id": "SWESMITH_011",
+      "digest": "ced0c380774f4e987d96266f5fd106a0ec0c932f3e8ba2458c5096b87b021602",
+      "files": {
+        "bug_diff.diff": "5d02bde1caa00e9ad9cb45c638ee17813cd7492ecb1bf729e809233f24e8b877",
+        "context/01_schemas.py": "e53b5ac3014423b764d1dcfe75d27902877c92a14b04481aee7c5af9d03a9bd8",
+        "packet.json": "8f944da1d88fabac37f8c875c007a2e6b0b6d9cedc2f4da72ce03392c35265e1",
+        "reference_repair.diff": "bbc8078a462a0fff1f3a8bb8d8f3be4b95a3721488a96aa1aab1d61ef705613e",
+        "specification.md": "6dcbbea55f01e4a2efbd868ac9f9a942e0dab41b23c1c84bdbd54d4623aca0e7",
+        "test_evidence.md": "e188ba5fcca3d4f03f1cce7ce3463fd52f142ae0ff4abd67d51eb53499f13a88"
+      },
+      "path": "data/review_packets/SWESMITH_011"
+    },
+    {
+      "case_id": "SWESMITH_012",
+      "digest": "dfc7583c4b88dbe019393f88aaeb2c7a40efccbe02189bc9906a719d5d6efff6",
+      "files": {
+        "bug_diff.diff": "bbdc8f9f045315a24299e691e92b093c222ff0bfb52ec82d6f6db8dbbb62fd65",
+        "context/01_cache.py": "cf2ba020e2beae1e6f5c8ad5b6fe3987208719a1269edb777f4e01ac1696ff16",
+        "packet.json": "c69c920d20a3ac6057103c539f841ebe30d7489fb47c161d82a760a610ab7aeb",
+        "reference_repair.diff": "5830996596954e3b6154c3478ba162c0c6dddeba925d9c02666505590a7dcae8",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "c38e27a598b48779c100ada5ff07714847135e125d0207c74ecaa40a8b01f71a"
+      },
+      "path": "data/review_packets/SWESMITH_012"
+    },
+    {
+      "case_id": "SWESMITH_013",
+      "digest": "cb49fb383982a72fa68eb2a41de9840a9fb9bb9a97e02d84c3fe664234108619",
+      "files": {
+        "bug_diff.diff": "8dd25d3497449343fac5c01b66d22732a0c0ac90def195233b59802dac65ed4d",
+        "context/01_models.py": "c17f150397517b72b77258c67b9f941a8873fe70de646a7bd67b950dfec3e2e0",
+        "context/02_responses.py": "6129deaa8242cd9b7dbf8d15f08649f80f81735815b848b2b69ae68ece9b035e",
+        "packet.json": "e6f0be45fc0bb3f1d5404ca494db1f23cf5154c2024b381e66077873ec489fa7",
+        "reference_repair.diff": "23f92ba45d9aa087ec2e06e92acb375302d6635a08b8a93645536f0d3ae9739d",
+        "specification.md": "26e6e56baff854121a31f8049c7dba80baaff29433aeff1a94e944358a577427",
+        "test_evidence.md": "98129ca3698fd469f0fd58db637bf779a3fdea8b962f84b713381128c00bcd58"
+      },
+      "path": "data/review_packets/SWESMITH_013"
+    },
+    {
+      "case_id": "SWESMITH_014",
+      "digest": "67e92295ae5172bdea8509eb8a3b2ce1828c0f585cf70c375363ad32651f501e",
+      "files": {
+        "bug_diff.diff": "579b1cef90ddf218fe6953297510f0750fd983930829b4a1ee844ed0fe2d2a8d",
+        "context/01_cli.py": "80ff665b4c7a9d37d57c3ad9dca92bdb56935c64bca465c3a3fd8a5a439a68be",
+        "packet.json": "bbbb0d61d643cec20c42f7864dd749096a7a040efe9c6e32a10bc783fc041088",
+        "reference_repair.diff": "2f0ce6815593ed2ea243654822615b8ede59c395d34a403196e38d357c08808f",
+        "specification.md": "fbd7c83ef53c653891e0aff0069024f62141ed9a9fb44c511ee164bc422b5b71",
+        "test_evidence.md": "1a2590d7173ed7d09bb539ff746c898441d626de8c18755a269a5a960635a251"
+      },
+      "path": "data/review_packets/SWESMITH_014"
+    },
+    {
+      "case_id": "SWESMITH_015",
+      "digest": "7c1ac8b7399bb94aebf4f623837519d108fa97e42200ba8ecd98eda39805bb07",
+      "files": {
+        "bug_diff.diff": "099952fd19f0722c9b56c8e91c843026f81ff425fe69d79c684bb9cc815920e5",
+        "context/01_core.py": "331f81bb41a991e80f1a0f0efef58dc72180f6b6872ec0a593e49f903b943825",
+        "packet.json": "0ece99c3d545da0932ec57e9889b6ccb2cdf9d0677a25641c6b616788ff26941",
+        "reference_repair.diff": "ec3bb5c63ee7494004002f2180285d6db45c41e2130f0638b56788ef4a04135c",
+        "specification.md": "adecbdbcd3ae5a276508b386abe7d552823d647b6417b1552dd11c1fbc89f152",
+        "test_evidence.md": "11a23be85de51b43ac0b7c01f80796d8a5f0b91c9685e65bf2e0ba091254fca4"
+      },
+      "path": "data/review_packets/SWESMITH_015"
+    },
+    {
+      "case_id": "SWESMITH_016",
+      "digest": "cc7a6722256dfcdb83db646e88513495fc57e797dbd12de80c7eadae00dab3f7",
+      "files": {
+        "bug_diff.diff": "0df84cdfdff1dec280c0eed6a7581a3e669b70960ff8a37658ac65e22596a81d",
+        "context/01_pep8.py": "2600ea9871c7f93d7fa1f43d7113e248a3848bfc5a03e09964c07dd20f4c2b9a",
+        "packet.json": "441c59a09559a3f5b14b32b4b7209aea66dc7e817b5e56b9a6e54bea9eb979ca",
+        "reference_repair.diff": "d1b4ab2a84a46e050f396eef56e003f53c803422ff3abdf6219d994ea1a6db1e",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "cf94adca973f6485d73ffde96f3ecf97d4bb66a1d80b58b33e883744377db831"
+      },
+      "path": "data/review_packets/SWESMITH_016"
+    },
+    {
+      "case_id": "SWESMITH_017",
+      "digest": "c97dc4c5a84d886147f2f925c2babf0a8350de410828c820d26382b749bc2a3f",
+      "files": {
+        "bug_diff.diff": "a1655eb02b1ccfaab0bebc8dcda176c155dd03b630d6ea41b96ac4da8a7fc96b",
+        "context/01_melt.py": "f0532b40514deb02917fb692969abcbfee7058bc6ff847816b16cae5fc3e8984",
+        "context/02_accessor.py": "fb1694a3e88552b0329a75441582fc20babf5bbd00309c5ca2b85a186f4cd888",
+        "packet.json": "1282dced74332fc9f398cbd96f1a4fa71e18eb4b4640574079c63559815f3ce7",
+        "reference_repair.diff": "f0f0f445677df31827c97ed4ae8bfbf6b60924893b9a317e0a0032a240a4b97d",
+        "specification.md": "20f34045ec0cfec97e6278da66840bcd1780ab19d4da43f34c1c670eec0d3e20",
+        "test_evidence.md": "47b05c266be2a8730775ae9c7005d1b32c36a3065bae0480f90d59021ff6e68c"
+      },
+      "path": "data/review_packets/SWESMITH_017"
+    },
+    {
+      "case_id": "SWESMITH_018",
+      "digest": "63208570e1b3ccc82572ed19286d89495e5602f4f3fa586dc7fc58c8f446c3ff",
+      "files": {
+        "bug_diff.diff": "ab1b1d37ad912b7c1bfd6a3a190ede90a62ec5ae202f2629f73813da3641fd27",
+        "context/01_build_helpers.py": "b02e64d1eabbdc3e5719c067a9577f2eb0c2d8a125878affbdd77e65e8d2a900",
+        "packet.json": "5224280f61f635722d260fc893f305e9f8d588f246be0584fe0a305f38ae12a6",
+        "reference_repair.diff": "0a12916231988a86ff3f959ff2d679ea8a7db7eff2a98293259632002fe07063",
+        "specification.md": "387dfdbd024fe83cf9872485993c6761fb5cb28af02baa6a3a9a2a3d145fcd11",
+        "test_evidence.md": "8d5c45e095bd9b3c9d87c9de182299ad059f88780f1e95258f506897b4cc7a7c"
+      },
+      "path": "data/review_packets/SWESMITH_018"
+    },
+    {
+      "case_id": "SWESMITH_019",
+      "digest": "d7348ad60fef01e3ad70e96c8277e346ce71a51d7732af56a29c39d627f72264",
+      "files": {
+        "bug_diff.diff": "d0bc22f848942c19832f621a2e95d1e630a3ae100c005c8dece7b0d1864364d7",
+        "context/01_main.py": "2aa6031e8da55f1f09ffe92992a04aeeaf6ac7518aa41ac5b74846e51fc34724",
+        "packet.json": "9a5eb5b9b642d51af901044f58f5d58a78beda22f140f46c6d760ab331123d7a",
+        "reference_repair.diff": "11c30630f551889bf627f32af04b602963b3572f465371f174f85261a66b8611",
+        "specification.md": "1e967c3f19a3fadaa47b6c947fc56a0128cc9d164dce670d246edfb7d04aa193",
+        "test_evidence.md": "b077d514079f092c2b40e08d37aa0298ea004f5f0fd2d7f06c21377eb5c091d7"
+      },
+      "path": "data/review_packets/SWESMITH_019"
+    },
+    {
+      "case_id": "SWESMITH_020",
+      "digest": "419d30189fd34e3c99b1f963f70315a6a38ba9b57a15c9576cfaeb306dbe3040",
+      "files": {
+        "bug_diff.diff": "ece7e66057a3fb454552b767def6527a22dffeb85e14e254225fdc0724a1964c",
+        "context/01_remotes.py": "28bf82670c9b054c032ab3f8259f378e52d8dc316702bfadb64b33080e22e581",
+        "context/02_remote.py": "5c532ea49cedfec4d6d6c4a1e8fe3b284ee07836de453a4c8b1648099c83f9cc",
+        "packet.json": "cf5b4c839016f0a130cc219236fb9621e8f3d5f0327c9878def5ae0c48b41cac",
+        "reference_repair.diff": "e450a11bbc3505bc78b59f4a69b59dc3b43bbd645b66402c02d9284078426edc",
+        "specification.md": "6bffd970ad6612af7b852be102c347dd45b8ec592af3343113affcc49b3084df",
+        "test_evidence.md": "b61c2c0e191a99b16bdc6b83a4e923909c42d937485291605898e5032d0b2df2"
+      },
+      "path": "data/review_packets/SWESMITH_020"
+    },
+    {
+      "case_id": "SWESMITH_021",
+      "digest": "0fe363e7be2d1cf9cab639c980cd301f1724c7036ac47b6c2349d4884e214d4b",
+      "files": {
+        "bug_diff.diff": "0108786d2809035ca6db77113fb99126506966329bfc44bc79e6e7d83b7c8e66",
+        "context/01_metrics.py": "c2ff70c3984e7fd281b3e371a8d18d8c01dbd62be8193a1ed17653fbddcb70b0",
+        "packet.json": "efb612b0395bfe70742c718b37befff05a0cc6cf8123597cbb7527d7bae56f0d",
+        "reference_repair.diff": "2cc5bd9a7c6f862aaca8e9d992608a9ba30b44e905ff231f2d5b1c13b2e76802",
+        "specification.md": "3851a034a73403cd10d4b37a073397ffade7881ca4566a4f17e034ffffd95bc6",
+        "test_evidence.md": "31a689830cbdddfc0c34c223e561e54374981b32bbac3c581c70a82e67e0dd21"
+      },
+      "path": "data/review_packets/SWESMITH_021"
+    },
+    {
+      "case_id": "SWESMITH_022",
+      "digest": "9a1a430fb97a084eb42baddc86b50307713e2c4d30f8831719e22c656647879b",
+      "files": {
+        "bug_diff.diff": "97d207e7f9d4b4d54e8fe4d9b5139d79d47534f4d1242013490cde35cfbe3588",
+        "context/01_test.py": "36c39312a68ea4095efa84bac02c6a0e0e74f69b573fccc4edf8ca7a399b591a",
+        "packet.json": "3515c23621e947d3fa1bd72b490a4393af6187b9c28393a6fc112727d61aaf80",
+        "reference_repair.diff": "9596cdf1712eb23b02ace9751294f59e3a4c2aff5e4035b5306d5f8917b5c551",
+        "specification.md": "901339500bff9f7a87ce05c902c3d485efc722dc7ba89a9a3409f484e41c0f06",
+        "test_evidence.md": "c8cf747896b17559744f01078e5ac65aa2bba0efd93c400e55543ae7d1347ff3"
+      },
+      "path": "data/review_packets/SWESMITH_022"
+    },
+    {
+      "case_id": "SWESMITH_023",
+      "digest": "9ad35b065fba6ccec62e132b8fc83db91877e60b24662d286e063ae09594c98b",
+      "files": {
+        "bug_diff.diff": "f12e58b4c0fa1e3f333d3f271a397bcaaee719517b0fd2d4cd12486c0d0d5588",
+        "context/01_locales.py": "a2b2bdd70bbef300d7c14c90a5a23f8a71216a21e1d21a27c49af1136c3ce5ee",
+        "packet.json": "3e6fa633b6f9b374813a94f11f7b7540c9d2a18ca874bae2922893e823156884",
+        "reference_repair.diff": "b6441ca04bcc38ed861969b5db5a4086d46659ca1ff9f130e31901d696e3908f",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "ee8e9c57fb30de7005bbc6d19a8708e0e393d2a5dcc83d41d87079a43c3ddb97"
+      },
+      "path": "data/review_packets/SWESMITH_023"
+    },
+    {
+      "case_id": "SWESMITH_024",
+      "digest": "ec7c87e83024e3b055edd641335203bc5d870b762d412377652b4102aa39e1d5",
+      "files": {
+        "bug_diff.diff": "ca03890563f0d8c96729bc95c92f29e12ecca389b3c18bba4508fa2e209b030f",
+        "context/01__freeze.py": "dcdb02df637433e760e8da0fbe981bac155d27f2f80d5b466b83ad00f0b580f1",
+        "packet.json": "38216f243107ee65148bedefa29bb487501e225a7762faf5638c70df81976fb0",
+        "reference_repair.diff": "a1712af0f487e942934c2effb7855c2ceedfadbb9104eda4150583cd4ad41822",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "44082b2573b21688a9fee24a0fd326582f31d0eebe1784eda5fdc5fbce743583"
+      },
+      "path": "data/review_packets/SWESMITH_024"
+    },
+    {
+      "case_id": "SWESMITH_025",
+      "digest": "c71b99528e485883c3a6482c4f4f259cdb965fd7f205c43745a097d30ec66a6b",
+      "files": {
+        "bug_diff.diff": "3e73a6435b1059644705f9d320f4cce83d5d685dc2de595b0cf96b2f7c94f211",
+        "context/01_websocket.py": "bde694306119b6193080e8e5e81df645e1a6fdad33ba250f47423412b14d3ec2",
+        "packet.json": "53a1892fdb24ecd9cd238bf00cdb5406bdd1cfca14def3cd213def89c9e7d9ba",
+        "reference_repair.diff": "b1a00cf04e076408add007b23f8a4f4317ef3e60b0c6835d488ebf3404f86f65",
+        "specification.md": "49898be670ffc4820e88e412c9af7b90bb0d185d0a1710d0e3a271e1e472d597",
+        "test_evidence.md": "329a4a99e78a27fad66b029ce4bf6670bc203f97e0bece95f60dbc285d4389d8"
+      },
+      "path": "data/review_packets/SWESMITH_025"
+    },
+    {
+      "case_id": "SWESMITH_026",
+      "digest": "9b2557b3b32ecd39c3ccd58c32984e328cd134b5be855568bf9f6573ad400611",
+      "files": {
+        "bug_diff.diff": "607545c3af0e0eaca83904f25e656d2ad066908e9f086c2222720da02a876ce1",
+        "context/01___init__.py": "b44c69f83e3a7f17ec260386ba123d6af0cd3a1717c84ff1a808f4b4e5300c60",
+        "packet.json": "80c8612a525adfc8000e22ee00db288ff2cd54070131fe5debd5d30915bcb4f8",
+        "reference_repair.diff": "def92fcfe57d95211065ecf35c159f776551f997889c5025d7db446c7373377e",
+        "specification.md": "95a2656d815434f934ffe11d15a832496d1f322de3f5a9e396fc69723fda2c9d",
+        "test_evidence.md": "98985e220374105d8799192c538d81d6f20d115380dd4014f51119d07cd3cd0f"
+      },
+      "path": "data/review_packets/SWESMITH_026"
+    },
+    {
+      "case_id": "SWESMITH_027",
+      "digest": "dcd5e504f5723d8fd0fe582d9e2e75167d4f40912f774f7748c43d759fce8e9f",
+      "files": {
+        "bug_diff.diff": "f748923c1c53f24c727fd964730d1e2b4bc49f853f6094f4381a96030e196f86",
+        "context/01_geo.py": "626ed893cd386853cc829815c46f5c7b17ffdf349a729dcb2ea1e1e24165e192",
+        "packet.json": "68f3d885d61cb63283d6a008ca07c62efef5c3ea232d4b4ba5f29eaf332d22b4",
+        "reference_repair.diff": "737560e3ab8d6faf84cb788b72f1bf0aa69b294de723934754d75c289af04281",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "9dc83a35d1a818247f1267bd05b8c06f83ca955da77c605e24799667e40ada44"
+      },
+      "path": "data/review_packets/SWESMITH_027"
+    },
+    {
+      "case_id": "SWESMITH_028",
+      "digest": "7f32f251f8cefbf5186fd4196d00616416b94dc1857021d92a9c17846f6f4275",
+      "files": {
+        "bug_diff.diff": "e2679e9ae201718155f5ac342c7b55c70b1606897f70a504ed8a96f6b409f1ff",
+        "context/01__utils.py": "97ef09f6212f25d3a7af8b77f735f621f757e0373041cf120d789bc69314be48",
+        "packet.json": "c2acaf78ceeff5c914d36455d10511a35c11001833dde8f2a31ecb71c234074d",
+        "reference_repair.diff": "7cc1c4d7dcc76be6cac613c5277b913ee2c16118e1b94de9f1410e4a1cfab5b5",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "cc0406d9422b716e728644b180e2457c1872b2fefbe0cec64f06021eb75f5689"
+      },
+      "path": "data/review_packets/SWESMITH_028"
+    },
+    {
+      "case_id": "SWESMITH_029",
+      "digest": "99cf87cf106268bb8a4888569c6cac4e090efc8e000fca3a92fa52fe8bf0636a",
+      "files": {
+        "bug_diff.diff": "82dcb82f784d66159c9ca4a0f5103022932a6afa5cd885747fb4f4024527afff",
+        "context/01_models.py": "a96268e75ad1a317e06748548295d958a5ff563f9036a5cb23e518fb2eb91391",
+        "context/02_responses.py": "c8a3654a17c6b7081c51b86287fbf58ff25e397d6aed4d23f86d157719751e5a",
+        "packet.json": "f80912e0e11aa23328ba759b6daf810f10f9fe2566f584e730cefe5dc0c9bfbd",
+        "reference_repair.diff": "e479c9fb54278225c620246fd02db346b3229df0c27d4e0eb650900458bf4093",
+        "specification.md": "84b47285f799f80bc16b87039c46b092accc3569c54f7c463b14c606fead6f5c",
+        "test_evidence.md": "f98dfc276e33d036686e897bdb9068300c6f91ec4328ba553891655873d8c454"
+      },
+      "path": "data/review_packets/SWESMITH_029"
+    },
+    {
+      "case_id": "SWESMITH_030",
+      "digest": "1ff1b9b5937e5af47846cdc5b54c00bc5fecca45a2427f58a3f1daec7fe9ce66",
+      "files": {
+        "bug_diff.diff": "9b5e75765baf9c1e9dca313bab23ae261200704292d847e832a93af32b9c6361",
+        "context/01_parameters.py": "2240ee5d1212d1e648bcae96562acd709ce26c512e759e27e37b3355ed521955",
+        "packet.json": "51af27c1a5f56f51135106f5da3d6edb5137825e0306e2371571ff5b26a078ef",
+        "reference_repair.diff": "2b97976527ad173ce3fb4bc5344d67f63b20e3b61549147553eaf9be3d8b419e",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "e9ba34ffc13623607d1872d1398d9ff807c32e065867f8eac65749a2129d80bd"
+      },
+      "path": "data/review_packets/SWESMITH_030"
+    },
+    {
+      "case_id": "SWESMITH_031",
+      "digest": "72edd55cf43dce9b006e3403c96950b6cf64249c6462e549ac2f32488c513de5",
+      "files": {
+        "bug_diff.diff": "32d3ed9058dc443f8c563b39003ff65d76b44fa83b8f76344bdcd8a9d4d5fa9d",
+        "context/01_main.py": "99d22cd9faed84b354d23ca9902c69bc9c1c362d9231d8695deb5ef8f372bbc0",
+        "packet.json": "cb1ace3cf35d5e63edf16edb038e13f6403dd1b30354e37748c7b11ddd95894e",
+        "reference_repair.diff": "0aa3e4b704887642a83004e9fb2830625a39b2608096dd1eb2afd070bbcdff41",
+        "specification.md": "a6acf3a436d557260a142355d18626ef522615d34d1c7556bc659ee0beb54e48",
+        "test_evidence.md": "cb731b07a8953b500a3aa404909e8c78bcdd61398584a0c47c269d730de36d8c"
+      },
+      "path": "data/review_packets/SWESMITH_031"
+    },
+    {
+      "case_id": "SWESMITH_032",
+      "digest": "8ebaa9662c034d964dff42c53cf7b96a1ba16b5441684944c5c35edb344dba27",
+      "files": {
+        "bug_diff.diff": "6aec1869fd44b64f5714d76677513c18dc3dd5818c2b1dd8fecf897e13bc0191",
+        "context/01_sockets.py": "8d20ed0e717376275ad600915caf37de93fc98b47578caeb39cd209eec55c1ee",
+        "packet.json": "f525832e4667f56ce8bcb4498705bc717f5fbcdff0f237cab9724ab245be268b",
+        "reference_repair.diff": "6b131591fe1822234ff686619b0cc23114f67e2f48fe7e6356a4d88031001f97",
+        "specification.md": "a953661feefad63376c6b66e7df5d5634480b7c4ede3024a861f974b34ad3280",
+        "test_evidence.md": "6e3c6991c38b57a440e8b2565d0e454aab313398a73da596421461da96db886a"
+      },
+      "path": "data/review_packets/SWESMITH_032"
+    },
+    {
+      "case_id": "SWESMITH_033",
+      "digest": "635766f07899086d495dc96ee8be0a4a50530d257a42bd755724c304406e1f75",
+      "files": {
+        "bug_diff.diff": "b84af5ef01015a3b144ffef6d0b78b4b4eee000481219c20b6b2c6ff66613995",
+        "context/01___init__.py": "687bd78d29cb32237cc2e3046271335339abc3345987c042b85ee0a612528294",
+        "packet.json": "d18be8e22b5f652664e5335386f9641a2315e3d1d7938868c2b2b9ee1a8a38f1",
+        "reference_repair.diff": "904d186d2bbc3a773dc48b4f9f1242334a527100be291ae1c5d253b0cc850d7b",
+        "specification.md": "d3bad5cda9d1714b0f90260b0d1c83ad645c396d152dd0b6fa048ad49ea47c53",
+        "test_evidence.md": "047164b287520a58906f3b4914d4700f11b743b18bf439b344164c1e644bcd8e"
+      },
+      "path": "data/review_packets/SWESMITH_033"
+    },
+    {
+      "case_id": "SWESMITH_034",
+      "digest": "c6c9f471b150755652df9ec21b9f99517c3d820be5d7fb5ad181844c2093cace",
+      "files": {
+        "bug_diff.diff": "35a3daa3c9352bda146883279675e4ee25f93eb70fc7f1039deeca14553e7dc9",
+        "context/01_result.py": "5851c7a65fa8cef13a5e27d93ef37d7ec71cb71c77605ce38b9aecd9670393f2",
+        "packet.json": "799f8f033ce9cc199da2293345c2960c47921485d23eea0f2502067199ad532d",
+        "reference_repair.diff": "4f0e35188c51e4a66573d70833891d445f017335bdc215505de71dc3752c022c",
+        "specification.md": "443b4bdade196255b31649a5457d9360cd5506c2805e7ba2575b024f6f4c7ecc",
+        "test_evidence.md": "1896b3d1b359216009dfa4c753dc1813f5b2520bdd8ba53f9605b577714284a7"
+      },
+      "path": "data/review_packets/SWESMITH_034"
+    },
+    {
+      "case_id": "SWESMITH_035",
+      "digest": "e88666a114fb116cccef85b7382a18d86cfb0c2bb2ceb391b05e392f92dd1acf",
+      "files": {
+        "bug_diff.diff": "4240a2b2087998c3da4d595beb419622c084fe6a08cf9d6193ca7a7a5c7388b5",
+        "context/01_snowflake.py": "be3fb1fd4e614d74a7ab828644bbf145f5b606fc3d6a3f71e6b8434b8ede875f",
+        "packet.json": "deb9b364ce58af4cf151cb1fdc7032371e7f589f57a11ca3e02dbdad168815f5",
+        "reference_repair.diff": "16b2d73b3961655c77ceb34afb3c26e5f87758ddf42fa082b37fe81a5a27ced1",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "7c8cc1c52d5cb09c855ae18660f7b5c2dc77cc0f6661c38b392e8c9e6b707c93"
+      },
+      "path": "data/review_packets/SWESMITH_035"
+    },
+    {
+      "case_id": "SWESMITH_036",
+      "digest": "1061db119c2c89876eab9b1deb6734e6a76a3fed5fb9c5b42bb9dbc120f29e33",
+      "files": {
+        "bug_diff.diff": "b5f603263ae3e149416927f6523cf33d4d1f25ab9f977b47c5be04920113530a",
+        "context/01_brain_namedtuple_enum.py": "f1ad0fe6ca8d0c26d5212c9355b74e4d532d631ed22680980153538939431067",
+        "packet.json": "0852406bc6f994d97b0c036b652a0e33f01f1e4e23ff3181366cf185b5c5fc9d",
+        "reference_repair.diff": "98c30e65d9857f3beb88fc6cd40331784f5165a66a63f8d225947bab29784bac",
+        "specification.md": "f0d06ad3a4bbde8dbc2409f05d89dba6f49443b38c5ede93fe6a5e32f0c2cc73",
+        "test_evidence.md": "a88ee606a18d6e31d6566e3ca4bfc644ca0f0cdc4ce1078a25e2d4e776f9ae41"
+      },
+      "path": "data/review_packets/SWESMITH_036"
+    },
+    {
+      "case_id": "SWESMITH_037",
+      "digest": "9cb6bae1698483e0ee84fdf455906a832b203555a051ec261dd78f92b666989e",
+      "files": {
+        "bug_diff.diff": "b3101b89a11eb64ffe448d8eabef5135086f19a4d1d30fc2d24ef57ea5e018fd",
+        "context/01_validators.py": "119633f96808d1cf963fcab1e00f0b5fee7c20ef36cae995c9f12d5d99ec1bdc",
+        "packet.json": "0b90c31534f58c979f0f90ac67d9c2c56213fb07262e9af1856cb606956da9b2",
+        "reference_repair.diff": "4eeedff137446cdeb267b04d1eb1f4b204d5e10bfe7cfb26298d9d32d9ceafd7",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "15d7debfa312ce68c5abfd82d2af9b30af7ccd7e41b94bd9ffc1416e96cd396c"
+      },
+      "path": "data/review_packets/SWESMITH_037"
+    },
+    {
+      "case_id": "SWESMITH_038",
+      "digest": "539f5d4faf5a65a81d820a34057cec4134c0ce0bd624c68a112e67fa76120c3f",
+      "files": {
+        "bug_diff.diff": "344af746431ead822f1f02bec62229ed184c154686d4deaca6db9f176b97784e",
+        "context/01_show.py": "7d3840f7386b1fbe2010c4f80279336d841226c1310ca0ff69f23209318ad9c9",
+        "packet.json": "ff8c587906e72a0179b41055b0f3b3d3c012caadffe4fb104fa8f2a1a154c2a4",
+        "reference_repair.diff": "6f4ef241698085f6d26ea0e356de0805d6df97f1bc3959e2f856708d67cf9a98",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "6b228d26ec68bad85b600392a861898de50cfea465c037bcf2e9af9c27fa6b67"
+      },
+      "path": "data/review_packets/SWESMITH_038"
+    },
+    {
+      "case_id": "SWESMITH_039",
+      "digest": "e024968f80ba8f2e8a196a22e6f82f15493cbb3dce377e947564ca35e99949fe",
+      "files": {
+        "bug_diff.diff": "3f48e90d94a449ca052c2990788cade3607e1c6a762f99f426f764ef724f29da",
+        "context/01_decode.py": "d4d3111179b967400095477c1f8732c0b652910c8bd3413dea8ec22421ad20a9",
+        "packet.json": "1f45353947099d1f140a371978cc6d599c6c7f7c1a2dc9ee6fb7bb18300f2312",
+        "reference_repair.diff": "ffc5a0d1d8d744ce5ce1cc19798d260930e2b4a0968d9eac080e7936b2009713",
+        "specification.md": "961150ed7dfd8d2881e3995115312f0b362b3d830be7c3d64a020e270d2e90ef",
+        "test_evidence.md": "a6e69181577a19b9f607892a87d019e88f81b919c66a79e62ccb0163d80594a9"
+      },
+      "path": "data/review_packets/SWESMITH_039"
+    },
+    {
+      "case_id": "SWESMITH_040",
+      "digest": "950065a6cd66811fe8ceebd2585c21239abae5653784541c67b30ff4627841ea",
+      "files": {
+        "bug_diff.diff": "8fc34463e2cdd980bd4aa68a4d917fa49fa1a6db30755940ceebb2f3900cdb9c",
+        "context/01_package_manager.py": "ca8c9b61a887e92441008967604657863432f60c26b10b88f55be682367b6f9e",
+        "packet.json": "8311ade683da0b28b311e3b0651cc280d9224d28a7953b00f3f2cd1d681f89e6",
+        "reference_repair.diff": "a9672d253e3caafa89775302382aebecb14be9f5c73e107cfb36b42f2350ca3e",
+        "specification.md": "481aca7c764028861509a6edf59b67d753937e4e78307dc01a61dc3346338119",
+        "test_evidence.md": "e2a0052679df86cbe0d39f1bb455a139c14a5927a2562ca19719db9474e12d5f"
+      },
+      "path": "data/review_packets/SWESMITH_040"
+    },
+    {
+      "case_id": "SWESMITH_041",
+      "digest": "47e0eb0960b37e5532e033ad4da6edf01f51bb8691a2207c0b1116f48fed7954",
+      "files": {
+        "bug_diff.diff": "091e6c17ebb514fd8a61e78804e6bdc5759772e07bf5bd905117e88eb2e2c370",
+        "context/01_linted_file.py": "b10cad231ec5d249d29ca5775416be946453749174a3c1192394d3ea3b68586e",
+        "packet.json": "660868fed5620e7133acffda57e8b61067be87b36c6399b35b185842289651b1",
+        "reference_repair.diff": "241c46bd530ffe28a48bba4ff4e5ad23075f33f96e2b0bbab2e51edc529898bc",
+        "specification.md": "ecc790306ffe5c341bb5c912052b6e5ca0f0c1cbf973f6fb24c928e53c453042",
+        "test_evidence.md": "fccd4afbbe921f8cbcc3ccca570044591bb5f14b5ef9aa556840959c1a77bda9"
+      },
+      "path": "data/review_packets/SWESMITH_041"
+    },
+    {
+      "case_id": "SWESMITH_042",
+      "digest": "b0071dd0f1f531949d5e7e1c92e3568dc8fbd9364e1659a0fba6db3d10b643f8",
+      "files": {
+        "bug_diff.diff": "a77c668a97a1788a396e44a2bbf319ee4ca1c3b6b7df7f592b5dcc28348718d0",
+        "context/01_debug.py": "50308e9262392e2a45f02ed05885f81f9e851f87ada44fca60d62fb76660eaea",
+        "packet.json": "ad5a3f37807320191f848bd403257c1e6543225f8c2f7a7ff746f40b6c26be03",
+        "reference_repair.diff": "67b746984d8924e045d0aa18ddea5aaed3204bd9e9e0ba65b4a55b95ed20a8cf",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "74e62ff850eff208ce3b8881b285824e100e183f992ebb082468bac5032e6b36"
+      },
+      "path": "data/review_packets/SWESMITH_042"
+    },
+    {
+      "case_id": "SWESMITH_043",
+      "digest": "11823ef2a451347fb6f6e319e86fa464a3a85909b84461aa1fe418273089aa63",
+      "files": {
+        "bug_diff.diff": "52a2869dd1b3050e02712e054b96d1d36a33d8c273e3b3763ccf0f50340c1b00",
+        "context/01_buffered_pipe.py": "1ec57d406052f7c6bc6d2a7ef847992511b99d08bf41d6a12ec1fe51307f5644",
+        "packet.json": "3d6bc207612cb24db95e18e45a6c1ff0950fd45f2ecaa0d3213d200ec859eb38",
+        "reference_repair.diff": "6a9af5af443de9941599eff5899e520981a2c83bf5e6d28ee5af6958342353a7",
+        "specification.md": "84eea0877a4292e162e93b3ad5254cfbd06d4d8a83dfc4527d05cb5cec0084aa",
+        "test_evidence.md": "cbdcd6395698dab05f06436f3b97d0c77b639a5a191353e6aa6704588ce73734"
+      },
+      "path": "data/review_packets/SWESMITH_043"
+    },
+    {
+      "case_id": "SWESMITH_044",
+      "digest": "144cf8655145db9a7b2f7a17daa2fb2cdc5310e4c4a7ad19825ebfe265daa763",
+      "files": {
+        "bug_diff.diff": "4f52083712e7cb1978cc43511c698dd489ae268b202028f41fe275f2f29dcd2b",
+        "context/01___init__.py": "cb0a6186d996730544dabcadb7cc592109b3f88cdbe0cfe9b756f8aa2828a8ab",
+        "packet.json": "ae623f99aa7d206d1711332e802790c377f04b3db0ad8e3515102300180521d9",
+        "reference_repair.diff": "9928f28c0370b16942f08746d66f584893539c9b6a94274e784b31a8b2003707",
+        "specification.md": "c494a64f1206d13f4e2e159764ade030dac5b4c20d7e1c91eec2b5959f812b57",
+        "test_evidence.md": "07f57435b2cda53bba3fedfcac4a2d5178b882ba5bd8921455d47a33ff13aadb"
+      },
+      "path": "data/review_packets/SWESMITH_044"
+    },
+    {
+      "case_id": "SWESMITH_045",
+      "digest": "680278551dd4d233d2ff778500b1e560a35118fa9046eed7007adbb47404ee04",
+      "files": {
+        "bug_diff.diff": "082ce0f99d3ef7740b27c0de045359eeffee01314237853bc6fe8a7cf18c86cb",
+        "context/01__mapping.py": "5d808029e60305377b79eb8bf35e2a3e977894596659e0da61cddc4efc58f8bd",
+        "context/02_theorem.py": "10a7c5820115e0a78fa6c686cc9a82b0c3f4cf6dda50383935b662a5197274a7",
+        "packet.json": "ed853024143643c752fc62ab74320e74aa55917c70fdf821c5a8aebe98807557",
+        "reference_repair.diff": "d0edb36229b59a11d14fb2226c349318488ce8f13bf22428044516f9540919a4",
+        "specification.md": "6903db906595f52e8707573cfd1cbcc3c8b87e32eedb6da3b6e8c451c108d908",
+        "test_evidence.md": "14bf78b8b4a9efe31d41f7906c89e367467343ecc4199f04acb571be97a0638f"
+      },
+      "path": "data/review_packets/SWESMITH_045"
+    },
+    {
+      "case_id": "SWESMITH_046",
+      "digest": "b5bd6d31b625c4f73fd3ea1dd30ef26f4d7fd07398737e72c8183c936f38094d",
+      "files": {
+        "bug_diff.diff": "cba894f29acedea0b6d0548e03365bbe1f58689b36cfce30251413ddbe596927",
+        "context/01_models.py": "93e153596801372ba7c28d93ff61c377a241e5c3ff40cf2a5c9f052fdc65e1a9",
+        "context/02_responses.py": "90f170c0541ae5486bf4f1683e7146857473d56c70317d5aecadc811dcc60a57",
+        "context/03_urls.py": "cc4b58512c3b2710f989fc3e10740a1780ce274d592d7e03c3a213653618a4e3",
+        "packet.json": "63117d3555f949f5719645e35223f649ed61a3fe5b17e35e41dfdb7e0ad707f1",
+        "reference_repair.diff": "e4da996d408eb7465671dbb9350e57ce77c4896d4d95495163689ec62aec1b77",
+        "specification.md": "b1e9f0145f1edc571a542d4478dbe7c676b112a6dae56d53bdff3fc9ab7f7b62",
+        "test_evidence.md": "1025f526a654c5c42feb056456eda52d1b94791f20646308ff0abb085fcab79a"
+      },
+      "path": "data/review_packets/SWESMITH_046"
+    },
+    {
+      "case_id": "SWESMITH_047",
+      "digest": "8540c539b705e35810c501a3b4757c22b3f764bb0986842e45fb349833652bad",
+      "files": {
+        "bug_diff.diff": "8a24a37dfda0401716d539bb05308a5a29935bd42c74cdcd44d6a4e788ee5a06",
+        "context/01_utils.py": "cf07acd4626b55c757d508fb6e511f4d7228700f6e07453d70cb3b8ba89b2600",
+        "packet.json": "2492e537bd35c1755e0e7937967f68cc94983474cf0ce39b50103fafebee1ade",
+        "reference_repair.diff": "9ef779f7c34fac98422888ed2e98b4a0db62fd8121b4a6e755a0880584566852",
+        "specification.md": "7186eb172edabd0b75369e413b812610fdffb14df94ca1401b190345833f8663",
+        "test_evidence.md": "78eaae7549aa6350f6830dfb950aacce8eabe3f34bea77c0a46c0f6af60eafe5"
+      },
+      "path": "data/review_packets/SWESMITH_047"
+    },
+    {
+      "case_id": "SWESMITH_048",
+      "digest": "188b388b6a750ebc0cba272a58efcbece6e18c4648855a3cbe3ff24cd4e17ce4",
+      "files": {
+        "bug_diff.diff": "a870b0b635bf1618479db76c351c2d1963944280973d100750dc8a46b7f2385d",
+        "context/01_generator.py": "a2410a980f81abb40f424168861b72f08919f10cc54d878edb6d8cce98cd6836",
+        "packet.json": "80da10f8fa4c062b70cf4f35c150f494b5854dae3a43862434091b52e1002be1",
+        "reference_repair.diff": "e352d0853180bc1665e35d8c899097f40bcaab356596a683f95ddcf914765943",
+        "specification.md": "86ad1d8bab7d21d1c672a45f93c973417f2e1fc5ca110bd0aeb617524d1d2ef0",
+        "test_evidence.md": "de982c69a4949a06a701890c3f4deb1f63ed5556e2f15681ed0dac24175039c9"
+      },
+      "path": "data/review_packets/SWESMITH_048"
+    },
+    {
+      "case_id": "SWESMITH_049",
+      "digest": "3366d0394c0b2afa5e0b824838f9bda234e90c24ea44f6d9c6db6d5fc83b9007",
+      "files": {
+        "bug_diff.diff": "e50d6fac24187e1beded4285b6545913f60e46c277b111ace5da71a43bee8e0f",
+        "context/01_tree.py": "ed14dd47811a1d0f6884522b562177a1a07c244b0e209c1dbaef246450a97774",
+        "packet.json": "f9871976e1259917f81b67e25e67bccfa1261d5f7a4730d5486fd893307478bc",
+        "reference_repair.diff": "25ac76b26cd5c3c3ac233f1516a8f505107c6ff4f76978710fe3700c1ab45682",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "7dda0a317ebc0bfff0de5856849a0605fe9d1df1f81e258077ae66c449a3b357"
+      },
+      "path": "data/review_packets/SWESMITH_049"
+    },
+    {
+      "case_id": "SWESMITH_050",
+      "digest": "8138c43e7cf79047110e6acdbe5ff47ed0ac794c6823627334b7b6d70cc767e8",
+      "files": {
+        "bug_diff.diff": "821ed5374635f38434a9a6fbaa831d1d03005fc93640108e8895870f2f781286",
+        "context/01_export.py": "e6a94916a9f502f12d9c1c31849563475f944d65a5ea4c3cd7fc6bee2803c7b8",
+        "packet.json": "16400dbf61d60b83e7597a38a202d8ea7ca8197916e22e229061efa7b720359d",
+        "reference_repair.diff": "9d55e3f5e456cf7064aea2032aaf0455adc256742987d08b226d505122987e18",
+        "specification.md": "b7cd8835959dc2faffff914abc55e581a9b02e49faf8a33e42434435d51d5203",
+        "test_evidence.md": "9fecedb67c95efbb2733fa756969b6d8c7d3a45f2c7d20b788bbf2771460ecbc"
+      },
+      "path": "data/review_packets/SWESMITH_050"
+    },
+    {
+      "case_id": "SWESMITH_051",
+      "digest": "4df2687eff5dd7de85eaaf82fbce99e2b8dadeb4f0541b2d259ca911c48a22c2",
+      "files": {
+        "bug_diff.diff": "ebac1bafb4f6e14f4da91e98da3dbd849ec579acf1adbf90c710e71dc94da8f2",
+        "context/01_shortcodes.py": "4b4515073ee6e06130014b84bcd9446f7e8be8a51438799aa69e86ae6db9742b",
+        "packet.json": "5ec66523409db571896d919fbe230e48437cd1956d52d7438d2281a91c7f7ae6",
+        "reference_repair.diff": "8092ce0684c82affce52a82904515e2b7cc8feceadbc0a7849bdf8777baf6a09",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "2e02ae82a2fdbd5a89f0bd2bf3c12fed4eaf3a7e0667afb6e1359758006c407b"
+      },
+      "path": "data/review_packets/SWESMITH_051"
+    },
+    {
+      "case_id": "SWESMITH_052",
+      "digest": "1a7c1fbcc1950a59bdfa645ada88b7535341e0ed293b17c9e3f493c47508d788",
+      "files": {
+        "bug_diff.diff": "dc095c48fb5392c2f39d06c01e57178772ead48be6c49eeba906357767971ff4",
+        "context/01_encaps.py": "bebf1233c793d4fa2a1fc9fdb08cef506e5c23d0b700446077d9836f25bce2a5",
+        "packet.json": "f8b3aac07ec5186c6707ef7fdde6063df87f2ca2363ed3196e884f9a4735e45a",
+        "reference_repair.diff": "210569edd003256cd37ee262dc07f659ecdce0ea2028c34d6f68a97840c73840",
+        "specification.md": "a5c74e730dc3e76390ff0f0ec6d8256696372161bc00bf1525829863f28e4c6b",
+        "test_evidence.md": "5f20ad2f5eea8096a294c24ce2d891cdb663dc1cb1df2607bd029f6637707f73"
+      },
+      "path": "data/review_packets/SWESMITH_052"
+    },
+    {
+      "case_id": "SWESMITH_053",
+      "digest": "bb77d6fb9e1c1ed4958d6041a89585cd3980bf0c3a0101bccc44fd87732582f6",
+      "files": {
+        "bug_diff.diff": "c08f668bd333d628cdac4a113f375a4375976ef7de3ad9a0a3dd5e6e5f02f3dd",
+        "context/01_backends.py": "8352f67807d80d2529f9b1a95b205d1069c983a018031d3a12bebbb5f46f0de0",
+        "packet.json": "414d516a4f9ebf78aaf5dfc6235a674a71a89c923e320310609d81a2fceb801a",
+        "reference_repair.diff": "e98ce08dab6e2e8665e3c94dc461ca097e7570c14624c0cce230feddfc1f2db1",
+        "specification.md": "6aa11d7a9134dd72325b6b4c0287181a1253e82f8f2b0f5ca2aa621859582f24",
+        "test_evidence.md": "ec6704749706d6b524b572f3774877210d835de5ce57d9de65aa3641b12f2b4d"
+      },
+      "path": "data/review_packets/SWESMITH_053"
+    },
+    {
+      "case_id": "SWESMITH_054",
+      "digest": "9264023cc186b8e0aa1b14b1d2340955b62c91739dfde6d44fd00907caaa3daa",
+      "files": {
+        "bug_diff.diff": "a7c25f650e4661bb47e4b606cd44699f6e0181859d786a61dfd5f989d6afc363",
+        "context/01_authors.py": "e05dbfbb33a7064354b359cf258154d22d4cec354b6c91ac27117ee53ed22b98",
+        "packet.json": "b10bd957dfa3d558edd512cda1de848fdf5c8ddc61c53d90fe94d4728b0cf314",
+        "reference_repair.diff": "97ab6639bdff519a31122a6294997c0401961adf73b6d429fa5a2cb33fa1b909",
+        "specification.md": "de14ca2727d5e35296832fabacd50ea57a5c2877422d7c9ab137c82e92a28eea",
+        "test_evidence.md": "d2c163acc87dbfa95a19e0006c361a8d4c2ee6d40506bbdf5d26c16fdd3b8385"
+      },
+      "path": "data/review_packets/SWESMITH_054"
+    },
+    {
+      "case_id": "SWESMITH_055",
+      "digest": "948f3d31a46d12f10aea0a509b983526f516c3269b91df07cf6d2c9500861617",
+      "files": {
+        "bug_diff.diff": "b8e3826060218b1ce147ca3efded0c59bb2d19d739db67ad116b2300c6e84307",
+        "context/01_distance.py": "e6e60e8bbd113379e33701468e411efe0592a11a5574c6a20e45044009aa2b90",
+        "packet.json": "09633a093ae174260239d11b537eed115385e06cc5347c57868cc4e4677e1a43",
+        "reference_repair.diff": "a78133f46e42eff2a46532754452e26e574badf1a52192fb02b7f340be549073",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "8559701da1bdd9bfe43bbaaa47e3e9fc77b09b480cd925c3c8d74f2d10887539"
+      },
+      "path": "data/review_packets/SWESMITH_055"
+    },
+    {
+      "case_id": "SWESMITH_056",
+      "digest": "09d09e7b2312735d53a11f8b53c25c2175cbc617f96d3743a73be29ce50ff474",
+      "files": {
+        "bug_diff.diff": "9a5d5e91220c52a937a6345ab91d17fc1fa10d30b00b2ad2eefccea521c1b797",
+        "context/01_profile_visualize.py": "0db9d42780052350f77c3581392c3786848a24d4e875168fd4722a1f40d00830",
+        "packet.json": "f39f75352018c679edc5905964b694abbda10cc79685d6a73f68c8165fb17eed",
+        "reference_repair.diff": "01fd0cba3599f4cb61325cd9f53a72d518a7fc94300b4f9b42c22c9fa2ab433d",
+        "specification.md": "13dc45adc821929634ec19592f4612a403491bc14795e0f96b28eff0d1eb21e8",
+        "test_evidence.md": "f0658dddfcba9fa7e18af1d048332cf37915314051ef845e699f295c8a985a05"
+      },
+      "path": "data/review_packets/SWESMITH_056"
+    },
+    {
+      "case_id": "SWESMITH_057",
+      "digest": "34cddff3e2f95c3eb8f0186436c83b7669880a26ade85e98f728332ffdbd1140",
+      "files": {
+        "bug_diff.diff": "865868214266bbf6277687c18cec94608411bac929857d6841277d2862e92434",
+        "context/01_utils.py": "e64e576111d2d7fc618ab26aaae74c6556216080c364d207ab3ef63b18d006ec",
+        "packet.json": "c924be54999a793251b375ec7c63a3a1ccae32390bd0a7bb2fd1f427f343e768",
+        "reference_repair.diff": "4b54d0a91e7dafe015f9a1db1fa08763fc63f4e421a1c94586a9e0271b5b3e66",
+        "specification.md": "308092999a5718046e6e0a676f1db31c9d19dff83c154db24de4e20e89048bb7",
+        "test_evidence.md": "3dee1ebb8c30f9ce49f2569667ef401bda6315787767e318cb4a06af3bd576be"
+      },
+      "path": "data/review_packets/SWESMITH_057"
+    },
+    {
+      "case_id": "SWESMITH_058",
+      "digest": "b58d2d4e47f01f280534587dd5786a3ef5b28894f989e156cdafdb5f57d3a849",
+      "files": {
+        "bug_diff.diff": "a2ae96c200f190b1355aa8b790f3314906dc1f703230801d8e2b587b17724bd2",
+        "context/01_type_adapter.py": "5ae53272974df69c969d7a43f24c5fc13006dad59b939eb0069b71e4f4af4bc0",
+        "packet.json": "babc34315d7253a267b4ad7b22dcad66d1a42327b4d00297a5237efcdf8f26ba",
+        "reference_repair.diff": "cf583313d340d697b5346d318bd01646b2a787b791fecb3680d93aa1c4eb2ee4",
+        "specification.md": "f3ce6fdbbe5f5723fa44ad3928fcc138d6ff87fca62ab979d464be30801fd9f9",
+        "test_evidence.md": "f65003c2e20532865b892dff735473e6c3ee73f17fe8efc6e3c25eb31787c0a5"
+      },
+      "path": "data/review_packets/SWESMITH_058"
+    },
+    {
+      "case_id": "SWESMITH_059",
+      "digest": "c6370fe2de4a412974af708034bf32db735f09ae4a9782418158e81a4cfefa9a",
+      "files": {
+        "bug_diff.diff": "bd79eb3e8b3078f81f584d119bf404e9e69f23b5ee2987f421aeb77753d00ddf",
+        "context/01_patch.py": "8ea710c9d58ca330d62941ed8bd3412289637f5a63b9b2867e9a089a5ad8c7f2",
+        "packet.json": "3fbf2c996409b791a16addfbc292408a48466d83689ef26a2428fc77ce48c0bf",
+        "reference_repair.diff": "55ce0bbe640627dd08ccec0ee599d5201e89ba30bd8f7346d2e7e59a92afc358",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "62d44c6a182b01b012bdb5ade72414c7c95dc14269923f9d0133e057e726f82f"
+      },
+      "path": "data/review_packets/SWESMITH_059"
+    },
+    {
+      "case_id": "SWESMITH_060",
+      "digest": "2f71b2db5cab03bcd903de7a4c16be88cd6095ed2616d72dc6f59276f8705481",
+      "files": {
+        "bug_diff.diff": "e53e660d0ea2344ab63cf961974f2e4bec4455ce3fc0bb1924a86f104179619b",
+        "context/01_core.py": "c2362164399549bb58d3beeda090534104b3292c3dd133468fe8e02ae583429c",
+        "packet.json": "8403a551ac5d65efbf52bd906d4bd9224390579b234873d353345ee958f32121",
+        "reference_repair.diff": "764bac8d5024c9fdbde380f1fb0ce641cd29aebac61bfe620100278328ef64ba",
+        "specification.md": "3a8f07719b3ab4302904c848e3b1c1b3f2c0976f0b247f4e15f93639b657d082",
+        "test_evidence.md": "ff8ea01b7db9e9cf8407cb776ca4c58144367c47aa309e96b4e78a973674ac5a"
+      },
+      "path": "data/review_packets/SWESMITH_060"
+    },
+    {
+      "case_id": "SWESMITH_061",
+      "digest": "5390099b7f51fdc6ea147f432411623e899930b425cde1e961df3c7da66ed7dc",
+      "files": {
+        "bug_diff.diff": "6bf7efda3cb1506fc52d2744c7975dd618da74d82af9ba7a1c77210a0d9c488a",
+        "context/01_generator.py": "5e50ec7f527aaf122f5ac0c94f8358ea3add7dbbd4780f3f233e8824b90293c0",
+        "packet.json": "d3706e6021a5ba46635ddc7b6d10284fdd98f397a73ade5a48b9c612cf9c6c6b",
+        "reference_repair.diff": "250fbb0984f24a3dda4ba0082640bde13e3bb8affe76e46e32dee75e32002fc3",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "a2da34cc73d8b1bc7990293bdcbe0102f802b7331f4f4f90effafc6bed232910"
+      },
+      "path": "data/review_packets/SWESMITH_061"
+    },
+    {
+      "case_id": "SWESMITH_062",
+      "digest": "fde5b3e4426e4be575cf62a20a5aa615de0ef419fbfe2806282b5e70426455fd",
+      "files": {
+        "bug_diff.diff": "a98ca6322647b32b5308fd68bd564a6e7bb0fdd0ce6ca933f6d2a4f347b31fe9",
+        "context/01_tokens.py": "456db036b56b534e7df01f1e1016169264b6905ea17762de9834333cf0d77ef3",
+        "packet.json": "4ef3ccecf01033ceaae4a5c7084ef26c1f83977990e1c9a8acb29f02c28d0b68",
+        "reference_repair.diff": "bc812ab63811274587a1675e1800d9b8f6e4d5fc4c5e1c80e95fbd78a40ea348",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "86c826956a8423e13a0fe2c72b5b5c0b3470149b2a53212af2e81c441ca48b66"
+      },
+      "path": "data/review_packets/SWESMITH_062"
+    },
+    {
+      "case_id": "SWESMITH_063",
+      "digest": "8f97a013c808e1d20c0d3c2a898110ed47d82664e15af65f7dc950ac854d99bb",
+      "files": {
+        "bug_diff.diff": "9aa6b5dbc4336efa533f3db717a8c6923da736f76f165ceb6221a3fad7419044",
+        "context/01_dev_commands.py": "4841cf1199eee35602b3eca0f02699ab1c754c65725e90ff39baa8624b236ec5",
+        "packet.json": "c326a9f0bbca34aa5ad7cdbec04a7a48d9e8aa75a679da9783c9c072f312e722",
+        "reference_repair.diff": "b299081ba2822b33588855aa8a8934aeda7f96a60d8b356b8a637564e42d2e52",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "51c98369d19e379feff49d8a759a5b0a6841def84b307851be6605efa030e038"
+      },
+      "path": "data/review_packets/SWESMITH_063"
+    },
+    {
+      "case_id": "SWESMITH_064",
+      "digest": "d59503b7e2e16f90b9623b6c0904b5082677bdf431ed0b28775d03b9150a4d09",
+      "files": {
+        "bug_diff.diff": "63b5d5bd8124b252aca92377110ee19677a70268b426243363bc26c29dacec29",
+        "context/01_shared.py": "744ee1eb77d92c4c48a8782d446acbeab6ff756878065a71a5ce70ec86c4e31b",
+        "packet.json": "4f46af653bdadaf3ba116ebd63c0f9eda0ab5b6258dd878b8ad3ad1b61426590",
+        "reference_repair.diff": "ffe6d9beb2ba981bdcab0c858a12cd7e6375d964a07e81ad536e00b5e262c0da",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "6ba2f8170d9dd69dfcdf76cfb2b53186602122a1c25e4e824eabfde982309098"
+      },
+      "path": "data/review_packets/SWESMITH_064"
+    },
+    {
+      "case_id": "SWESMITH_065",
+      "digest": "77c6d2326e33f9c6bdca7abd41fe3192af296d329de708958c87064a63c4c0ef",
+      "files": {
+        "bug_diff.diff": "0294502b497100d4b5e90724fc8b69311ec89b13e4717fa8c467146866b02f4e",
+        "context/01_gdcm_handler.py": "32098f6024ba90fcc9bdd5f8fbf4aa8781d2f0acf59321a7cdc5f25074abc949",
+        "context/02_pylibjpeg_handler.py": "505b083e34be6206f3410a6cc55899342677bea81e0b9832ef2669bca97e2a23",
+        "context/03_uid.py": "4821cc179dae763c2ce4913f6e3a44327b8239b4d10123ef273a18f792c79f6b",
+        "packet.json": "39cbaeca4839586b212b1ddc97a15fe0ed55b84299cf82960c5feae8674593d1",
+        "reference_repair.diff": "1bc5d74b73a374ca1c3aa3dd71d39de50adfecf48a0a3294e6722f293f639dca",
+        "specification.md": "9ceac0e0c7796fffdc43e26f4c373eebfcacccbe9cfebf742bbe0aacee5eb74f",
+        "test_evidence.md": "57b03c48b4bff1aad0859767dd52c6439619125b20e765b4f44101c4e19012af"
+      },
+      "path": "data/review_packets/SWESMITH_065"
+    },
+    {
+      "case_id": "SWESMITH_066",
+      "digest": "0a285350fd8e7c649a0ab268d582eea3f7d05e0f156a513982d74fae4e8d3344",
+      "files": {
+        "bug_diff.diff": "17deab687ffea2b8b5bcc5f678e596db70d786880e474d245df2152789e20fdb",
+        "context/01_common.py": "fbc9107145b2b6ba0a2aa131b105ac8b4b2576d29971d103894befe689bb1daa",
+        "packet.json": "72ab59f09c8cc61131829bf02b6e6c70d1da60804a8bc86aa060690a409ca388",
+        "reference_repair.diff": "cd56eb4527e50e98d26bb7a5c824b32fa4646abc4a4639f406b7324098983b03",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "974711ed62d72411411f36a99a232b0dbb009cc46e406880b680e4bf2a08005b"
+      },
+      "path": "data/review_packets/SWESMITH_066"
+    },
+    {
+      "case_id": "SWESMITH_067",
+      "digest": "e48abfc9f749f00334b84a90e84cf7bef62f6fd82d8645d4fa6fdb643afd8383",
+      "files": {
+        "bug_diff.diff": "0f3a6b5775246aac483e1871e3454bcaa21a7480e06b8b8ffb133862abb271cd",
+        "context/01_legacy.py": "693661eedd572ffcc11e9303568e8489b00dadc112d77ddc39d20c92d3683998",
+        "packet.json": "e609a8b4bce02211ced5e403403af6c095b7444d57013c7caac72f88cf50cb06",
+        "reference_repair.diff": "3cc06c754f0eac00d623e42b8a7fb966c897b9381a49ca8db1fe1029c2cc9744",
+        "specification.md": "8e29e13587c8b04ef2d1645eaaca449ca8dc6a656fd87d346b806f6e707ca8cd",
+        "test_evidence.md": "41b133b31d43a9d1a0d559e20c9df167ecce3affef4d29bd035574091de8ef1a"
+      },
+      "path": "data/review_packets/SWESMITH_067"
+    },
+    {
+      "case_id": "SWESMITH_068",
+      "digest": "3090e03640e9e3b87a42612f00062b06f3f1895c05b92c1a630472078bc97cf1",
+      "files": {
+        "bug_diff.diff": "cf706fbb54fb9a9102552c5d5c7d1ded59ee2e5f7d18d0c48bcaa3136405ddff",
+        "context/01_create.py": "419c7d81aff8d91e4e92e9099a1e48ef621b2049a0697a8fb26fcb7d561ef02e",
+        "packet.json": "c9aa5d10c46ced7a9beaa4a1b6df76c94a20188b219d13dfb011e4eeebda811b",
+        "reference_repair.diff": "352f4a7d77482a8366a2a3b8b5f5cde7e1b76f9cf0b220d66f43c098538f55e8",
+        "specification.md": "acf4a7b523330e324078c535e12795a8701267c85b32eb52029486ab78d3eafc",
+        "test_evidence.md": "072dd7b480987bb7e8ead8e22c8cedc9e2de74a3bbde2ab3024a188b4ba8594b"
+      },
+      "path": "data/review_packets/SWESMITH_068"
+    },
+    {
+      "case_id": "SWESMITH_069",
+      "digest": "9c703c8866b41347a413a899882581f144e96fa37ff6d1f1fd0c09848e523e70",
+      "files": {
+        "bug_diff.diff": "37d8b9eee705b1c18b7cccbf966d68db87b807317e2dfa491e4eff1a39a0e59c",
+        "context/01_bottle.py": "60cad9960d92202c41ecb1c41028c3b742b2f1c8692b17354eb434c575db8b07",
+        "packet.json": "ec3affb071d54350c7353e21dd8b06a70163061ae0d982cf901c73d97fcafa2d",
+        "reference_repair.diff": "09cad1e90b3e148440adda712d890d9c108b576aeaca21e03442ea8a507e4ead",
+        "specification.md": "1331548c5d12c8ceb3e13a3f898fbe23582ad6b82a87074780b790b903b2c820",
+        "test_evidence.md": "36bea81367fa983407181d76b1a3c2082a944fcab24ce95e14f347c4ed21254b"
+      },
+      "path": "data/review_packets/SWESMITH_069"
+    },
+    {
+      "case_id": "SWESMITH_070",
+      "digest": "5391d0e5e9152a17655496da7ffc8f1d21bca6597dca6eb845d3da408bfd6254",
+      "files": {
+        "bug_diff.diff": "49ae53874cc54bd2424877246d32cd57a917f4931ff7add963aa9407cca2f552",
+        "context/01_gpx.py": "ea9e185ea475cda50cf5cd25714671329307a464d574971ec62d7960cd094ce5",
+        "packet.json": "ed295c73ebccb859828fabfa746c095db42139c1eae25d1e7f1577bd6d6fe7bc",
+        "reference_repair.diff": "c45ff499318fa19bddade3a8d810015e466d20b4aa028e13232fba3635bbdedc",
+        "specification.md": "7867d5f2424a2683f6a539186f1749742a35518868ee65018dc199a831f345ed",
+        "test_evidence.md": "97eb915474d2eff05dbaab438b4b7762e2c77fef385ae285d3ea48c0b1c58183"
+      },
+      "path": "data/review_packets/SWESMITH_070"
+    },
+    {
+      "case_id": "SWESMITH_071",
+      "digest": "4bafb104b3be70d4fc0560324ef3e50b645fb094364b775f885363f5f52586df",
+      "files": {
+        "bug_diff.diff": "e4a2d09b771e92213ee400c6e3b9a46441921330c81c86a31a547c326324a0d1",
+        "context/01___init__.py": "9fff47e80c31ead76e5c75178961bba86c3de403f309d946ecd62a819bf2334c",
+        "packet.json": "358eecfdfae3851a3a2988919601e542898815b09f3948ae8e6c7a843f9c87f9",
+        "reference_repair.diff": "fb58768cdb67952968d3ad884a55a3f06459b341296b0a6d017ed2d087dceedb",
+        "specification.md": "d522217ff0583c8c1a675ad68ce8a762ae8d4a1801f309be2a22ea6b66288894",
+        "test_evidence.md": "6ef6d18996cddf8d65fb3f25025fde421c6172c63b74eba20510d855b2ea26df"
+      },
+      "path": "data/review_packets/SWESMITH_071"
+    },
+    {
+      "case_id": "SWESMITH_072",
+      "digest": "23e4032ccba8cd746c59a4959bf35f6ee515ef874b28f7dc1a5d39cef9a259b1",
+      "files": {
+        "bug_diff.diff": "f9aae83ad752438bfd46c504518c724e04feb99f2c96be1e17c8ac243a1cbbfc",
+        "context/01_semanal.py": "2c67c1d4f6c01eb55dbdd5a6ad41e3a5e650fe5f74a034a6b22be28c5bd0100e",
+        "packet.json": "36b6538f0163f895385c1413256f96dc29a017ce917208b5df5f515b2d5bc951",
+        "reference_repair.diff": "c09ca14b5a4185a421868a5cfbf828b988e1d835996e498d40c5156f8bff8a8a",
+        "specification.md": "4ed50148e2c49956b8773389f2e80f6d48df46b0356c4dfb7d43e4fac367848e",
+        "test_evidence.md": "d5fa7d1d2ba118f2c52c63e5776ffb6bbec076b196d669dcda906eff44592e9e"
+      },
+      "path": "data/review_packets/SWESMITH_072"
+    },
+    {
+      "case_id": "SWESMITH_073",
+      "digest": "0addd77c1f4641ec1ccb549074baeb1d32e24b8f12007e7cb856dde849c1c8e7",
+      "files": {
+        "bug_diff.diff": "27677b1adf66b2f686269ba4416298dcc650bb557d903dce175d1e24c0f92325",
+        "context/01_worksheet.py": "6830cca3f2f7507f6a261bf6c995b65785999094f53686386067dc3928f1b233",
+        "packet.json": "d63a1d0d246510c16ddae0a30fcdc1a30ec2d9c76883caee3e29843dbd76fd55",
+        "reference_repair.diff": "57ac1990419b73122646b3e39c6080cac2e4e58f2c8b8bcf30c11aba4ce5d0e7",
+        "specification.md": "31b5b35d0b8717e7a7401d30618b23c0e1bf746e3604aa5ea0788b04f6de2205",
+        "test_evidence.md": "3adc1408055332cd13e5591eaf974e038c46c5fc9043e2324b43293bd167fe5b"
+      },
+      "path": "data/review_packets/SWESMITH_073"
+    },
+    {
+      "case_id": "SWESMITH_074",
+      "digest": "0caca4bf7e5177ebc34a78a6d0a38e9666f54a892209a80e5686fd6fd8ce8ab0",
+      "files": {
+        "bug_diff.diff": "6f859f79aa879af6cdc4d139bbb294d11c794eb26b5cd4b52c531597c65ed342",
+        "context/01_ptyprocess.py": "62d308d0063863590d51c448dd50b93d1357fa3e5dc7149fbedc778b61c51055",
+        "packet.json": "550ed9bc238cf24df5216d8292742b8f813641acaabff70baed5ea92c8c79237",
+        "reference_repair.diff": "c66f1b9d62ecc8a0954d84d8eb2290b6d68e2882e9a3cb7d5e27d2cc2377a7b0",
+        "specification.md": "a96edb83474773bfec0404041acfdf4c33d7883ea3f61101e458cb60bade68a4",
+        "test_evidence.md": "8e79c7be6a08ca15988b748b52a97b83c3d9834de3ef6ce8e22f728487239cd5"
+      },
+      "path": "data/review_packets/SWESMITH_074"
+    },
+    {
+      "case_id": "SWESMITH_075",
+      "digest": "e431402066e7b45e67297c734f2193249c91a4f18186168ee02482742c437122",
+      "files": {
+        "bug_diff.diff": "021e504ff95a11c9bdd0850eeda184573415dd845b0f8943f1aa508b8dedcf50",
+        "context/01_html.py": "9e4214a435a201e71b28d4e26e501e189c10988910af03cd79288754ebd848c2",
+        "packet.json": "e8d32a0815f24df6646fc5ec3021365796c721c00e24b261a62be2cd234a8ddb",
+        "reference_repair.diff": "4a4b23c65a058ea4185d135d939e7cbd180453ec2a59f6a0d393873de52e249e",
+        "specification.md": "0e14fae7023ef12ae5eff5a4c68550c3cb570380225030e2a32890c2e4fffc16",
+        "test_evidence.md": "9f35266ac6452576fb5a62e6874817869cb76ca488affd49f40ca6a31121c4f1"
+      },
+      "path": "data/review_packets/SWESMITH_075"
+    },
+    {
+      "case_id": "SWESMITH_076",
+      "digest": "0ca6d0372c57052eee49f5cb905675cf410745cc04b7020aab7d75f6ddee9e53",
+      "files": {
+        "bug_diff.diff": "6676f38fdd1159f566ac3bd0ee8c9ba0102fbb3430dfc49a4849cacbfd1dd45a",
+        "context/01_tokenize.py": "2408153220ddac450668599111a15a2dddb2cdf7d747ba5bed1281dd53dc15e0",
+        "packet.json": "c560e46ccf8bf85b180e037a94d67cd41f9414ab0240c47ec1abc83884cb0d6e",
+        "reference_repair.diff": "f3b3aea7319145016ca0c808e25da51dd77880b203b7b3db47090234e9c4ffc6",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "c9aa3b5cc60d191984575de289b914a427b71a2713a8f310faea5aa7a11b2190"
+      },
+      "path": "data/review_packets/SWESMITH_076"
+    },
+    {
+      "case_id": "SWESMITH_077",
+      "digest": "ea84006ab6d87ee3c7886f181e90c40afd4f1377f4cbb293ff96dd19aac64abb",
+      "files": {
+        "bug_diff.diff": "d59c602365a7cf1b1e3a841f6de10b06848cd544c788fd52ae051e27a52e7aea",
+        "context/01_path.py": "6cd405ab49dc712558796146147ec816b78735fc3197cc0219d42440bf644410",
+        "packet.json": "3e979c3c966684da7742712ce4995f04a1032fb073bdba005b22c5f660608e9a",
+        "reference_repair.diff": "366ec81a9f3b93a228ed0c243a9eceb1fe20fa4462c14c32f6ddbdc294b8a287",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "7e70e3d62f7622711fd9bb50ca881ec024c0afa7d372c5e0b1a332e3f15b73d4"
+      },
+      "path": "data/review_packets/SWESMITH_077"
+    },
+    {
+      "case_id": "SWESMITH_078",
+      "digest": "7b8966bb220963ae688a3403f6c5daae5b5f13afa9728001ea87912af0b5fa01",
+      "files": {
+        "bug_diff.diff": "e09aa878793b1d30f79a342f440cfb7bd7b42fd868de22493c0a24865197ed35",
+        "context/01_crypto.py": "81ac203b4dda6e16ebfe4e5144718e8fb2b940db035e09bd2eef4047b7e49e48",
+        "packet.json": "65f03674d39dcee4787ea67dbbbe9c67e6f6ebd94eefe9dffa3eb22fba851ae8",
+        "reference_repair.diff": "279a0767e92f82a50e542b578d5731ff76d7297ed03a9f6b090f8a6508aa39c2",
+        "specification.md": "749875dd36ea7bab43d32708847cb423b9f9333d97bc80210f90eb2ef9ac82b6",
+        "test_evidence.md": "f21ca1b6dad6918d2af5331c1ef885a40c756232362312b1fcb46a8a222a8f5e"
+      },
+      "path": "data/review_packets/SWESMITH_078"
+    },
+    {
+      "case_id": "SWESMITH_079",
+      "digest": "5e8d1368cb5d5d97f0b03b67c0a15568460806a3fe55338193916d3fbeced7ff",
+      "files": {
+        "bug_diff.diff": "ef1f31f7f90fd059a5797c0bfe91871394114a93aecca5448d0da88c62f629c5",
+        "context/01_ewm.py": "e0a62c8e9a8b582d2b2eef1f4bc24fba8f89ab66b36a2eac78ba94d6db48f677",
+        "packet.json": "f70ee89bd4a37a4c491cec3ff147981094a1b21531550c280ed92be3a44fe85b",
+        "reference_repair.diff": "e7a2c3483ba3faa542cb116326b6c04c9f249e5f24ba6dad76695f4f35a88d53",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "b1e58813f946947bf39b2dc0c3cc66c465efd3faefc420e0e06fdad5c82a0582"
+      },
+      "path": "data/review_packets/SWESMITH_079"
+    },
+    {
+      "case_id": "SWESMITH_080",
+      "digest": "d1138d647a60ec641f77303084d5da4d6cfdc460fc75fce483c3b6b464d1117e",
+      "files": {
+        "bug_diff.diff": "c0a7c9492cbba0cd6781424ac138ae1addc6ad5298a065ddf9961e0af08c83dc",
+        "context/01___init__.py": "1115e13bac990b5080f9c57f66b9f0a4a17d1653826c519c4b1311380246c385",
+        "packet.json": "9bd86f552a37dcedcd7219f7d6a4bb98cfa6a173c6e5142db696e23489b89eba",
+        "reference_repair.diff": "b240418ccc3c12a9448366e1572621044ec8c6bcb042dc36dca11c2c963c3502",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "757a7f9fb031a4dd8a7548bb61d8096aaffc8ff12ea48bcdff23950089cc6cb1"
+      },
+      "path": "data/review_packets/SWESMITH_080"
+    },
+    {
+      "case_id": "SWESMITH_081",
+      "digest": "e2e13219a1c3de3e32f07920ff9fea1df6150a2715ac80cc58c97a604b95a80c",
+      "files": {
+        "bug_diff.diff": "cb320e645bf8ea48a66dd7bf3efcf37ef647ee41b898b9c79bb0c2caebfe1b28",
+        "context/01_body.py": "121f1d30bad0d4aad895ecd8ace612b07f8aa69a7d3de226a2ebdf3ba5a88960",
+        "packet.json": "312f6dece831728d5b9e11c6f58673bc71be1d486995c430f82395513ed7402a",
+        "reference_repair.diff": "65760545ea413873baad7571a4117978abeabb3ffe592fd678a5d9808f166f95",
+        "specification.md": "8eab4681c5c9c517cd7e15bb660d9f78b8bb37f5a97275cb5cdd699c02f18afb",
+        "test_evidence.md": "7a2f292d9eff72f0eaab184f0ffd4b59f3d32e533b5133267f62ff7d6ec65426"
+      },
+      "path": "data/review_packets/SWESMITH_081"
+    },
+    {
+      "case_id": "SWESMITH_082",
+      "digest": "25555e1898d0765b0c828c68e05902bf2520b0f4f7172d68a7a52b53d467d966",
+      "files": {
+        "bug_diff.diff": "918877d2825e80fe90241b59370c4c27494fb5778ea1f98e6678986893978c2d",
+        "context/01_responses.py": "2d9ba965e445f4b545e78cd35dd83831387283e922520a255cf7d339c0ec2e16",
+        "packet.json": "2c8e93fd5c54f3c1a337d9662f350fca3bacb0b25ce436b6e6613f378c626a01",
+        "reference_repair.diff": "1ef6f02414c173acd6c5d047991a7405d783d083648d0d1c672804fde712df88",
+        "specification.md": "c5071f91c10c1f4737213fcb6b70e0387fe49b0cefc3f9427be62ab58c8d46ce",
+        "test_evidence.md": "2506c50633738993d85b29c846cb2f2a1d39f79bdae69d4a314511cd5c3c97ca"
+      },
+      "path": "data/review_packets/SWESMITH_082"
+    },
+    {
+      "case_id": "SWESMITH_083",
+      "digest": "a2348a1e47366a671208ace5d30e136c0341ec9686e52ff5faea31f5e6dcd654",
+      "files": {
+        "bug_diff.diff": "5e4045aa910cce19c50bfbaf42bcd1ba4b89516ed2e8d59d6346653434deda37",
+        "context/01_files.py": "6c96e2d009f4e9bd10e5935e3c38c5ad18ded3bfc2335d9b0412723f7bafa90d",
+        "packet.json": "31fb8b32ecae2569f90415ac9f277170220c18bad6e19236c6f8c31221998ffb",
+        "reference_repair.diff": "835377dbd16ae4008d1abf670dcfb41c3094b6e402347da53b0e53ca12635310",
+        "specification.md": "7f197d45cb783556034d6596de794969e8408907907ced410b6fb1c34edc8c2e",
+        "test_evidence.md": "3f97450e1d5750ac3bc0934ea850727047824c28b655657fea65b811ee727873"
+      },
+      "path": "data/review_packets/SWESMITH_083"
+    },
+    {
+      "case_id": "SWESMITH_084",
+      "digest": "7edb425d59b784778418594e72ce3e1cce1d1389fa9fda3593e42fa487c49a49",
+      "files": {
+        "bug_diff.diff": "91ab5ccef5591223da16297c8dc782a58b83d40d3b8cf6e0178712278a9904db",
+        "context/01_access_token.py": "1b478c7e2d2768073da93d96109cf18fa2059043c0f29820f6a0e91057d4e1f8",
+        "packet.json": "7cc1e7a7ef7dbf6e78d2c38080e806aa4b010d343fb6fd18746144f691dd9ac5",
+        "reference_repair.diff": "17c4d35bf22d9f582859a49170558b781dc071ddde3058054cc703754539e61a",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "69d824f995a36398c3e0c539e939804816a09ae448301f476fa44faf8f7440a0"
+      },
+      "path": "data/review_packets/SWESMITH_084"
+    },
+    {
+      "case_id": "SWESMITH_085",
+      "digest": "d4c377bdd41836ff077529e586a8a5efc575a93c32f6e99f4f3e2fad647bfaa2",
+      "files": {
+        "bug_diff.diff": "e551a722b440ea7a90a232371004bfdb28e247c250f5ed49de0b2f39925835ed",
+        "context/01_isoduration.py": "fc1d126ee6a5daa6dd01355ceeaa9c5e67d5d02abaf08207d716a3cee761e744",
+        "packet.json": "4f088f3f89703958c2fb6da296005543b896e1cc63241039659b66be38eea134",
+        "reference_repair.diff": "8e2e55dac8738dcb4b5159868429161084342564790639b87c7c3b972443eee0",
+        "specification.md": "ac240cbf923029b574d8c0087a3271e5f77fd38ed26a96162a1d5df056196139",
+        "test_evidence.md": "6d6be844c7120aa479d66791fe196ddc308c78599a10f4157a4609fe9b979c00"
+      },
+      "path": "data/review_packets/SWESMITH_085"
+    },
+    {
+      "case_id": "SWESMITH_086",
+      "digest": "5da53c2077f97299a83d50462a3ccba65c0a0f6f8a233475a343afbfc8bb34ad",
+      "files": {
+        "bug_diff.diff": "350b671d161172eee55b9fd5ac3bc5eb0817aad48024275e9233395b7b5c25c9",
+        "context/01_dependencies.py": "1ef0569d0688a24b05c9fd63a85d9206977af1e9535d1c55fa457803d0144400",
+        "packet.json": "9dd9d16a93250c5a90541ba287c45f972138796818d849757baa43a31ad3d9ec",
+        "reference_repair.diff": "8402bb9dc86c452dafa3d9e08fc122c8e0c27d4a1a77e901a1a16d2044bf81da",
+        "specification.md": "cdc8db5f25f0cc4f13c519a4db2a48e323f51b6653091e1928b31eaa83fc3c05",
+        "test_evidence.md": "95892960300d619ec7b973b0d14b7a1f393257baea465d3a275284a1d8dd30f3"
+      },
+      "path": "data/review_packets/SWESMITH_086"
+    },
+    {
+      "case_id": "SWESMITH_087",
+      "digest": "6535574cd796c0056b1dc565df652ee79d6d53e03a04ade90cb7d663fbd6ddcf",
+      "files": {
+        "bug_diff.diff": "4649849876abef7c05f15beee4e759e2c37d42d7ab8dbac776e07c67b27d5c8e",
+        "context/01_formparsers.py": "6d6a639463f36fb8936dbf46d5bac7fe0c3769655c91f50bb3d8e1c5b21978ad",
+        "packet.json": "9c8e134d9a8f4ed78e100da0135f0835625cb2f9a9daf869b312c7f62edb9e27",
+        "reference_repair.diff": "2f9a8bb0619d596a13a1e41085edefdb521b44aa4af0ddb2d25007077985db63",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "2f9ce864524afe2a90d4f4287f87f163a955840789a1b442325e8103b6b6d673"
+      },
+      "path": "data/review_packets/SWESMITH_087"
+    },
+    {
+      "case_id": "SWESMITH_088",
+      "digest": "20300d939ee182a91b3a1c963a3c4d8fd9e08f922f79a3cec5dc50765781fac3",
+      "files": {
+        "bug_diff.diff": "b9a3f473e5448f4f9110d58dc1305a4041199c1a55e9dfba7d32b5516fd9c1c8",
+        "context/01__known_annotated_metadata.py": "b72a6fb2f1e35f3cb9bb63ae2db303745cfe0205c4259d983e8af730bfdc2904",
+        "context/02__validators.py": "493dc219a20b8582b22c6850bbf9919c9591aacde815d34ce2a59de74c6ed64c",
+        "packet.json": "055bd41a8a0174f3b034fc0001ed03a6f2422d2c42e56cf73f26838ae4daf730",
+        "reference_repair.diff": "60b561354c54c1ddc3e3c8ce12aa7f006e76d6926e5b103c1d1971a7278b9adb",
+        "specification.md": "9af72f48ce649383869bcd85d66f9fa952cae309a0a4335030d687873bbd2cea",
+        "test_evidence.md": "201a99c6f4405b06acc72c7f88b94b30b8dc3dac01bb92d3fe48b6beb31b5630"
+      },
+      "path": "data/review_packets/SWESMITH_088"
+    },
+    {
+      "case_id": "SWESMITH_089",
+      "digest": "5b0f0b45637d557e906dd08a1d5344552142b463580fed5130ecf5ccce658c61",
+      "files": {
+        "bug_diff.diff": "61dd4e11604ef48fb20cdea1716708e3db39839588114de38e427d1f7c3200e5",
+        "context/01_linted_file.py": "7f73e984030754d8ac8a5485bdd84cf0c4d522539b4b63581c2c58bd18e33b2b",
+        "packet.json": "ce90e854938240a2772bd3e599bd172adc5a02e737b792d9f96a008c20fb502e",
+        "reference_repair.diff": "0e1c66da404919cbc90b5bbd4d5cf57416cd26882bb38d24d886e3c3c2df0c64",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "1cf271f0dfb4a6cdbf4e91968f23b5750299c75b68311f26272712726695da37"
+      },
+      "path": "data/review_packets/SWESMITH_089"
+    },
+    {
+      "case_id": "SWESMITH_090",
+      "digest": "7b3278ff87954be3eb1f1a3bc22d7d85960617f38e49d4e12135587ab351c4af",
+      "files": {
+        "bug_diff.diff": "6452f0ad1c7c25a7d9c77aeaddf987da93cb98b3469df262329d32b45a1f6525",
+        "context/01_tokens.py": "f69bf1f02b2a510497c7b10e620003a4a51025531cf9442466efa1a81f87f9d5",
+        "packet.json": "e2c78fa480971e2671ec4fba28296222c16c5f0afeb778d4fd047cbff153a915",
+        "reference_repair.diff": "dee2a17a6f0b29ae95376aa30e30307463c00e75453aa90a60e14c7a9086ff46",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "d8d323028c73deedd18b01d35ee787b6ef67ec4214cd9eb822756e75aaf0f38c"
+      },
+      "path": "data/review_packets/SWESMITH_090"
+    },
+    {
+      "case_id": "SWESMITH_091",
+      "digest": "586e73e454c1b1f06b857cfaa08eb04262d00776cce0d681626b9a3de39021f9",
+      "files": {
+        "bug_diff.diff": "0ce2a6b0bf3936c0fc7037724a01df007ddccccba743aad909bcf5fba862ee13",
+        "context/01_scope.py": "ab87df68a7415a71b7484e6514fd922e7fd431a01e371abf4a86735dac04e09a",
+        "packet.json": "fe8ce132917ebbc3c292f8486ce77bdfa1f4d077ad31b4031c1a48637f872785",
+        "reference_repair.diff": "b3e5b9f8aea97c74ab015ce48208809128f41fdb27ef62a9a3e742a736a9070a",
+        "specification.md": "3ee5ebf93dac0173c0ef0c472889c466b9ef4eedf88651503c7e26f85f0a8830",
+        "test_evidence.md": "eecf18d34a4bc5c4398b891b0b64dcc1e0a818af38b9864685d38e4b2757a2ff"
+      },
+      "path": "data/review_packets/SWESMITH_091"
+    },
+    {
+      "case_id": "SWESMITH_092",
+      "digest": "d4f81e5285b244c0cb8b1a54935cce7a126e8b1f74119f574dae54d58bdcd7ce",
+      "files": {
+        "bug_diff.diff": "cd5729c2e702d4ce547bb0409d70ad47d5707fc39a04dffaf87788c05dd6a6e5",
+        "context/01_structure.py": "15bb05340564d8271821b6b29b9799b455829bf84a6391d6b80d8a6d219428df",
+        "packet.json": "bde761ba1e9eea215316217a98aec617f543038d887ab79bc065789b2c214f0b",
+        "reference_repair.diff": "2b1a75d590c95c26c77e89c37499e4a728b6cb0b31ea174f3de023fa75af2670",
+        "specification.md": "53ab62c5eea2ba1a48d17552ea36f51e1afe8ba8e4c8a9c89752f6a7992ca153",
+        "test_evidence.md": "865a9480695845f4ca39f7e3a2da667139a2824ec41c84199937434b7197a99c"
+      },
+      "path": "data/review_packets/SWESMITH_092"
+    },
+    {
+      "case_id": "SWESMITH_093",
+      "digest": "8bfde210df5fbaf57c32b01c350bfebf4861d2eb67baf77733e0eaf775774557",
+      "files": {
+        "bug_diff.diff": "709ae120b3dc2b7b7c4f999fe596ee4b3f1043209ec5f870e070a09235f11861",
+        "context/01_core.py": "7d2a1098c81894d09cf965b4fa1c350c51402c53e2eeb6602ab808c22b0a75b1",
+        "packet.json": "5632d2b93283846df2505bdb3d87313f421bb1d6f162e8bcddafd970eeb8499b",
+        "reference_repair.diff": "2627c781c04d396cac95d492c164401c41513116c1a61372db6719e850947005",
+        "specification.md": "ecdc1236e1cc480bd2fc135c2bba4228738e225a749de96c60000cf7b366b086",
+        "test_evidence.md": "1a57b27b12fee3034215b799878bf5ac1826db05a281057ace05f46994c24e1a"
+      },
+      "path": "data/review_packets/SWESMITH_093"
+    },
+    {
+      "case_id": "SWESMITH_094",
+      "digest": "bb4613c6abb7ea0edfe1ca46460d99a745d8fa38330b6252be61d1dea044310a",
+      "files": {
+        "bug_diff.diff": "84a6a3357e8f98391506fe21b98f85170b8a04ae63c7cd2bf6b2544e82344b91",
+        "context/01__openpyxl.py": "c59f11b0e0374c14597daad0290a616b03911460cd31a894a3c77b6aa351870d",
+        "packet.json": "d770854eb43c64c4b43587499d4a062e7cb2711f712b0bc58b930143d74f75b3",
+        "reference_repair.diff": "97d5182b7037a038da840cd6b2b84c9dca420e143c6a71c0ef9972f9f8d905c6",
+        "specification.md": "ef09e8d3001eea657e318b690ee5110119a6a88a140e186569a34e6698712e6c",
+        "test_evidence.md": "4add9e95de0a3f40a88776903e2a5a0581db2282a77cbd7158d0889a5f154375"
+      },
+      "path": "data/review_packets/SWESMITH_094"
+    },
+    {
+      "case_id": "SWESMITH_095",
+      "digest": "75a0f8b8928371a7bc01a72dea6b523dcd82f82275c2b0724fde9bd60cd69b26",
+      "files": {
+        "bug_diff.diff": "f74ce79078f6b766b3eacf209ddbf241900e5a063045c22f181c00f961c27e9c",
+        "context/01_package.py": "6bc0d168c7c675afc9ae2fb409b58bf0fd2ce7b48eba6869f152fc9c6daf0f0f",
+        "packet.json": "0f743c92429e9146fbc9957c6c3c34214c8123d436c83a76c521fac8d0c768bf",
+        "reference_repair.diff": "1cac088e8558c84d0a7712911f875ef5332ff4e9b7cc8c66bd8d60b864a330df",
+        "specification.md": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54",
+        "test_evidence.md": "9ced1f6b71e407160ac02c2b64bd42fbc86a2ebe0c52f7be127e07dfe2e8c064"
+      },
+      "path": "data/review_packets/SWESMITH_095"
+    },
+    {
+      "case_id": "SWESMITH_096",
+      "digest": "4354e3ff6e2546b086325786a0669ee26e962f51498639c103848c8aa3daaa7e",
+      "files": {
+        "bug_diff.diff": "a864bea04e9a908d47872b83ceb69a908e3df07354736261806533200d309ac0",
+        "context/01_exceptions.py": "b7fe279297bf03e72882982ae2d5756d2671414e925ffacbb390877d2bc7b6f3",
+        "context/02_fleets.py": "480f5445da939bdc58330697ebc7b1e96fbbc158efac815877e0a89929580bae",
+        "context/03_flow_logs.py": "eddf168e0da0a0589ef89e63e16800d46a88499c262307be9a06dbc219a7c86b",
+        "context/04_hosts.py": "66ef7b8e27a4e125350772125d8105300e28361db86807cb0803cf20bd92fb3a",
+        "context/05_spot_requests.py": "c5daeb8f1a911005ac1c4836d4bc1f07a9d73e846d65ff71fd957580212fa942",
+        "context/06_utils.py": "9d78a565e2f592b2abce5c2052475e672162c558f59e862b1173271149997c62",
+        "packet.json": "8a7d91545b2c2e8cf61ce5362bd20146615969d799e460d095a04a870657aa44",
+        "reference_repair.diff": "7db812272ee54c7a73484d97d640178dbad4099f8918bf03153b69114e1beac0",
+        "specification.md": "15f9b0e0357d4630846a02ce64b034de098b18247fa1da8d86b179c2fa8a2ce2",
+        "test_evidence.md": "aabd33f10b1690a2d76ebc620d6c80239ecf6e6c4f50ba40b585c271409e979f"
+      },
+      "path": "data/review_packets/SWESMITH_096"
+    },
+    {
+      "case_id": "SWESMITH_097",
+      "digest": "4658416840fca190ffd2f58a54d580e6a55af144f50226a4ea56f24d88841006",
+      "files": {
+        "bug_diff.diff": "1977ddae340cb4c79fe287582bc8494bb32c591beb06e6772c18eb9daef99a9b",
+        "context/01_node_classes.py": "af1c0f378d51cdea44e225c6be124f1594c1ac4c7eab6a9228c99c78f99cefa0",
+        "packet.json": "1b33da04e157717cc1efd595a957745988685a16749d77517673cf30d6c12fd9",
+        "reference_repair.diff": "5257e83935dde15f9c4dc08d4aa72a6a431856690602905cd6bb37c24316aed5",
+        "specification.md": "d0b0d0399ba25f77196ed383ce997d2e70347d398551223a03b0f1c0a7d9503c",
+        "test_evidence.md": "0516abaaf03e5b59cf4a5da6269f946a4347beff38f5434bbd9916d2af66804f"
+      },
+      "path": "data/review_packets/SWESMITH_097"
+    },
+    {
+      "case_id": "SWESMITH_098",
+      "digest": "4442b1ad8f1a77c62b37748f5ee0eab32ff8d59a38c42af3012a9cc83c8ff8a5",
+      "files": {
+        "bug_diff.diff": "50d510e9633e2d2ce713b8b5b50d6424c52be99692bbf3d35749ff6222a4d830",
+        "context/01_decorators.py": "f437ed25060bba284a8ee0e9f8faec2c2714540aa5d7cca3fc35da2b0f393c27",
+        "packet.json": "2c10d13a826d3906a49c7ff0faa918cbd535bcbdb3e35a223aa4b13c3fb299f6",
+        "reference_repair.diff": "f33cb7bdab86a844462ce057286f1e52bdcc226b993c1a92037626641f1daf16",
+        "specification.md": "05ccb107237dba1446965c5a9a82352ea0d3ed59d367786c5c30814e33495039",
+        "test_evidence.md": "9e14a67dd9169f060f0a3d66dd45a876ef2c23600ec9fa4859efe4d4d03cc253"
+      },
+      "path": "data/review_packets/SWESMITH_098"
+    },
+    {
+      "case_id": "SWESMITH_099",
+      "digest": "d92098b888b08fe37e6d3f54d722df9fb353822d8ab87654dcd161d8aaa756bb",
+      "files": {
+        "bug_diff.diff": "72743cfad73752bfcd52c7c5ffac3f0b3fa4cf1a9defd43653027473f79f4c49",
+        "context/01___init__.py": "6618303086e023f48038d56f1680819de338824409330677499d8bc1d40cf8f0",
+        "packet.json": "e5faca6560b940a2d02335a7ed9c5afc61abd3c82d6001c54e7295032c66a9ee",
+        "reference_repair.diff": "4df9cbaa32b0daa785c34fde4e4dc11dc93d01b337014b8ce599d855d9c5ee70",
+        "specification.md": "13e08a8e63edfa49f25a4d32174f0c765deb8d2ee78592427d553eafe7494a98",
+        "test_evidence.md": "dcff5c021105fb6f9daf5bc7e69322cee576871bef5273761e4cc96988e9efbf"
+      },
+      "path": "data/review_packets/SWESMITH_099"
+    },
+    {
+      "case_id": "SWESMITH_100",
+      "digest": "59638e83ac90e72a4bf2b42b0e23a41d560d012bb027d260a216bfeff6554c48",
+      "files": {
+        "bug_diff.diff": "d9f2286b9ab2e42a4731198b0fd681a6020c1b3e12925d2eeb35bfcfcf7353a2",
+        "context/01_main.py": "f4576a1b37957bd93299bfbc1ebd53fb9bad8b834e45c3ae81b8372f586ec7e1",
+        "packet.json": "a5c32f8001adce6cdaa46b6be46d022ea80c51161f7744aada67f80aa4a08da2",
+        "reference_repair.diff": "e94d94caace35e2a99654f6eb52e7a032fe6f75e41649b0b915773b03fac95ac",
+        "specification.md": "ebecc11c9a92a6a119504e642b08098e62b5af011649e692294b73f624484701",
+        "test_evidence.md": "f0e9db1521d0435c728c7b68c060e75606fe340a9101e1a982e0693f103e9104"
+      },
+      "path": "data/review_packets/SWESMITH_100"
+    }
+  ],
+  "review_manifest_sha256": "64e607800de2a08e4321b371d616841bbd4fbe6deaddb1321dfd355333caebfa",
+  "taxonomy_fingerprint": "aa1dc7dcb6ca3ae3254461af2e98066026265abbc3f9b469108d9c844e23546c"
+}

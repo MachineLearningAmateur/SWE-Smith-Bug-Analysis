@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 11,
+    "lines_deleted": 11,
+    "path": "bug_diff.diff",
+    "sha256": "e4a2d09b771e92213ee400c6e3b9a46441921330c81c86a31a547c326324a0d1"
+  },
+  "case_id": "SWESMITH_071",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01___init__.py",
+      "repo_path": "schema/__init__.py",
+      "sha256": "9fff47e80c31ead76e5c75178961bba86c3de403f309d946ecd62a819bf2334c"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 114,
+    "path": "test_evidence.md",
+    "sha256": "6ef6d18996cddf8d65fb3f25025fde421c6172c63b74eba20510d855b2ea26df",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test_schema.py",
+        "test_name": "test_schema.py::test_description_with_default"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "test_schema.py",
+        "test_name": "test_schema.py::test_dict_optional_defaults"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "fb58768cdb67952968d3ad884a55a3f06459b341296b0a6d017ed2d087dceedb"
+  },
+  "repository": {
+    "language": "python",
+    "name": "keleshev/schema"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "d522217ff0583c8c1a675ad68ce8a762ae8d4a1801f309be2a22ea6b66288894"
+  }
+}

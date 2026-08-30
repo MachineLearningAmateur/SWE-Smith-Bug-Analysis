@@ -1,0 +1,21 @@
+diff --git a/parso/python/tokenize.py b/parso/python/tokenize.py
+index 611c266..e3ffe44 100644
+--- a/parso/python/tokenize.py
++++ b/parso/python/tokenize.py
+@@ -282,7 +282,6 @@ class FStringNode:
+ 
+ 
+ def _close_fstring_if_necessary(fstring_stack, string, line_nr, column, additional_prefix):
+-    return None, additional_prefix, 0
+     for fstring_stack_index, node in enumerate(fstring_stack):
+         lstripped_string = string.lstrip()
+         len_lstrip = len(string) - len(lstripped_string)
+@@ -297,6 +296,8 @@ def _close_fstring_if_necessary(fstring_stack, string, line_nr, column, addition
+             assert not node.previous_lines
+             del fstring_stack[fstring_stack_index:]
+             return token, '', len(node.quote) + len_lstrip
++    return None, additional_prefix, 0
++
+ 
+ def _find_fstring_string(endpats, fstring_stack, line, lnum, pos):
+     tos = fstring_stack[-1]

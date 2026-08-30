@@ -1,0 +1,27 @@
+diff --git a/src/pipdeptree/_freeze.py b/src/pipdeptree/_freeze.py
+index fbd9837..e6aea91 100644
+--- a/src/pipdeptree/_freeze.py
++++ b/src/pipdeptree/_freeze.py
+@@ -72,17 +72,18 @@ class PipBaseDistributionAdapter:
+ 
+     @property
+     def editable_project_location(self) -> str | None:
+-
+-        result = None
+-        egg_link_path = egg_link_path_from_sys_path(self.raw_name)
++        direct_url = self.direct_url
+         if direct_url and direct_url.is_local_editable():
+             from pip._internal.utils.urls import url_to_path  # noqa: PLC2701, PLC0415
+ 
+             return url_to_path(direct_url.url)
++
++        result = None
++        egg_link_path = egg_link_path_from_sys_path(self.raw_name)
+         if egg_link_path:
+             with Path(egg_link_path).open("r", encoding=locale.getpreferredencoding(False)) as f:  # noqa: FBT003
+                 result = f.readline().rstrip()
+-        direct_url = self.direct_url
+         return result
+ 
++
+ __all__ = ["dist_to_frozen_repr"]

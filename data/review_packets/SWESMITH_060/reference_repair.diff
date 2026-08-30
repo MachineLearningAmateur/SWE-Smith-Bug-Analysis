@@ -1,0 +1,26 @@
+diff --git a/glom/core.py b/glom/core.py
+index 2e7707e..cee71a3 100644
+--- a/glom/core.py
++++ b/glom/core.py
+@@ -676,15 +676,12 @@ class Path:
+         return (len(self.path_t.__ops__) - 1) // 2
+ 
+     def __eq__(self, other):
+-        """Compare this Path with another object for equality.
+-    
+-        Two Path objects are considered equal if they represent the same path,
+-        which means they have the same operations in their path_t.__ops__ attribute.
+-        """
+-        if not isinstance(other, Path):
+-            return False
+-    
+-        return self.path_t.__ops__ == other.path_t.__ops__
++        if type(other) is Path:
++            return self.path_t.__ops__ == other.path_t.__ops__
++        elif type(other) is TType:
++            return self.path_t.__ops__ == other.__ops__
++        return False
++
+     def __ne__(self, other):
+         return not self == other
+ 

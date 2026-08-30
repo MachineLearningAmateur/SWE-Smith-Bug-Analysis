@@ -1,0 +1,180 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 2,
+    "lines_added": 25,
+    "lines_deleted": 112,
+    "path": "bug_diff.diff",
+    "sha256": "b9a3f473e5448f4f9110d58dc1305a4041199c1a55e9dfba7d32b5516fd9c1c8"
+  },
+  "case_id": "SWESMITH_088",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01__known_annotated_metadata.py",
+      "repo_path": "pydantic/_internal/_known_annotated_metadata.py",
+      "sha256": "b72a6fb2f1e35f3cb9bb63ae2db303745cfe0205c4259d983e8af730bfdc2904"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_02",
+      "path": "context/02__validators.py",
+      "repo_path": "pydantic/_internal/_validators.py",
+      "sha256": "493dc219a20b8582b22c6850bbf9919c9591aacde815d34ce2a59de74c6ed64c"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "CODE_CONTEXT_02",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 5438,
+    "passing_count": 0,
+    "path": "test_evidence.md",
+    "sha256": "201a99c6f4405b06acc72c7f88b94b30b8dc3dac01bb92d3fe48b6beb31b5630",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/benchmarks/test_attribute_access.py",
+        "test_name": "tests/benchmarks/test_attribute_access.py::test_getattr"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/benchmarks/test_attribute_access.py",
+        "test_name": "tests/benchmarks/test_attribute_access.py::test_setattr"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/benchmarks/test_discriminated_unions.py",
+        "test_name": "tests/benchmarks/test_discriminated_unions.py::test_efficiency_with_highly_nested_examples"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/benchmarks/test_discriminated_unions.py",
+        "test_name": "tests/benchmarks/test_discriminated_unions.py::test_schema_build"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/benchmarks/test_fastapi_startup_generics.py",
+        "test_name": "tests/benchmarks/test_fastapi_startup_generics.py::test_fastapi_startup_perf"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/benchmarks/test_fastapi_startup_simple.py",
+        "test_name": "tests/benchmarks/test_fastapi_startup_simple.py::test_fastapi_startup_perf"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/benchmarks/test_imports.py",
+        "test_name": "tests/benchmarks/test_imports.py::test_import_basemodel"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/benchmarks/test_imports.py",
+        "test_name": "tests/benchmarks/test_imports.py::test_import_field"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/benchmarks/test_isinstance.py",
+        "test_name": "tests/benchmarks/test_isinstance.py::test_isinstance_basemodel"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_complex_model_schema_generation"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_construct_dataclass_schema"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_failed_rebuild"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_field_validators_serializers"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_lots_of_models_with_lots_of_fields"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_model_validators_serializers"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_nested_model_schema_generation"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_recursive_model_schema_generation"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_simple_model_schema_generation"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_simple_model_schema_lots_of_fields_generation"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/benchmarks/test_model_schema_generation.py",
+        "test_name": "tests/benchmarks/test_model_schema_generation.py::test_tagged_union_with_callable_discriminator_schema_generation"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "60b561354c54c1ddc3e3c8ce12aa7f006e76d6926e5b103c1d1971a7278b9adb"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pydantic/pydantic"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "9af72f48ce649383869bcd85d66f9fa952cae309a0a4335030d687873bbd2cea"
+  }
+}

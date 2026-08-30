@@ -1,0 +1,31 @@
+diff --git a/redbot/core/dev_commands.py b/redbot/core/dev_commands.py
+index b0deb5c..61843c8 100644
+--- a/redbot/core/dev_commands.py
++++ b/redbot/core/dev_commands.py
+@@ -386,6 +386,10 @@ class DevOutput:
+                 lineno -= line_offset
+                 # support for enhanced error locations in tracebacks
+                 if py311_or_above:
++                    frame_summary = traceback.FrameSummary(
++                        frame_summary.filename, lineno, frame_summary.name, line=line
++                    )
++                else:
+                     end_lineno = frame_summary.end_lineno
+                     if end_lineno is not None:
+                         end_lineno -= line_offset
+@@ -398,15 +402,10 @@ class DevOutput:
+                         colno=frame_summary.colno,
+                         end_colno=frame_summary.end_colno,
+                     )
+-                else:
+-                    frame_summary = traceback.FrameSummary(
+-                        frame_summary.filename, lineno, frame_summary.name, line=line
+-                    )
+                 stack_summary[idx] = frame_summary
+ 
+         return "".join(top_traceback_exc.format())
+ 
+-
+ @cog_i18n(_)
+ class Dev(commands.Cog):
+     """Various development focused utilities."""

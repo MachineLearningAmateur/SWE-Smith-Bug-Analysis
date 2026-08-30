@@ -1,0 +1,30 @@
+diff --git a/inflect/__init__.py b/inflect/__init__.py
+index 3eef486..00d52af 100644
+--- a/inflect/__init__.py
++++ b/inflect/__init__.py
+@@ -3678,11 +3678,20 @@ class engine:
+         else:
+             return self._sub_ord(num)
+ 
+-    def millfn(self, ind: int = 0) -> str:
+-        if ind > len(mill) - 1:
+-            raise NumOutOfRangeError
+-        return mill[ind]
+-
++    def millfn(self, ind: int) -> str:
++        """
++        Return the appropriate magnitude suffix for numbers.
++    
++        Args:
++            ind: Index into the mill array, representing the magnitude 
++                 (0=ones, 1=thousands, 2=millions, etc.)
++    
++        Returns:
++            The appropriate suffix string from the mill array
++        """
++        if ind < len(mill):
++            return mill[ind]
++        return mill[-1]  # Return the largest defined magnitude if index is out of range
+     def unitfn(self, units: int, mindex: int = 0) -> str:
+         return f"{unit[units]}{self.millfn(mindex)}"
+ 

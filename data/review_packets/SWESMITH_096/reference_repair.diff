@@ -1,0 +1,686 @@
+diff --git a/moto/ec2/exceptions.py b/moto/ec2/exceptions.py
+index 62a3933..ecf4cc6 100644
+--- a/moto/ec2/exceptions.py
++++ b/moto/ec2/exceptions.py
+@@ -111,7 +111,7 @@ class InvalidSubnetIdError(EC2ClientError):
+ 
+ 
+ class InvalidFlowLogIdError(EC2ClientError):
+-    def __init__(self, count, flow_log_ids):
++    def __init__(self, count: int, flow_log_ids: str):
+         super().__init__(
+             "InvalidFlowLogId.NotFound",
+             f"These flow log ids in the input list are not found: [TotalCount: {count}] {flow_log_ids}",
+@@ -119,7 +119,7 @@ class InvalidFlowLogIdError(EC2ClientError):
+ 
+ 
+ class FlowLogAlreadyExists(EC2ClientError):
+-    def __init__(self):
++    def __init__(self) -> None:
+         super().__init__(
+             "FlowLogAlreadyExists",
+             "Error. There is an existing Flow Log with the same configuration and log destination.",
+@@ -409,7 +409,7 @@ class InvalidNextToken(EC2ClientError):
+ 
+ 
+ class InvalidDependantParameterError(EC2ClientError):
+-    def __init__(self, dependant_parameter, parameter, parameter_value):
++    def __init__(self, dependant_parameter: str, parameter: str, parameter_value: str):
+         super().__init__(
+             "InvalidParameter",
+             f"{dependant_parameter} can't be empty if {parameter} is {parameter_value}.",
+@@ -417,7 +417,7 @@ class InvalidDependantParameterError(EC2ClientError):
+ 
+ 
+ class InvalidDependantParameterTypeError(EC2ClientError):
+-    def __init__(self, dependant_parameter, parameter_value, parameter):
++    def __init__(self, dependant_parameter: str, parameter_value: str, parameter: str):
+         super().__init__(
+             "InvalidParameter",
+             f"{dependant_parameter} type must be {parameter_value} if {parameter} is provided.",
+@@ -425,7 +425,7 @@ class InvalidDependantParameterTypeError(EC2ClientError):
+ 
+ 
+ class InvalidAggregationIntervalParameterError(EC2ClientError):
+-    def __init__(self, parameter):
++    def __init__(self, parameter: str):
+         super().__init__("InvalidParameter", f"Invalid {parameter}")
+ 
+ 
+@@ -827,4 +827,4 @@ class AuthFailureRestricted(RESTError):
+         super().__init__(
+             "AuthFailure",
+             "Unauthorized attempt to access restricted resource",
+-        )
+\ No newline at end of file
++        )
+diff --git a/moto/ec2/models/fleets.py b/moto/ec2/models/fleets.py
+index 0c2bd3a..8178c31 100644
+--- a/moto/ec2/models/fleets.py
++++ b/moto/ec2/models/fleets.py
+@@ -1,6 +1,8 @@
+ import datetime
+ from collections import defaultdict
+-from moto.ec2.models.spot_requests import SpotFleetLaunchSpec
++from typing import Any, Dict, List, Optional, Tuple
++
++from moto.ec2.models.spot_requests import SpotFleetLaunchSpec, SpotInstanceRequest
+ 
+ from ..utils import (
+     convert_tag_spec,
+@@ -12,19 +14,19 @@ from .core import TaggedEC2Resource
+ class Fleet(TaggedEC2Resource):
+     def __init__(
+         self,
+-        ec2_backend,
+-        fleet_id,
+-        on_demand_options,
+-        spot_options,
+-        target_capacity_specification,
+-        launch_template_configs,
+-        excess_capacity_termination_policy,
+-        replace_unhealthy_instances,
+-        terminate_instances_with_expiration,
+-        fleet_type,
+-        valid_from,
+-        valid_until,
+-        tag_specifications,
++        ec2_backend: Any,
++        fleet_id: str,
++        on_demand_options: Dict[str, Any],
++        spot_options: Dict[str, Any],
++        target_capacity_specification: Dict[str, Any],
++        launch_template_configs: List[Dict[str, Any]],
++        excess_capacity_termination_policy: str,
++        replace_unhealthy_instances: bool,
++        terminate_instances_with_expiration: bool,
++        fleet_type: str,
++        valid_from: str,
++        valid_until: str,
++        tag_specifications: List[Dict[str, Any]],
+     ):
+         self.ec2_backend = ec2_backend
+         self.id = fleet_id
+@@ -49,9 +51,9 @@ class Fleet(TaggedEC2Resource):
+         self.fulfilled_on_demand_capacity = 0.0
+         self.fulfilled_spot_capacity = 0.0
+ 
+-        self.launch_specs = []
++        self.launch_specs: List[SpotFleetLaunchSpec] = []
+ 
+-        launch_specs_from_config = []
++        launch_specs_from_config: List[Dict[str, Any]] = []
+         for config in launch_template_configs or []:
+             launch_spec = config["LaunchTemplateSpecification"]
+             if "LaunchTemplateId" in launch_spec:
+@@ -91,8 +93,8 @@ class Fleet(TaggedEC2Resource):
+                 )
+             )
+ 
+-        self.spot_requests = []
+-        self.on_demand_instances = []
++        self.spot_requests: List[SpotInstanceRequest] = []
++        self.on_demand_instances: List[Dict[str, Any]] = []
+         default_capacity = (
+             target_capacity_specification.get("DefaultTargetCapacityType")
+             or "on-demand"
+@@ -121,10 +123,10 @@ class Fleet(TaggedEC2Resource):
+                 self.create_spot_requests(remaining_capacity)
+ 
+     @property
+-    def physical_resource_id(self):
++    def physical_resource_id(self) -> str:
+         return self.id
+ 
+-    def create_spot_requests(self, weight_to_add):
++    def create_spot_requests(self, weight_to_add: float) -> List[SpotInstanceRequest]:
+         weight_map, added_weight = self.get_launch_spec_counts(weight_to_add)
+         for launch_spec, count in weight_map.items():
+             requests = self.ec2_backend.request_spot_instances(
+@@ -152,7 +154,7 @@ class Fleet(TaggedEC2Resource):
+         self.fulfilled_capacity += added_weight
+         return self.spot_requests
+ 
+-    def create_on_demand_requests(self, weight_to_add):
++    def create_on_demand_requests(self, weight_to_add: float) -> None:
+         weight_map, added_weight = self.get_launch_spec_counts(weight_to_add)
+         for launch_spec, count in weight_map.items():
+             reservation = self.ec2_backend.run_instances(
+@@ -182,10 +184,12 @@ class Fleet(TaggedEC2Resource):
+             )
+         self.fulfilled_capacity += added_weight
+ 
+-    def get_launch_spec_counts(self, weight_to_add):
+-        weight_map = defaultdict(int)
++    def get_launch_spec_counts(
++        self, weight_to_add: float
++    ) -> Tuple[Dict[SpotFleetLaunchSpec, int], float]:
++        weight_map: Dict[SpotFleetLaunchSpec, int] = defaultdict(int)
+ 
+-        weight_so_far = 0
++        weight_so_far = 0.0
+         if (
+             self.spot_options
+             and self.spot_options["AllocationStrategy"] == "diversified"
+@@ -215,15 +219,16 @@ class Fleet(TaggedEC2Resource):
+ 
+         return weight_map, weight_so_far
+ 
+-    def terminate_instances(self):
++    def terminate_instances(self) -> None:
+         instance_ids = []
+         new_fulfilled_capacity = self.fulfilled_capacity
+         for req in self.spot_requests + self.on_demand_instances:
+             instance = None
+             try:
+-                instance = req.instance
++                instance = req.instance  # type: ignore
+             except AttributeError:
+-                instance = req["instance"]
++                instance = req["instance"]  # type: ignore[index]
++
+             if instance.state == "terminated":
+                 continue
+ 
+@@ -246,23 +251,23 @@ class Fleet(TaggedEC2Resource):
+ 
+ 
+ class FleetsBackend:
+-    def __init__(self):
+-        self.fleets = {}
++    def __init__(self) -> None:
++        self.fleets: Dict[str, Fleet] = {}
+ 
+     def create_fleet(
+         self,
+-        on_demand_options,
+-        spot_options,
+-        target_capacity_specification,
+-        launch_template_configs,
+-        excess_capacity_termination_policy,
+-        replace_unhealthy_instances,
+-        terminate_instances_with_expiration,
+-        fleet_type,
+-        valid_from,
+-        valid_until,
+-        tag_specifications,
+-    ):
++        on_demand_options: Dict[str, Any],
++        spot_options: Dict[str, Any],
++        target_capacity_specification: Dict[str, Any],
++        launch_template_configs: List[Dict[str, Any]],
++        excess_capacity_termination_policy: str,
++        replace_unhealthy_instances: bool,
++        terminate_instances_with_expiration: bool,
++        fleet_type: str,
++        valid_from: str,
++        valid_until: str,
++        tag_specifications: List[Dict[str, Any]],
++    ) -> Fleet:
+         fleet_id = random_fleet_id()
+         fleet = Fleet(
+             self,
+@@ -282,24 +287,26 @@ class FleetsBackend:
+         self.fleets[fleet_id] = fleet
+         return fleet
+ 
+-    def get_fleet(self, fleet_id):
++    def get_fleet(self, fleet_id: str) -> Optional[Fleet]:
+         return self.fleets.get(fleet_id)
+ 
+-    def describe_fleet_instances(self, fleet_id):
++    def describe_fleet_instances(self, fleet_id: str) -> List[Any]:
+         fleet = self.get_fleet(fleet_id)
+         if not fleet:
+             return []
+         return fleet.spot_requests + fleet.on_demand_instances
+ 
+-    def describe_fleets(self, fleet_ids):
+-        fleets = self.fleets.values()
++    def describe_fleets(self, fleet_ids: Optional[List[str]]) -> List[Fleet]:
++        fleets = list(self.fleets.values())
+ 
+         if fleet_ids:
+             fleets = [fleet for fleet in fleets if fleet.id in fleet_ids]
+ 
+         return fleets
+ 
+-    def delete_fleets(self, fleet_ids, terminate_instances):
++    def delete_fleets(
++        self, fleet_ids: List[str], terminate_instances: bool
++    ) -> List[Fleet]:
+         fleets = []
+         for fleet_id in fleet_ids:
+             fleet = self.fleets[fleet_id]
+@@ -314,4 +321,4 @@ class FleetsBackend:
+                 # State is different, and indicates that instances are still running
+                 fleet.state = "deleted_running"
+             fleets.append(fleet)
+-        return fleets
+\ No newline at end of file
++        return fleets
+diff --git a/moto/ec2/models/flow_logs.py b/moto/ec2/models/flow_logs.py
+index bdd8a8a..923def7 100644
+--- a/moto/ec2/models/flow_logs.py
++++ b/moto/ec2/models/flow_logs.py
+@@ -1,5 +1,6 @@
+ import itertools
+-from collections import defaultdict
++from typing import Any, Dict, List, Optional, Tuple
++
+ from moto.core.common_models import CloudFormationModel
+ 
+ from ..exceptions import (
+@@ -20,18 +21,18 @@ from .core import TaggedEC2Resource
+ class FlowLogs(TaggedEC2Resource, CloudFormationModel):
+     def __init__(
+         self,
+-        ec2_backend,
+-        flow_log_id,
+-        resource_id,
+-        traffic_type,
+-        log_destination,
+-        log_group_name,
+-        deliver_logs_permission_arn,
+-        max_aggregation_interval,
+-        log_destination_type,
+-        log_format,
+-        deliver_logs_status="SUCCESS",
+-        deliver_logs_error_message=None,
++        ec2_backend: Any,
++        flow_log_id: str,
++        resource_id: str,
++        traffic_type: str,
++        log_destination: str,
++        log_group_name: str,
++        deliver_logs_permission_arn: str,
++        max_aggregation_interval: str,
++        log_destination_type: str,
++        log_format: str,
++        deliver_logs_status: str = "SUCCESS",
++        deliver_logs_error_message: Optional[str] = None,
+     ):
+         self.ec2_backend = ec2_backend
+         self.id = flow_log_id
+@@ -49,16 +50,23 @@ class FlowLogs(TaggedEC2Resource, CloudFormationModel):
+         self.created_at = utc_date_and_time()
+ 
+     @staticmethod
+-    def cloudformation_name_type():
+-        return None
++    def cloudformation_name_type() -> str:
++        return ""
+ 
+     @staticmethod
+-    def cloudformation_type():
++    def cloudformation_type() -> str:
+         # https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-ec2-flowlog.html
+         return "AWS::EC2::FlowLog"
+ 
+     @classmethod
+-    def create_from_cloudformation_json(cls, resource_name, cloudformation_json, account_id, region_name, **kwargs):
++    def create_from_cloudformation_json(  # type: ignore[misc]
++        cls,
++        resource_name: str,
++        cloudformation_json: Any,
++        account_id: str,
++        region_name: str,
++        **kwargs: Any,
++    ) -> "FlowLogs":
+         from ..models import ec2_backends
+ 
+         properties = cloudformation_json["Properties"]
+@@ -93,10 +101,12 @@ class FlowLogs(TaggedEC2Resource, CloudFormationModel):
+         return flow_log[0]
+ 
+     @property
+-    def physical_resource_id(self):
++    def physical_resource_id(self) -> str:
+         return self.id
+ 
+-    def get_filter_value(self, filter_name):
++    def get_filter_value(
++        self, filter_name: str, method_name: Optional[str] = None
++    ) -> Any:
+         """
+         API Version 2016-11-15 defines the following filters for DescribeFlowLogs:
+ 
+@@ -128,17 +138,17 @@ class FlowLogs(TaggedEC2Resource, CloudFormationModel):
+ 
+ 
+ class FlowLogsBackend:
+-    def __init__(self):
+-        self.flow_logs = defaultdict(dict)
++    def __init__(self) -> None:
++        self.flow_logs: Dict[str, FlowLogs] = {}
+ 
+     def _validate_request(
+         self,
+-        log_group_name,
+-        log_destination,
+-        log_destination_type,
+-        max_aggregation_interval,
+-        deliver_logs_permission_arn,
+-    ):
++        log_group_name: str,
++        log_destination: str,
++        log_destination_type: str,
++        max_aggregation_interval: str,
++        deliver_logs_permission_arn: str,
++    ) -> None:
+         if log_group_name is None and log_destination is None:
+             raise InvalidDependantParameterError(
+                 "LogDestination", "LogGroupName", "not provided"
+@@ -162,16 +172,16 @@ class FlowLogsBackend:
+ 
+     def create_flow_logs(
+         self,
+-        resource_type,
+-        resource_ids,
+-        traffic_type,
+-        deliver_logs_permission_arn,
+-        log_destination_type,
+-        log_destination,
+-        log_group_name,
+-        log_format,
+-        max_aggregation_interval,
+-    ):
++        resource_type: str,
++        resource_ids: List[str],
++        traffic_type: str,
++        deliver_logs_permission_arn: str,
++        log_destination_type: str,
++        log_destination: str,
++        log_group_name: str,
++        log_format: str,
++        max_aggregation_interval: str,
++    ) -> Tuple[List[FlowLogs], List[Any]]:
+         # Guess it's best to put it here due to possible
+         # lack of them in the CloudFormation template
+         max_aggregation_interval = (
+@@ -204,13 +214,13 @@ class FlowLogsBackend:
+             flow_log_id = random_flow_log_id()
+             if resource_type == "VPC":
+                 # Validate VPCs exist
+-                self.get_vpc(resource_id)
++                self.get_vpc(resource_id)  # type: ignore[attr-defined]
+             elif resource_type == "Subnet":
+                 # Validate Subnets exist
+-                self.get_subnet(resource_id)
++                self.get_subnet(resource_id)  # type: ignore[attr-defined]
+             elif resource_type == "NetworkInterface":
+                 # Validate NetworkInterfaces exist
+-                self.get_network_interface(resource_id)
++                self.get_network_interface(resource_id)  # type: ignore[attr-defined]
+ 
+             if log_destination_type == "s3":
+                 from moto.s3.exceptions import MissingBucket
+@@ -218,7 +228,7 @@ class FlowLogsBackend:
+ 
+                 arn = log_destination.split(":", 5)[5]
+                 try:
+-                    s3_backends[self.account_id]["global"].get_bucket(arn)
++                    s3_backends[self.account_id][self.partition].get_bucket(arn)  # type: ignore[attr-defined]
+                 except MissingBucket:
+                     # Instead of creating FlowLog report
+                     # the unsuccessful status for the
+@@ -237,7 +247,8 @@ class FlowLogsBackend:
+                 try:
+                     # Need something easy to check the group exists.
+                     # The list_tags_log_group seems to do the trick.
+-                    logs_backends[self.account_id][self.region_name].list_tags_log_group(log_group_name)
++                    logs = logs_backends[self.account_id][self.region_name]  # type: ignore[attr-defined]
++                    logs.list_tags_log_group(log_group_name)
+                 except ResourceNotFoundException:
+                     deliver_logs_status = "FAILED"
+                     deliver_logs_error_message = "Access error"
+@@ -268,15 +279,17 @@ class FlowLogsBackend:
+ 
+         return flow_logs_set, unsuccessful
+ 
+-    def describe_flow_logs(self, flow_log_ids=None, filters=None):
+-        matches = itertools.chain([i for i in self.flow_logs.values()])
++    def describe_flow_logs(
++        self, flow_log_ids: Optional[List[str]] = None, filters: Any = None
++    ) -> List[FlowLogs]:
++        matches = list(itertools.chain([i for i in self.flow_logs.values()]))
+         if flow_log_ids:
+             matches = [flow_log for flow_log in matches if flow_log.id in flow_log_ids]
+         if filters:
+             matches = generic_filter(filters, matches)
+         return matches
+ 
+-    def delete_flow_logs(self, flow_log_ids):
++    def delete_flow_logs(self, flow_log_ids: List[str]) -> None:
+         non_existing = []
+         for flow_log in flow_log_ids:
+             if flow_log in self.flow_logs:
+@@ -288,4 +301,3 @@ class FlowLogsBackend:
+             raise InvalidFlowLogIdError(
+                 len(flow_log_ids), " ".join(x for x in flow_log_ids)
+             )
+-        return True
+\ No newline at end of file
+diff --git a/moto/ec2/models/hosts.py b/moto/ec2/models/hosts.py
+index 6d3b0a3..cc4253b 100644
+--- a/moto/ec2/models/hosts.py
++++ b/moto/ec2/models/hosts.py
+@@ -1,4 +1,4 @@
+-from typing import Any, Dict, List
++from typing import Any, Dict, List, Optional
+ 
+ from moto.core.utils import unix_time
+ 
+@@ -20,8 +20,8 @@ class Host(TaggedEC2Resource):
+         self.state = "available"
+         self.host_recovery = host_recovery or "off"
+         self.zone = zone
+-        self.instance_type = instance_type
+-        self.instance_family = instance_family
++        self.instance_type: Optional[str] = instance_type
++        self.instance_family: Optional[str] = instance_family
+         self.auto_placement = auto_placement or "on"
+         self.ec2_backend = backend
+         self.allocation_time = unix_time()
+@@ -29,21 +29,23 @@ class Host(TaggedEC2Resource):
+     def release(self) -> None:
+         self.state = "released"
+ 
+-    def get_filter_value(self, key):
+-        if key == "availability-zone":
++    def get_filter_value(
++        self, filter_name: str, method_name: Optional[str] = None
++    ) -> Any:
++        if filter_name == "availability-zone":
+             return self.zone
+-        if key == "state":
++        if filter_name == "state":
+             return self.state
+-        if key == "tag-key":
++        if filter_name == "tag-key":
+             return [t["key"] for t in self.get_tags()]
+-        if key == "instance-type":
++        if filter_name == "instance-type":
+             return self.instance_type
+         return None
+ 
+ 
+ class HostsBackend:
+-    def __init__(self):
+-        self.hosts = {}
++    def __init__(self) -> None:
++        self.hosts: Dict[str, Host] = {}
+ 
+     def allocate_hosts(
+         self,
+@@ -72,18 +74,27 @@ class HostsBackend:
+                 host.add_tags(tags)
+         return [host.id for host in hosts]
+ 
+-    def describe_hosts(self, host_ids: List[str], filters: Dict[str, Any]) -> List[Host]:
++    def describe_hosts(
++        self, host_ids: List[str], filters: Dict[str, Any]
++    ) -> List[Host]:
+         """
+         Pagination is not yet implemented
+         """
+-        results = self.hosts.values()
++        results = list(self.hosts.values())
+         if host_ids:
+             results = [r for r in results if r.id in host_ids]
+         if filters:
+             results = generic_filter(filters, results)
+         return results
+ 
+-    def modify_hosts(self, host_ids, auto_placement, host_recovery, instance_type, instance_family):
++    def modify_hosts(
++        self,
++        host_ids: List[str],
++        auto_placement: str,
++        host_recovery: str,
++        instance_type: str,
++        instance_family: str,
++    ) -> None:
+         for _id in host_ids:
+             host = self.hosts[_id]
+             if auto_placement is not None:
+@@ -99,4 +110,4 @@ class HostsBackend:
+ 
+     def release_hosts(self, host_ids: List[str]) -> None:
+         for host_id in host_ids:
+-            self.hosts[host_id].release()
+\ No newline at end of file
++            self.hosts[host_id].release()
+diff --git a/moto/ec2/models/spot_requests.py b/moto/ec2/models/spot_requests.py
+index 842271b..0895698 100644
+--- a/moto/ec2/models/spot_requests.py
++++ b/moto/ec2/models/spot_requests.py
+@@ -146,18 +146,18 @@ class SpotInstanceRequest(TaggedEC2Resource):
+ class SpotFleetLaunchSpec:
+     def __init__(
+         self,
+-        ebs_optimized,
+-        group_set,
+-        iam_instance_profile,
+-        image_id,
+-        instance_type,
+-        key_name,
+-        monitoring,
+-        spot_price,
+-        subnet_id,
+-        tag_specifications,
+-        user_data,
+-        weighted_capacity,
++        ebs_optimized: Any,
++        group_set: List[str],
++        iam_instance_profile: Any,
++        image_id: str,
++        instance_type: str,
++        key_name: Any,
++        monitoring: Any,
++        spot_price: Any,
++        subnet_id: Any,
++        tag_specifications: Dict[str, Dict[str, str]],
++        user_data: Any,
++        weighted_capacity: float,
+     ):
+         self.ebs_optimized = ebs_optimized
+         self.group_set = group_set
+@@ -559,4 +559,4 @@ class SpotRequestBackend:
+         if instance_types:
+             matches = [t for t in matches if t.get("InstanceType") in instance_types]
+ 
+-        return matches
+\ No newline at end of file
++        return matches
+diff --git a/moto/ec2/utils.py b/moto/ec2/utils.py
+index 16b8868..4c1590a 100644
+--- a/moto/ec2/utils.py
++++ b/moto/ec2/utils.py
+@@ -12,6 +12,7 @@ from typing import (
+     Optional,
+     Set,
+     Tuple,
++    TypeVar,
+     Union,
+ )
+ 
+@@ -80,6 +81,7 @@ EC2_RESOURCE_TO_PREFIX = {
+     "key-pair": "key",
+ }
+ 
++
+ EC2_PREFIX_TO_RESOURCE = dict((v, k) for (k, v) in EC2_RESOURCE_TO_PREFIX.items())
+ HEX_CHARS = list(str(x) for x in range(10)) + ["a", "b", "c", "d", "e", "f"]
+ 
+@@ -109,14 +111,14 @@ def random_security_group_id() -> str:
+ 
+ 
+ def random_security_group_rule_id() -> str:
+-    return random_id(prefix=EC2_RESOURCE_TO_PREFIX["security-group-rule"], size=17)
++    return random_id(prefix=EC2_RESOURCE_TO_PREFIX["security-group-rule"])
+ 
+ 
+-def random_fleet_id():
++def random_fleet_id() -> str:
+     return f"fleet-{random_resource_id(size=8)}-{random_resource_id(size=4)}-{random_resource_id(size=4)}-{random_resource_id(size=4)}-{random_resource_id(size=12)}"
+ 
+ 
+-def random_flow_log_id():
++def random_flow_log_id() -> str:
+     return random_id(prefix=EC2_RESOURCE_TO_PREFIX["flow-logs"])
+ 
+ 
+@@ -262,8 +264,8 @@ def random_public_ip() -> str:
+     return f"54.214.{random.choice(range(255))}.{random.choice(range(255))}"
+ 
+ 
+-def random_dedicated_host_id():
+-    return random_id(prefix=EC2_RESOURCE_TO_PREFIX["dedicated_host"], size=17)
++def random_dedicated_host_id() -> str:
++    return random_id(prefix=EC2_RESOURCE_TO_PREFIX["dedicated_host"])
+ 
+ 
+ def random_private_ip(cidr: Optional[str] = None, ipv6: bool = False) -> str:
+@@ -553,14 +555,17 @@ def is_filter_matching(obj: Any, _filter: str, filter_value: Any) -> bool:
+         return value in filter_value
+ 
+ 
+-def generic_filter(filters: Dict[str, Any], objects: List[Any]) -> List[Any]:
++def generic_filter(
++    filters: Dict[str, Any], objects: List[FILTER_TYPE]
++) -> List[FILTER_TYPE]:
+     if filters:
+-        for (_filter, _filter_value) in filters.items():
++        for _filter, _filter_value in filters.items():
+             objects = [
+                 obj
+                 for obj in objects
+                 if is_filter_matching(obj, _filter, _filter_value)
+             ]
++
+     return objects
+ 
+ 
+@@ -917,15 +922,17 @@ def gen_moto_amis(
+     return result
+ 
+ 
+-def convert_tag_spec(tag_spec_set, tag_key="Tag"):
++def convert_tag_spec(
++    tag_spec_set: List[Dict[str, Any]], tag_key: str = "Tag"
++) -> Dict[str, Dict[str, str]]:
+     # IN:   [{"ResourceType": _type, "Tag": [{"Key": k, "Value": v}, ..]}]
+     #  (or) [{"ResourceType": _type, "Tags": [{"Key": k, "Value": v}, ..]}] <-- special cfn case
+     # OUT:  {_type: {k: v, ..}}
+-    tags = {}
++    tags: Dict[str, Dict[str, str]] = {}
+     for tag_spec in tag_spec_set:
+         if tag_spec["ResourceType"] not in tags:
+             tags[tag_spec["ResourceType"]] = {}
+         tags[tag_spec["ResourceType"]].update(
+             {tag["Key"]: tag["Value"] for tag in tag_spec[tag_key]}
+         )
+-    return tags
+\ No newline at end of file
++    return tags

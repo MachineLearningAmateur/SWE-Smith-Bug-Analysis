@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 2,
+    "path": "bug_diff.diff",
+    "sha256": "52a2869dd1b3050e02712e054b96d1d36a33d8c273e3b3763ccf0f50340c1b00"
+  },
+  "case_id": "SWESMITH_043",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_buffered_pipe.py",
+      "repo_path": "paramiko/buffered_pipe.py",
+      "sha256": "1ec57d406052f7c6bc6d2a7ef847992511b99d08bf41d6a12ec1fe51307f5644"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 553,
+    "path": "test_evidence.md",
+    "sha256": "cbdcd6395698dab05f06436f3b97d0c77b639a5a191353e6aa6704588ce73734",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/agent.py",
+        "test_name": "tests/agent.py::AgentKey_::get_bits::defers_to_inner_key_when_present[ecdsa-256]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "6a9af5af443de9941599eff5899e520981a2c83bf5e6d28ee5af6958342353a7"
+  },
+  "repository": {
+    "language": "python",
+    "name": "paramiko/paramiko"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "84eea0877a4292e162e93b3ad5254cfbd06d4d8a83dfc4527d05cb5cec0084aa"
+  }
+}

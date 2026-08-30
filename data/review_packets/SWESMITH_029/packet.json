@@ -1,0 +1,78 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 2,
+    "lines_added": 8,
+    "lines_deleted": 62,
+    "path": "bug_diff.diff",
+    "sha256": "82dcb82f784d66159c9ca4a0f5103022932a6afa5cd885747fb4f4024527afff"
+  },
+  "case_id": "SWESMITH_029",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_models.py",
+      "repo_path": "moto/ssoadmin/models.py",
+      "sha256": "a96268e75ad1a317e06748548295d958a5ff563f9036a5cb23e518fb2eb91391"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_02",
+      "path": "context/02_responses.py",
+      "repo_path": "moto/ssoadmin/responses.py",
+      "sha256": "c8a3654a17c6b7081c51b86287fbf58ff25e397d6aed4d23f86d157719751e5a"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "CODE_CONTEXT_02",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 3,
+    "passing_count": 15,
+    "path": "test_evidence.md",
+    "sha256": "f98dfc276e33d036686e897bdb9068300c6f91ec4328ba553891655873d8c454",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_ssoadmin/test_ssoadmin.py",
+        "test_name": "tests/test_ssoadmin/test_ssoadmin.py::test_delete_account_assignment"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_ssoadmin/test_ssoadmin.py",
+        "test_name": "tests/test_ssoadmin/test_ssoadmin.py::test_describe_account_assignment_creation_status"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_ssoadmin/test_ssoadmin.py",
+        "test_name": "tests/test_ssoadmin/test_ssoadmin.py::test_describe_account_assignment_deletion_status"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "e479c9fb54278225c620246fd02db346b3229df0c27d4e0eb650900458bf4093"
+  },
+  "repository": {
+    "language": "python",
+    "name": "getmoto/moto"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "84b47285f799f80bc16b87039c46b092accc3569c54f7c463b14c606fead6f5c"
+  }
+}

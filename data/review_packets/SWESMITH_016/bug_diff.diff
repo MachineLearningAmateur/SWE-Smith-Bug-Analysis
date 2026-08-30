@@ -1,0 +1,24 @@
+diff --git a/parso/python/pep8.py b/parso/python/pep8.py
+index c492dae..19b5eb0 100644
+--- a/parso/python/pep8.py
++++ b/parso/python/pep8.py
+@@ -124,7 +124,7 @@ class BackslashNode(IndentationNode):
+     type = IndentationTypes.BACKSLASH
+ 
+     def __init__(self, config, parent_indentation, containing_leaf, spacing, parent=None):
+-        expr_stmt = containing_leaf.search_ancestor('expr_stmt')
++        self.parent = parent
+         if expr_stmt is not None:
+             equals = expr_stmt.children[-2]
+ 
+@@ -141,9 +141,8 @@ class BackslashNode(IndentationNode):
+                     self.indentation = ' ' * (equals.end_pos[1] + 1)
+         else:
+             self.indentation = parent_indentation + config.indentation
++        expr_stmt = containing_leaf.search_ancestor('expr_stmt')
+         self.bracket_indentation = self.indentation
+-        self.parent = parent
+-
+ 
+ def _is_magic_name(name):
+     return name.value.startswith('__') and name.value.endswith('__')

@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 14,
+    "lines_deleted": 28,
+    "path": "bug_diff.diff",
+    "sha256": "c08f668bd333d628cdac4a113f375a4375976ef7de3ad9a0a3dd5e6e5f02f3dd"
+  },
+  "case_id": "SWESMITH_053",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_backends.py",
+      "repo_path": "dask/backends.py",
+      "sha256": "8352f67807d80d2529f9b1a95b205d1069c983a018031d3a12bebbb5f46f0de0"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 0,
+    "path": "test_evidence.md",
+    "sha256": "ec6704749706d6b524b572f3774877210d835de5ce57d9de65aa3641b12f2b4d",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "dask/tests/test_backends.py",
+        "test_name": "dask/tests/test_backends.py::test_CreationDispatch_error_informative_message[pandas]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "e98ce08dab6e2e8665e3c94dc461ca097e7570c14624c0cce230feddfc1f2db1"
+  },
+  "repository": {
+    "language": "python",
+    "name": "dask/dask"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "6aa11d7a9134dd72325b6b4c0287181a1253e82f8f2b0f5ca2aa621859582f24"
+  }
+}

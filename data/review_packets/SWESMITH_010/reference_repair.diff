@@ -1,0 +1,31 @@
+diff --git a/pypika/queries.py b/pypika/queries.py
+index 6b1b53b..42c7c45 100644
+--- a/pypika/queries.py
++++ b/pypika/queries.py
+@@ -850,20 +850,15 @@ class QueryBuilder(Selectable, Term):
+         self._with.append(t)
+ 
+     @builder
+-    @builder
+-    def into(self, table: Union[str, Table]) -> 'QueryBuilder':
+-        """
+-        Query builder entry point. Initializes query building and sets the table to insert into.
+-        When using this function, the query becomes an INSERT query.
++    def into(self, table: Union[str, Table]) -> "QueryBuilder":
++        if self._insert_table is not None:
++            raise AttributeError("'Query' object has no attribute '%s'" % "into")
+ 
+-        :param table:
+-            Type: Table or str
++        if self._selects:
++            self._select_into = True
+ 
+-            An instance of a Table object or a string table name.
+-
+-        :return: QueryBuilder
+-        """
+         self._insert_table = table if isinstance(table, Table) else Table(table)
++
+     @builder
+     def select(self, *terms: Any) -> "QueryBuilder":
+         for term in terms:

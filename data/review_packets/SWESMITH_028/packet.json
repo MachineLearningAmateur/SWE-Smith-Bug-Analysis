@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 5,
+    "lines_deleted": 5,
+    "path": "bug_diff.diff",
+    "sha256": "e2679e9ae201718155f5ac342c7b55c70b1606897f70a504ed8a96f6b409f1ff"
+  },
+  "case_id": "SWESMITH_028",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01__utils.py",
+      "repo_path": "starlette/_utils.py",
+      "sha256": "97ef09f6212f25d3a7af8b77f735f621f757e0373041cf120d789bc69314be48"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 322,
+    "passing_count": 519,
+    "path": "test_evidence.md",
+    "sha256": "cc0406d9422b716e728644b180e2457c1872b2fefbe0cec64f06021eb75f5689",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_app_middleware_argument[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_app_middleware_argument[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_contextvars[asyncio-CustomMiddlewareWithoutBaseHTTPMiddleware]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_contextvars[trio-CustomMiddlewareWithoutBaseHTTPMiddleware]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_custom_middleware[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_custom_middleware[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_do_not_block_on_background_tasks[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_do_not_block_on_background_tasks[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_fully_evaluated_response[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_fully_evaluated_response[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_multiple_middlewares_stacked_client_disconnected[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_multiple_middlewares_stacked_client_disconnected[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_pr_1519_comment_1236166180_example"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_read_request_body_in_app_after_middleware_calls_body[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_read_request_body_in_app_after_middleware_calls_body[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_read_request_body_in_app_after_middleware_calls_stream[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_read_request_body_in_app_after_middleware_calls_stream[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_read_request_body_in_dispatch_after_app_calls_body_with_middleware_calling_body_before_call_next[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_read_request_body_in_dispatch_after_app_calls_body_with_middleware_calling_body_before_call_next[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/middleware/test_base.py",
+        "test_name": "tests/middleware/test_base.py::test_read_request_stream_in_app_after_middleware_calls_body[asyncio]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "7cc1c4d7dcc76be6cac613c5277b913ee2c16118e1b94de9f1410e4a1cfab5b5"
+  },
+  "repository": {
+    "language": "python",
+    "name": "encode/starlette"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

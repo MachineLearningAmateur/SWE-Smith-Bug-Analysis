@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 3,
+    "lines_deleted": 0,
+    "path": "bug_diff.diff",
+    "sha256": "f9aae83ad752438bfd46c504518c724e04feb99f2c96be1e17c8ac243a1cbbfc"
+  },
+  "case_id": "SWESMITH_072",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_semanal.py",
+      "repo_path": "mypy/semanal.py",
+      "sha256": "2c67c1d4f6c01eb55dbdd5a6ad41e3a5e650fe5f74a034a6b22be28c5bd0100e"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 1,
+    "path": "test_evidence.md",
+    "sha256": "d5fa7d1d2ba118f2c52c63e5776ffb6bbec076b196d669dcda906eff44592e9e",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "mypy/test/testcheck.py",
+        "test_name": "mypy/test/testcheck.py::TypeCheckSuite::check-tuples.test::testAssignEmptyBogus"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "c09ca14b5a4185a421868a5cfbf828b988e1d835996e498d40c5156f8bff8a8a"
+  },
+  "repository": {
+    "language": "python",
+    "name": "python/mypy"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "4ed50148e2c49956b8773389f2e80f6d48df46b0356c4dfb7d43e4fac367848e"
+  }
+}

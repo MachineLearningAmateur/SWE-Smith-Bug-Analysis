@@ -1,0 +1,33 @@
+diff --git a/pdfminer/utils.py b/pdfminer/utils.py
+index 2a6b886..a5b5385 100644
+--- a/pdfminer/utils.py
++++ b/pdfminer/utils.py
+@@ -722,22 +722,17 @@ class Plane(Generic[LTComponentT]):
+         return obj in self._objs
+ 
+     def _getrange(self, bbox: Rect) -> Iterator[Point]:
+-        """Returns an iterator of grid coordinates (x,y) that overlap with the bbox."""
+         (x0, y0, x1, y1) = bbox
++        if x1 <= self.x0 or self.x1 <= x0 or y1 <= self.y0 or self.y1 <= y0:
++            return
+         x0 = max(self.x0, x0)
+         y0 = max(self.y0, y0)
+         x1 = min(self.x1, x1)
+         y1 = min(self.y1, y1)
+-    
+-        # Calculate grid cell indices
+-        i0 = int(x0 - self.x0) // self.gridsize
+-        j0 = int(y0 - self.y0) // self.gridsize
+-        i1 = int(ceil((x1 - self.x0) / self.gridsize))
+-        j1 = int(ceil((y1 - self.y0) / self.gridsize))
+-    
+-        for i in range(i0, i1):
+-            for j in range(j0, j1):
+-                yield (i, j)
++        for grid_y in drange(y0, y1, self.gridsize):
++            for grid_x in drange(x0, x1, self.gridsize):
++                yield (grid_x, grid_y)
++
+     def extend(self, objs: Iterable[LTComponentT]) -> None:
+         for obj in objs:
+             self.add(obj)

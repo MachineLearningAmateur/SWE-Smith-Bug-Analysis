@@ -1,0 +1,208 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 6,
+    "lines_added": 136,
+    "lines_deleted": 173,
+    "path": "bug_diff.diff",
+    "sha256": "a864bea04e9a908d47872b83ceb69a908e3df07354736261806533200d309ac0"
+  },
+  "case_id": "SWESMITH_096",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_exceptions.py",
+      "repo_path": "moto/ec2/exceptions.py",
+      "sha256": "b7fe279297bf03e72882982ae2d5756d2671414e925ffacbb390877d2bc7b6f3"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_02",
+      "path": "context/02_fleets.py",
+      "repo_path": "moto/ec2/models/fleets.py",
+      "sha256": "480f5445da939bdc58330697ebc7b1e96fbbc158efac815877e0a89929580bae"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_03",
+      "path": "context/03_flow_logs.py",
+      "repo_path": "moto/ec2/models/flow_logs.py",
+      "sha256": "eddf168e0da0a0589ef89e63e16800d46a88499c262307be9a06dbc219a7c86b"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_04",
+      "path": "context/04_hosts.py",
+      "repo_path": "moto/ec2/models/hosts.py",
+      "sha256": "66ef7b8e27a4e125350772125d8105300e28361db86807cb0803cf20bd92fb3a"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_05",
+      "path": "context/05_spot_requests.py",
+      "repo_path": "moto/ec2/models/spot_requests.py",
+      "sha256": "c5daeb8f1a911005ac1c4836d4bc1f07a9d73e846d65ff71fd957580212fa942"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_06",
+      "path": "context/06_utils.py",
+      "repo_path": "moto/ec2/utils.py",
+      "sha256": "9d78a565e2f592b2abce5c2052475e672162c558f59e862b1173271149997c62"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "CODE_CONTEXT_02",
+    "CODE_CONTEXT_03",
+    "CODE_CONTEXT_04",
+    "CODE_CONTEXT_05",
+    "CODE_CONTEXT_06",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 42,
+    "passing_count": 60,
+    "path": "test_evidence.md",
+    "sha256": "aabd33f10b1690a2d76ebc620d6c80239ecf6e6c4f50ba40b585c271409e979f",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_diversified_spot_fleet"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_fleet_api"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_fleet_api_response"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_fleet_request_with_tags"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_fleet_using_launch_template_config__overrides"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_fleet_using_launch_template_config__overrides_single[overrides0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_fleet_using_launch_template_config__overrides_single[overrides1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_on_demand_fleet"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_create_spot_fleet_with_lowest_price"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_delete_fleet"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_describe_fleet_instances_api"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_launch_template_is_created_properly"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[lowestPrice-capacity-optimized-prioritized]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[lowestPrice-capacity-optimized]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[lowestPrice-diversified]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[lowestPrice-lowest-price]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[prioritized-capacity-optimized-prioritized]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[prioritized-capacity-optimized]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[prioritized-diversified]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/test_ec2/test_fleets.py",
+        "test_name": "tests/test_ec2/test_fleets.py::test_request_fleet_using_launch_template_config__name[prioritized-lowest-price]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "7db812272ee54c7a73484d97d640178dbad4099f8918bf03153b69114e1beac0"
+  },
+  "repository": {
+    "language": "python",
+    "name": "getmoto/moto"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "15f9b0e0357d4630846a02ce64b034de098b18247fa1da8d86b179c2fa8a2ce2"
+  }
+}

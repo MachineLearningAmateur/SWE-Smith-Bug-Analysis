@@ -1,0 +1,20 @@
+diff --git a/gunicorn/http/body.py b/gunicorn/http/body.py
+index c70ff6e..d7ee29e 100644
+--- a/gunicorn/http/body.py
++++ b/gunicorn/http/body.py
+@@ -93,6 +93,8 @@ class ChunkedReader:
+             chunk_size = chunk_size.rstrip(b" \t")
+         if any(n not in b"0123456789abcdefABCDEF" for n in chunk_size):
+             raise InvalidChunkSize(chunk_size)
++        if len(chunk_size) == 0:
++            raise InvalidChunkSize(chunk_size)
+         chunk_size = int(chunk_size, 16)
+ 
+         if chunk_size == 0:
+@@ -263,4 +265,4 @@ class Body:
+             else:
+                 line, data = data[:pos + 1], data[pos + 1:]
+                 ret.append(line)
+-        return ret
+\ No newline at end of file
++        return ret

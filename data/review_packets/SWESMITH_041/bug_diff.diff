@@ -1,0 +1,66 @@
+diff --git a/src/sqlfluff/core/linter/linted_file.py b/src/sqlfluff/core/linter/linted_file.py
+index de529ac..1b10832 100644
+--- a/src/sqlfluff/core/linter/linted_file.py
++++ b/src/sqlfluff/core/linter/linted_file.py
+@@ -342,11 +342,8 @@ class LintedFile(NamedTuple):
+         return slice_buff
+ 
+     @staticmethod
+-    def _build_up_fixed_source_string(
+-        source_file_slices: List[slice],
+-        source_patches: List[FixPatch],
+-        raw_source_string: str,
+-    ) -> str:
++    def _build_up_fixed_source_string(source_file_slices: List[slice],
++        source_patches: List[FixPatch], raw_source_string: str) ->str:
+         """Use patches and raw file to fix the source file.
+ 
+         This assumes that patches and slices have already
+@@ -355,32 +352,22 @@ class LintedFile(NamedTuple):
+         slice of exactly the right file in the list of file
+         slices.
+         """
+-        # Iterate through the patches, building up the new string.
+-        str_buff = ""
+-        for source_slice in source_file_slices:
+-            # Is it one in the patch buffer:
+-            for patch in source_patches:
+-                if patch.source_slice == source_slice:
+-                    # Use the patched version
+-                    linter_logger.debug(
+-                        "%-30s    %s    %r > %r",
+-                        f"Appending {patch.patch_category} Patch:",
+-                        patch.source_slice,
+-                        patch.source_str,
+-                        patch.fixed_raw,
+-                    )
+-                    str_buff += patch.fixed_raw
+-                    break
++        # Initialize an empty string to build up the fixed source
++        fixed_source_string = ""
++        # Create a lookup dictionary for patches by their source slice
++        patch_lookup = {patch.source_slice: patch for patch in source_patches}
++    
++        # Iterate through the slices
++        for file_slice in source_file_slices:
++            # Check if this slice corresponds to a patch
++            if file_slice in patch_lookup:
++                # If it does, use the fixed string from the patch
++                fixed_source_string += patch_lookup[file_slice].fixed_raw
+             else:
+-                # Use the raw string
+-                linter_logger.debug(
+-                    "Appending Raw:                    %s     %r",
+-                    source_slice,
+-                    raw_source_string[source_slice],
+-                )
+-                str_buff += raw_source_string[source_slice]
+-        return str_buff
+-
++                # Otherwise, use the original source string for this slice
++                fixed_source_string += raw_source_string[file_slice]
++    
++        return fixed_source_string
+     def persist_tree(
+         self, suffix: str = "", formatter: Optional[FormatterInterface] = None
+     ) -> bool:

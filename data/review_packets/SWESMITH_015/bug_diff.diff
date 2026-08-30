@@ -1,0 +1,65 @@
+diff --git a/src/apispec/core.py b/src/apispec/core.py
+index e9ccb40..4bf1585 100644
+--- a/src/apispec/core.py
++++ b/src/apispec/core.py
+@@ -423,37 +423,35 @@ class APISpec:
+         See https://github.com/OAI/OpenAPI-Specification/blob/master/versions/3.0.2.md#openapi-object
+     """
+ 
+-    def __init__(
+-        self,
+-        title: str,
+-        version: str,
+-        openapi_version: str,
+-        plugins: Sequence[BasePlugin] = (),
+-        **options: typing.Any,
+-    ) -> None:
++    def __init__(self, title: str, version: str, openapi_version: str, plugins:
++        Sequence[BasePlugin]=(), **options: typing.Any) ->None:
++        """Initialize an APISpec object with the given parameters.
++
++        :param str title: API title
++        :param str version: API version
++        :param str openapi_version: OpenAPI Specification version.
++            Should be in the form '2.x' or '3.x.x' to comply with the OpenAPI standard.
++        :param list|tuple plugins: Plugin instances.
++        :param options: Optional top-level keys
++        """
+         self.title = title
+         self.version = version
+-        self.options = options
+-        self.plugins = plugins
+         self.openapi_version = Version(openapi_version)
+-        if not (
+-            MIN_INCLUSIVE_OPENAPI_VERSION
+-            <= self.openapi_version
+-            < MAX_EXCLUSIVE_OPENAPI_VERSION
++        if (
++            self.openapi_version < MIN_INCLUSIVE_OPENAPI_VERSION
++            or self.openapi_version >= MAX_EXCLUSIVE_OPENAPI_VERSION
+         ):
+-            raise APISpecError(f"Not a valid OpenAPI version number: {openapi_version}")
+-
++            raise APISpecError(
++                f"Not a valid OpenAPI version number: {self.openapi_version}. "
++                f"Must be >= {MIN_INCLUSIVE_OPENAPI_VERSION}, < {MAX_EXCLUSIVE_OPENAPI_VERSION}"
++            )
++        self.options = options
++        self.plugins = plugins
+         # Metadata
+-        self._tags: list[dict] = []
+-        self._paths: dict = {}
+-
++        self._tags = []
++        self._paths = {}
+         # Components
+-        self.components = Components(self.plugins, self.openapi_version)
+-
+-        # Plugins
+-        for plugin in self.plugins:
+-            plugin.init_spec(self)
+-
++        self.components = Components(plugins, self.openapi_version)
+     def to_dict(self) -> dict[str, typing.Any]:
+         ret: dict[str, typing.Any] = {
+             "paths": self._paths,

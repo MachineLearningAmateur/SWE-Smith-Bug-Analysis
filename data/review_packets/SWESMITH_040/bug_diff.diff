@@ -1,0 +1,23 @@
+diff --git a/conan/tools/system/package_manager.py b/conan/tools/system/package_manager.py
+index aebd9f8..d9d5c3d 100644
+--- a/conan/tools/system/package_manager.py
++++ b/conan/tools/system/package_manager.py
+@@ -43,9 +43,9 @@ class _SystemPackageManagerTool(object):
+                            "apk": ["alpine"],
+                            "yum": ["pidora", "scientific", "xenserver", "amazon", "oracle", "amzn",
+                                    "almalinux", "rocky"],
+-                           "dnf": ["fedora", "rhel", "centos", "mageia", "nobara"],
++                           "dnf": ["fedora", "rhel", "centos", "mageia"],
+                            "brew": ["Darwin"],
+-                           "pacman": ["arch", "manjaro", "msys2", "endeavouros"],
++                           "pacman": ["arch", "manjaro", "msys2"],
+                            "choco": ["Windows"],
+                            "zypper": ["opensuse", "sles"],
+                            "pkg": ["freebsd"],
+@@ -366,4 +366,4 @@ class Zypper(_SystemPackageManagerTool):
+     tool_name = "zypper"
+     install_command = "{sudo}{tool} --non-interactive in {packages}"
+     update_command = "{sudo}{tool} --non-interactive ref"
+-    check_command = "rpm -q {package}"
++    check_command = "rpm -q {package}"
+\ No newline at end of file

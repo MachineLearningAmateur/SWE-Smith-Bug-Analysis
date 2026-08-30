@@ -1,0 +1,59 @@
+diff --git a/deepdiff/path.py b/deepdiff/path.py
+index 7e7e859..ee63b5b 100644
+--- a/deepdiff/path.py
++++ b/deepdiff/path.py
+@@ -57,6 +57,9 @@ def _path_to_elements(path, root_element=DEFAULT_FIRST_ELEMENT):
+     elem = ''
+     inside = False
+     prev_char = None
++    path = path[4:]  # removing "root from the beginning"
++    brackets = []
++    inside_quotes = False
+     quote_used = ''
+     for char in path:
+         if prev_char == '𝆺𝅥𝅯':
+@@ -65,10 +68,12 @@ def _path_to_elements(path, root_element=DEFAULT_FIRST_ELEMENT):
+             elem += char
+             # If we are inside and the quote is not what we expected, the quote is not closing
+             if not(inside_quotes and quote_used != char):
++                inside_quotes = not inside_quotes
+                 if inside_quotes:
+                     quote_used = char
+                 else:
+                     _add_to_elements(elements, elem, inside)
++                    elem = ''
+                     quote_used = ''
+         elif inside_quotes:
+             elem += char
+@@ -79,13 +84,14 @@ def _path_to_elements(path, root_element=DEFAULT_FIRST_ELEMENT):
+                 elem = ''
+             # we are already inside. The bracket is a part of the word.
+             elif inside == '[':
+-                pass
++                elem += char
+             else:
+                 inside = '['
+                 brackets.append('[')
++                elem = ''
+         elif char == '.':
+             if inside == '[':
+-                pass
++                elem += char
+             elif inside == '.':
+                 _add_to_elements(elements, elem, inside)
+                 elem = ''
+@@ -102,11 +108,13 @@ def _path_to_elements(path, root_element=DEFAULT_FIRST_ELEMENT):
+                 elem = ''
+                 inside = False
+         else:
+-            pass
++            elem += char
++        prev_char = char
+     if elem:
+         _add_to_elements(elements, elem, inside)
+     return tuple(elements)
+ 
++
+ def _get_nested_obj(obj, elements, next_element=None):
+     for (elem, action) in elements:
+         if action == GET:

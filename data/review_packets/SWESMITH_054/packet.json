@@ -1,0 +1,77 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 26,
+    "path": "bug_diff.diff",
+    "sha256": "a7c25f650e4661bb47e4b606cd44699f6e0181859d786a61dfd5f989d6afc363"
+  },
+  "case_id": "SWESMITH_054",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_authors.py",
+      "repo_path": "nikola/plugins/task/authors.py",
+      "sha256": "e05dbfbb33a7064354b359cf258154d22d4cec354b6c91ac27117ee53ed22b98"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 4,
+    "passing_count": 338,
+    "path": "test_evidence.md",
+    "sha256": "d2c163acc87dbfa95a19e0006c361a8d4c2ee6d40506bbdf5d26c16fdd3b8385",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_path_handlers.py",
+        "test_name": "tests/test_path_handlers.py::test_render_taxonomies_permalink[authors-base:/path/with/leading/slash]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_path_handlers.py",
+        "test_name": "tests/test_path_handlers.py::test_render_taxonomies_permalink[authors-base:]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_path_handlers.py",
+        "test_name": "tests/test_path_handlers.py::test_render_taxonomies_permalink[authors-base:blog]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_path_handlers.py",
+        "test_name": "tests/test_path_handlers.py::test_render_taxonomies_permalink[authors-base:path/with/trailing/slash/]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "97ab6639bdff519a31122a6294997c0401961adf73b6d429fa5a2cb33fa1b909"
+  },
+  "repository": {
+    "language": "python",
+    "name": "getnikola/nikola"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "de14ca2727d5e35296832fabacd50ea57a5c2877422d7c9ab137c82e92a28eea"
+  }
+}

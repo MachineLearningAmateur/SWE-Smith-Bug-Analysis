@@ -1,0 +1,71 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 29,
+    "lines_deleted": 25,
+    "path": "bug_diff.diff",
+    "sha256": "51fa34a786e9f4e80df3cfd3df986fce505c0fc72feb2e632dfd252e7e3ea6a2"
+  },
+  "case_id": "SWESMITH_008",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_http1connection.py",
+      "repo_path": "tornado/http1connection.py",
+      "sha256": "bd84b10f235cbf3badf6c4b660beef84805e94cfeec22f3be598f56967b4da27"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 3,
+    "passing_count": 1154,
+    "path": "test_evidence.md",
+    "sha256": "46809a62d61cfa7e92551d29fad1ce500b4af64fd25f6e91f81735ae784b9ea7",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": null,
+        "test_name": "test_client_close (tornado.test.web_test.ClientCloseTest)"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": null,
+        "test_name": "test_early_return (tornado.test.web_test.StreamingRequestBodyTest)"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": null,
+        "test_name": "test_early_return_with_data (tornado.test.web_test.StreamingRequestBodyTest)"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "12bdd07701805d8ce8fb348e29941ba84dfe85673eb24d51a72b32714af0f4b0"
+  },
+  "repository": {
+    "language": "python",
+    "name": "tornadoweb/tornado"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "99f4154de4da084544660f1ee2df34fc75cd8444946a44dfe7c32b22a8dd7a5c"
+  }
+}

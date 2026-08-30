@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 3,
+    "lines_deleted": 11,
+    "path": "bug_diff.diff",
+    "sha256": "d59c602365a7cf1b1e3a841f6de10b06848cd544c788fd52ae051e27a52e7aea"
+  },
+  "case_id": "SWESMITH_077",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_path.py",
+      "repo_path": "deepdiff/path.py",
+      "sha256": "6cd405ab49dc712558796146147ec816b78735fc3197cc0219d42440bf644410"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 122,
+    "passing_count": 797,
+    "path": "test_evidence.md",
+    "sha256": "7e70e3d62f7622711fd9bb50ca881ec024c0afa7d372c5e0b1a332e3f15b73d4",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_command_extract"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_deeppatch_command[t1.csv-t2.csv-args4-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_deeppatch_command[t1.json-t2.json-args0-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_deeppatch_command[t1.json-t2_json.csv-args2-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_deeppatch_command[t1.pickle-t2.pickle-args6-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_deeppatch_command[t1.toml-t2.toml-args5-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_deeppatch_command[t1.yaml-t2.yaml-args7-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_command.py",
+        "test_name": "tests/test_command.py::TestCommands::test_deeppatch_command[t2_json.csv-t1.json-args3-0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_delta_constr_flat_dict_list_param_preserve"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_delta_dict_items_added_retain_order"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_delta_dump_and_read1"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_delta_dump_and_read2"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_delta_dump_and_read3"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_delta_mutate"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_from_null_delta_json"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_list_difference3_delta"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_list_difference_add_delta"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_list_difference_add_delta_when_index_not_valid"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_list_difference_delta1"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/test_delta.py",
+        "test_name": "tests/test_delta.py::TestBasicsOfDelta::test_list_difference_delta_does_not_raise_error_if_prev_value_changed"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "366ec81a9f3b93a228ed0c243a9eceb1fe20fa4462c14c32f6ddbdc294b8a287"
+  },
+  "repository": {
+    "language": "python",
+    "name": "seperman/deepdiff"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

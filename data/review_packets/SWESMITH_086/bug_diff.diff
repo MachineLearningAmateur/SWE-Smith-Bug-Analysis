@@ -1,0 +1,42 @@
+diff --git a/safety/scan/ecosystems/python/dependencies.py b/safety/scan/ecosystems/python/dependencies.py
+index d4850dc..32e90d8 100644
+--- a/safety/scan/ecosystems/python/dependencies.py
++++ b/safety/scan/ecosystems/python/dependencies.py
+@@ -271,7 +271,7 @@ def read_virtual_environment_dependencies(f: InspectableFile) -> Generator[Pytho
+                 more_info_url=None)
+ 
+ 
+-def get_dependencies(f: InspectableFile) -> List[PythonDependency]:
++def get_dependencies(f: InspectableFile) ->List[PythonDependency]:
+     """
+     Gets the dependencies for the given inspectable file.
+ 
+@@ -281,14 +281,16 @@ def get_dependencies(f: InspectableFile) -> List[PythonDependency]:
+     Returns:
+         List[PythonDependency]: A list of PythonDependency objects.
+     """
+-    if not f.file_type:
+-        return []
+-
+-    if f.file_type in [FileType.REQUIREMENTS_TXT, FileType.POETRY_LOCK,
+-                       FileType.PIPENV_LOCK, FileType.PYPROJECT_TOML]:
+-        return list(read_dependencies(f.file, resolve=True))
+-
+-    if f.file_type == FileType.VIRTUAL_ENVIRONMENT:
+-        return list(read_virtual_environment_dependencies(f))
+-
+-    return []
++    dependencies = []
++    
++    # Check if the file is a virtual environment
++    if f.file_type == FileType.VIRTUAL_ENV:
++        dependencies = list(read_virtual_environment_dependencies(f))
++    # Check if the file is a requirements file
++    elif f.file_type == FileType.REQUIREMENTS:
++        dependencies = list(read_requirements(f.file))
++    # Check if the file is a setup.py or other dependency file
++    elif f.file_type == FileType.PYTHON and is_supported_by_parser(f.file.name):
++        dependencies = list(read_dependencies(f.file))
++    
++    return dependencies
+\ No newline at end of file

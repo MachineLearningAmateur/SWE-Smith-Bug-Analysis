@@ -1,0 +1,23 @@
+diff --git a/readability/debug.py b/readability/debug.py
+index 3bc8197..52a1c41 100644
+--- a/readability/debug.py
++++ b/readability/debug.py
+@@ -16,17 +16,14 @@ def describe_node(node):
+     if node.get("id", ""):
+         name += "#" + node.get("id")
+     if node.get("class", "").strip():
+-        name += "." + ".".join(node.get("class").split())
++        pass
+     if name[:4] in ["div#", "div."]:
+         name = name[3:]
+     if name in ["tr", "td", "div", "p"]:
+-        uid = uids.get(node)
+         if uid is None:
+             uid = uids[node] = len(uids) + 1
+-        name += "{%02d}" % uid
+     return name
+ 
+-
+ def describe(node, depth=1):
+     global uids, uids_document
+     doc = node.getroottree().getroot()

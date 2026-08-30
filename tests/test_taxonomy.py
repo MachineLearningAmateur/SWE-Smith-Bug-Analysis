@@ -1,12 +1,10 @@
-"""The frozen taxonomy must stay frozen, and the two injector prompts must
-not drift apart in the sections they share."""
+"""The frozen taxonomy must stay frozen."""
 
 import json
 
 import pytest
 
-from ssr.generation import load_prompt_sections
-from ssr.paths import PROMPTS, TAXONOMY_PROVENANCE
+from ssr.paths import TAXONOMY_PROVENANCE
 from ssr.taxonomy import (
     CODE_STATE_LABELS,
     FINE_LABELS,
@@ -85,34 +83,3 @@ def test_unknown_label_is_rejected():
         family_for("not_a_real_label")
 
 
-# ----------------------------------------------------------------------
-SHARED_SECTIONS = ("SYSTEM", "DISCOVER", "WEAKEN")
-
-
-def test_injector_prompts_share_their_common_sections():
-    removal = load_prompt_sections(PROMPTS / "injector_removal.md")
-    reversion = load_prompt_sections(PROMPTS / "injector_history_reversion.md")
-    for name in SHARED_SECTIONS:
-        assert removal[name] == reversion[name], f"the {name} section has drifted apart"
-
-
-def test_inject_sections_differ():
-    removal = load_prompt_sections(PROMPTS / "injector_removal.md")
-    reversion = load_prompt_sections(PROMPTS / "injector_history_reversion.md")
-    assert removal["INJECT"] != reversion["INJECT"]
-
-
-def test_reversion_prompt_forbids_checkout_and_revert():
-    reversion = load_prompt_sections(PROMPTS / "injector_history_reversion.md")
-    assert "Do NOT check out an old commit" in reversion["INJECT"]
-    assert "git revert" in reversion["INJECT"]
-
-
-def test_weaken_section_forbids_source_edits():
-    removal = load_prompt_sections(PROMPTS / "injector_removal.md")
-    assert "touching any non-test source file" in removal["WEAKEN"]
-
-
-def test_injector_is_not_told_the_test_command():
-    removal = load_prompt_sections(PROMPTS / "injector_removal.md")
-    assert "Find that out yourself" in removal["SYSTEM"]

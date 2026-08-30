@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 12,
+    "lines_deleted": 9,
+    "path": "bug_diff.diff",
+    "sha256": "267542013456f2137c335ef25323aef8c1ccab6a551d6a055e8522caafe71fa9"
+  },
+  "case_id": "SWESMITH_005",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_deephash.py",
+      "repo_path": "deepdiff/deephash.py",
+      "sha256": "1ad0092ebd93ddb5ef013a3b9d1daad2e9538304bf91224b85e15291ad5aaea5"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 917,
+    "path": "test_evidence.md",
+    "sha256": "8a88d7565936dc236818be88ccb4fb317b2c833dcceb7ee76abbffdf4372e1e7",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_hash.py",
+        "test_name": "tests/test_hash.py::TestOtherHashFuncs::test_combine_hashes_lists[items0-pre-pre583852d84b3482edf53408b64724a37289d7af458c44bb989a8abbffe24d2d2b]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_hash.py",
+        "test_name": "tests/test_hash.py::TestOtherHashFuncs::test_combine_hashes_lists[items1-pre-pre583852d84b3482edf53408b64724a37289d7af458c44bb989a8abbffe24d2d2b]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "ab29f1b968c0cf0476bfee81d7d4868cdf24269bf6683fbd63fb5da33a151d0c"
+  },
+  "repository": {
+    "language": "python",
+    "name": "seperman/deepdiff"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "26a72fd36ac195f4330045ce42e68e75919a8afbd3f32bddc9e2e343d7c70dbe"
+  }
+}

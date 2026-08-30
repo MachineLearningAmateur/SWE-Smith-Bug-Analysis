@@ -1,0 +1,21 @@
+diff --git a/nikola/shortcodes.py b/nikola/shortcodes.py
+index 022f122..aa3fd16 100644
+--- a/nikola/shortcodes.py
++++ b/nikola/shortcodes.py
+@@ -237,7 +237,7 @@ def extract_shortcodes(data):
+                 for j in range(i, len(data)):
+                     if data[j][0] == 'SHORTCODE_END' and data[j][3] == name:
+                         # Extract this chunk
+-                        shortcodes[sc_id] = ''.join(t[1] for t in data[i:j - 1])
++                        shortcodes[sc_id] = ''.join(t[1] for t in data[i:j + 1])
+                         return ''.join(text), data[j + 1:]
+                 # Doesn't close
+                 shortcodes[sc_id] = token[1]
+@@ -257,6 +257,7 @@ def extract_shortcodes(data):
+             break
+     return ''.join(text), shortcodes
+ 
++
+ def _split_shortcodes(data):
+     """Given input data, splits it into a sequence of texts, shortcode starts and shortcode ends.
+ 

@@ -1,0 +1,20 @@
+diff --git a/pandas/io/excel/_openpyxl.py b/pandas/io/excel/_openpyxl.py
+index 366650c..3055c68 100644
+--- a/pandas/io/excel/_openpyxl.py
++++ b/pandas/io/excel/_openpyxl.py
+@@ -568,12 +568,11 @@ class OpenpyxlReader(BaseExcelReader["Workbook"]):
+     ) -> Workbook:
+         from openpyxl import load_workbook
+ 
++        default_kwargs = {"read_only": True, "data_only": True, "keep_links": False}
++
+         return load_workbook(
+             filepath_or_buffer,
+-            read_only=True,
+-            data_only=True,
+-            keep_links=False,
+-            **engine_kwargs,
++            **(default_kwargs | engine_kwargs),
+         )
+ 
+     @property

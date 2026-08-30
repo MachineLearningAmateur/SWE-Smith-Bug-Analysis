@@ -1,0 +1,77 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 6,
+    "lines_deleted": 7,
+    "path": "bug_diff.diff",
+    "sha256": "6f859f79aa879af6cdc4d139bbb294d11c794eb26b5cd4b52c531597c65ed342"
+  },
+  "case_id": "SWESMITH_074",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_ptyprocess.py",
+      "repo_path": "ptyprocess/ptyprocess.py",
+      "sha256": "62d308d0063863590d51c448dd50b93d1357fa3e5dc7149fbedc778b61c51055"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 4,
+    "passing_count": 8,
+    "path": "test_evidence.md",
+    "sha256": "8e79c7be6a08ca15988b748b52a97b83c3d9834de3ef6ce8e22f728487239cd5",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_invalid_binary.py",
+        "test_name": "tests/test_invalid_binary.py::InvalidBinaryChars::test_invalid_binary"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_preexec_fn.py",
+        "test_name": "tests/test_preexec_fn.py::PreexecFns::test_preexec"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_preexec_fn.py",
+        "test_name": "tests/test_preexec_fn.py::PreexecFns::test_preexec_error"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_spawn.py",
+        "test_name": "tests/test_spawn.py::PtyTestCase::test_pass_fds"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "c66f1b9d62ecc8a0954d84d8eb2290b6d68e2882e9a3cb7d5e27d2cc2377a7b0"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pexpect/ptyprocess"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "a96edb83474773bfec0404041acfdf4c33d7883ea3f61101e458cb60bade68a4"
+  }
+}

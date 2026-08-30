@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 14,
+    "lines_deleted": 5,
+    "path": "bug_diff.diff",
+    "sha256": "607545c3af0e0eaca83904f25e656d2ad066908e9f086c2222720da02a876ce1"
+  },
+  "case_id": "SWESMITH_026",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01___init__.py",
+      "repo_path": "inflect/__init__.py",
+      "sha256": "b44c69f83e3a7f17ec260386ba123d6af0cd3a1717c84ff1a808f4b4e5300c60"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 149,
+    "path": "test_evidence.md",
+    "sha256": "98985e220374105d8799192c538d81d6f20d115380dd4014f51119d07cd3cd0f",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_pwd.py",
+        "test_name": "tests/test_pwd.py::Test::test_millfn"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "def92fcfe57d95211065ecf35c159f776551f997889c5025d7db446c7373377e"
+  },
+  "repository": {
+    "language": "python",
+    "name": "jaraco/inflect"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "95a2656d815434f934ffe11d15a832496d1f322de3f5a9e396fc69723fda2c9d"
+  }
+}

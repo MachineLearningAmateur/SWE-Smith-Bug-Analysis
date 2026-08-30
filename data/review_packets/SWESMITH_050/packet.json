@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 4,
+    "lines_deleted": 19,
+    "path": "bug_diff.diff",
+    "sha256": "821ed5374635f38434a9a6fbaa831d1d03005fc93640108e8895870f2f781286"
+  },
+  "case_id": "SWESMITH_050",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_export.py",
+      "repo_path": "conan/cli/commands/export.py",
+      "sha256": "e6a94916a9f502f12d9c1c31849563475f944d65a5ea4c3cd7fc6bee2803c7b8"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 24,
+    "path": "test_evidence.md",
+    "sha256": "9fecedb67c95efbb2733fa756969b6d8c7d3a45f2c7d20b788bbf2771460ecbc",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/integration/command/list/test_combined_pkglist_flows.py",
+        "test_name": "test/integration/command/list/test_combined_pkglist_flows.py::TestExportUpload::test_export_upload"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "9d55e3f5e456cf7064aea2032aaf0455adc256742987d08b226d505122987e18"
+  },
+  "repository": {
+    "language": "python",
+    "name": "conan-io/conan"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "b7cd8835959dc2faffff914abc55e581a9b02e49faf8a33e42434435d51d5203"
+  }
+}

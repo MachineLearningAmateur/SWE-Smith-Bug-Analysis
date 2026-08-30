@@ -1,0 +1,71 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 2,
+    "lines_deleted": 3,
+    "path": "bug_diff.diff",
+    "sha256": "bbdc8f9f045315a24299e691e92b093c222ff0bfb52ec82d6f6db8dbbb62fd65"
+  },
+  "case_id": "SWESMITH_012",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_cache.py",
+      "repo_path": "parso/cache.py",
+      "sha256": "cf2ba020e2beae1e6f5c8ad5b6fe3987208719a1269edb777f4e01ac1696ff16"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 3,
+    "passing_count": 797,
+    "path": "test_evidence.md",
+    "sha256": "c38e27a598b48779c100ada5ff07714847135e125d0207c74ecaa40a8b01f71a",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/test_cache.py",
+        "test_name": "test/test_cache.py::test_cache_last_used_update[True-False]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "test/test_cache.py",
+        "test_name": "test/test_cache.py::test_cache_last_used_update[True-True]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "test/test_cache.py",
+        "test_name": "test/test_cache.py::test_modulepickling_change_cache_dir"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "5830996596954e3b6154c3478ba162c0c6dddeba925d9c02666505590a7dcae8"
+  },
+  "repository": {
+    "language": "python",
+    "name": "davidhalter/parso"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

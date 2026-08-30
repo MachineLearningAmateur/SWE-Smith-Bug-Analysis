@@ -1,0 +1,36 @@
+diff --git a/sqlglot/optimizer/scope.py b/sqlglot/optimizer/scope.py
+index 8ed7603..c93f8d2 100644
+--- a/sqlglot/optimizer/scope.py
++++ b/sqlglot/optimizer/scope.py
+@@ -506,23 +506,14 @@ class Scope:
+         Returns:
+             dict[int, int]: Mapping of Scope instance ID to reference count
+         """
+-        counts = defaultdict(int)
+-    
+-        # First, collect all scopes in the tree
+-        all_scopes = list(self.traverse())
+-    
+-        # For each scope, check if it's referenced in any other scope's sources
+-        for scope in all_scopes:
+-            for source_name, source in scope.sources.items():
+-                if isinstance(source, Scope):
+-                    counts[id(source)] += 1
+-    
+-        # Add any scopes that aren't referenced
+-        for scope in all_scopes:
+-            if id(scope) not in counts and scope is not self:
+-                counts[id(scope)] = 0
+-    
+-        return dict(counts)
++        scope_ref_count = defaultdict(lambda: 0)
++
++        for scope in self.traverse():
++            for _, source in scope.selected_sources.values():
++                scope_ref_count[id(source)] += 1
++
++        return scope_ref_count
++
+ 
+ def traverse_scope(expression: exp.Expression) -> t.List[Scope]:
+     """

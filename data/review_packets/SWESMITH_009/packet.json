@@ -1,0 +1,167 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 29,
+    "lines_deleted": 33,
+    "path": "bug_diff.diff",
+    "sha256": "7dd4824a1db838a063431f679dea3b90ebf8c3bc2e35570552eca44c5c4a12a8"
+  },
+  "case_id": "SWESMITH_009",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01__base_nodes.py",
+      "repo_path": "astroid/nodes/_base_nodes.py",
+      "sha256": "cf581bf6e2d546fa600414453fe83a2e345178fdf01e28a3ffb30e2a6bf1e28e"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 19,
+    "passing_count": 1574,
+    "path": "test_evidence.md",
+    "sha256": "05d57b95a9ae3f9e341e92b2d2d68cf661e97e74fadd935717b58b3cd0ecfaf0",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_different_types_aug_not_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_different_types_aug_not_implemented_rop_fallback"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_different_types_augop_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_different_types_no_method_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_op_same_type_aug_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_op_same_type_aug_not_implemented_normal_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_op_subtype_aug_op_is_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_op_subtype_both_not_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_aug_op_subtype_normal_op_is_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_augassign"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_augop_supertypes_augop_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_augop_supertypes_none_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_augop_supertypes_normal_binop_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_augop_supertypes_not_implemented_returned_for_all"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_augop_supertypes_reflected_binop_implemented"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::InferenceTest::test_binary_op_type_errors"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::test_infer_assign_attr"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/test_inference.py",
+        "test_name": "tests/test_inference.py::test_limit_inference_result_amount"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/test_scoped_nodes.py",
+        "test_name": "tests/test_scoped_nodes.py::ClassNodeTest::test_slots_added_dynamically_still_inferred"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "1809a718e18e284643cca2d8aba15d97ce068d3cfeaff2609c6e86990f5dee64"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pylint-dev/astroid"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "0801af2751b4cc3eb9ece1f256645fbf042fdbb2115ff7b0dc05fac695063254"
+  }
+}

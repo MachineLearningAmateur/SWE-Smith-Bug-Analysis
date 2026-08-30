@@ -110,7 +110,7 @@ def main() -> int:
     # Imported here: they need the packages checked above.
     from ssr.corpus import read_status, status_banner  # noqa: E402
     from ssr.paths import REVIEWERS, REVIEW_PACKETS, REVIEW_SNAPSHOT_MANIFEST  # noqa: E402
-    from ssr.review_workflow import ReviewerPaths, expected_bug_ids  # noqa: E402
+    from ssr.review_workflow import ReviewerPaths, expected_case_ids  # noqa: E402
     from ssr.taxonomy import verify_provenance  # noqa: E402
     from ssr.util import SsrError, read_json, sha256_file  # noqa: E402
 
@@ -169,16 +169,16 @@ def main() -> int:
         altered: list[str] = []
         checked = 0
         for entry in packets:
-            directory = REVIEW_PACKETS / entry["packet_id"]
+            directory = REVIEW_PACKETS / entry["case_id"]
             if not directory.is_dir():
-                missing.append(entry["packet_id"])
+                missing.append(entry["case_id"])
                 continue
             if args.skip_packet_hashes:
                 continue
             for relative, expected in (entry.get("files") or {}).items():
                 path = directory / relative
                 if not path.is_file() or sha256_file(path) != expected:
-                    altered.append(f"{entry['packet_id']}/{relative}")
+                    altered.append(f"{entry['case_id']}/{relative}")
                     break
                 checked += 1
 
@@ -206,11 +206,11 @@ def main() -> int:
     for reviewer in reviewers:
         paths = ReviewerPaths(reviewer)
         try:
-            expected = expected_bug_ids()
+            expected = expected_case_ids()
         except SsrError:
             break
-        done = sorted(path.stem for path in paths.cases.glob("SSR_*.json")) if paths.cases.is_dir() else []
-        remaining = [bug_id for bug_id in expected if bug_id not in set(done)]
+        done = sorted(path.stem for path in paths.cases.glob("SWESMITH_*.json")) if paths.cases.is_dir() else []
+        remaining = [case_id for case_id in expected if case_id not in set(done)]
         if paths.complete.is_file():
             report.add(f"reviewer {reviewer}", OK, f"COMPLETE, {len(done)} case(s) recorded")
         elif done:

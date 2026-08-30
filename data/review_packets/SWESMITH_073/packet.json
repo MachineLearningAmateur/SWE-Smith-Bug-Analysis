@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 24,
+    "lines_deleted": 14,
+    "path": "bug_diff.diff",
+    "sha256": "27677b1adf66b2f686269ba4416298dcc650bb557d903dce175d1e24c0f92325"
+  },
+  "case_id": "SWESMITH_073",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_worksheet.py",
+      "repo_path": "gspread/worksheet.py",
+      "sha256": "6830cca3f2f7507f6a261bf6c995b65785999094f53686386067dc3928f1b233"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 148,
+    "path": "test_evidence.md",
+    "sha256": "3adc1408055332cd13e5591eaf974e038c46c5fc9043e2324b43293bd167fe5b",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/worksheet_test.py",
+        "test_name": "tests/worksheet_test.py::WorksheetTest::test_batch_update"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "57ac1990419b73122646b3e39c6080cac2e4e58f2c8b8bcf30c11aba4ce5d0e7"
+  },
+  "repository": {
+    "language": "python",
+    "name": "burnash/gspread"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "31b5b35d0b8717e7a7401d30618b23c0e1bf746e3604aa5ea0788b04f6de2205"
+  }
+}

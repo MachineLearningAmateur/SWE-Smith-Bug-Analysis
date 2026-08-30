@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 7,
+    "path": "bug_diff.diff",
+    "sha256": "a870b0b635bf1618479db76c351c2d1963944280973d100750dc8a46b7f2385d"
+  },
+  "case_id": "SWESMITH_048",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_generator.py",
+      "repo_path": "faker/generator.py",
+      "sha256": "a2410a980f81abb40f424168861b72f08919f10cc54d878edb6d8cce98cd6836"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 2101,
+    "path": "test_evidence.md",
+    "sha256": "de982c69a4949a06a701890c3f4deb1f63ed5556e2f15681ed0dac24175039c9",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/sphinx/test_docstring.py",
+        "test_name": "tests/sphinx/test_docstring.py::TestProviderMethodDocstring::test_stringify_results"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_proxy.py",
+        "test_name": "tests/test_proxy.py::TestFakerProxyClass::test_seed_locale"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "e352d0853180bc1665e35d8c899097f40bcaab356596a683f95ddcf914765943"
+  },
+  "repository": {
+    "language": "python",
+    "name": "joke2k/faker"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "86ad1d8bab7d21d1c672a45f93c973417f2e1fc5ca110bd0aeb617524d1d2ef0"
+  }
+}

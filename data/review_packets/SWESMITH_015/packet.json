@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 23,
+    "lines_deleted": 25,
+    "path": "bug_diff.diff",
+    "sha256": "099952fd19f0722c9b56c8e91c843026f81ff425fe69d79c684bb9cc815920e5"
+  },
+  "case_id": "SWESMITH_015",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_core.py",
+      "repo_path": "src/apispec/core.py",
+      "sha256": "331f81bb41a991e80f1a0f0efef58dc72180f6b6872ec0a593e49f903b943825"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 382,
+    "passing_count": 177,
+    "path": "test_evidence.md",
+    "sha256": "11a23be85de51b43ac0b7c01f80796d8a5f0b91c9685e65bf2e0ba091254fca4",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_core.py",
+        "test_name": "tests/test_core.py::TestComponents::test_components_can_be_accessed_by_plugin_in_init_spec"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestCircularReference::test_circular_referencing_schemas[2.0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestCircularReference::test_circular_referencing_schemas[3.0.0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentHeaderHelper::test_can_use_schema_in_header[PetSchema-3.0.0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentHeaderHelper::test_can_use_schema_in_header[schema1-3.0.0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentParameterHelper::test_can_use_schema_in_parameter[2.0-PetSchema]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentParameterHelper::test_can_use_schema_in_parameter[2.0-schema1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentParameterHelper::test_can_use_schema_in_parameter[3.0.0-PetSchema]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentParameterHelper::test_can_use_schema_in_parameter[3.0.0-schema1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentParameterHelper::test_can_use_schema_in_parameter_with_content[PetSchema-3.0.0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentParameterHelper::test_can_use_schema_in_parameter_with_content[schema1-3.0.0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response[2.0-PetSchema]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response[2.0-schema1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response[3.0.0-PetSchema]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response[3.0.0-schema1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response_header[2.0-PetSchema]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response_header[2.0-schema1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response_header[3.0.0-PetSchema]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_can_use_schema_in_response_header[3.0.0-schema1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/test_ext_marshmallow.py",
+        "test_name": "tests/test_ext_marshmallow.py::TestComponentResponseHelper::test_content_without_schema[3.0.0]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "ec3bb5c63ee7494004002f2180285d6db45c41e2130f0638b56788ef4a04135c"
+  },
+  "repository": {
+    "language": "python",
+    "name": "marshmallow-code/apispec"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "adecbdbcd3ae5a276508b386abe7d552823d647b6417b1552dd11c1fbc89f152"
+  }
+}

@@ -1,0 +1,20 @@
+diff --git a/parso/cache.py b/parso/cache.py
+index 5592a9f..b11d511 100644
+--- a/parso/cache.py
++++ b/parso/cache.py
+@@ -102,13 +102,12 @@ parser_cache: Dict[str, Any] = {}
+ 
+ class _NodeCacheItem:
+     def __init__(self, node, lines, change_time=None):
++        self.change_time = change_time
+         self.node = node
+-        self.lines = lines
+         if change_time is None:
+             change_time = time.time()
+-        self.change_time = change_time
+         self.last_used = change_time
+-
++        self.lines = lines
+ 
+ def load_module(hashed_grammar, file_io, cache_path=None):
+     """

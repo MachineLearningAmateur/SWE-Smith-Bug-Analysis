@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 2,
+    "path": "bug_diff.diff",
+    "sha256": "5e4045aa910cce19c50bfbaf42bcd1ba4b89516ed2e8d59d6346653434deda37"
+  },
+  "case_id": "SWESMITH_083",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_files.py",
+      "repo_path": "conan/tools/files/files.py",
+      "sha256": "6c96e2d009f4e9bd10e5935e3c38c5ad18ded3bfc2335d9b0412723f7bafa90d"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 13,
+    "path": "test_evidence.md",
+    "sha256": "3f97450e1d5750ac3bc0934ea850727047824c28b655657fea65b811ee727873",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/integration/command/download/download_test.py",
+        "test_name": "test/integration/command/download/download_test.py::test_download_verify_ssl_conf"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "835377dbd16ae4008d1abf670dcfb41c3094b6e402347da53b0e53ca12635310"
+  },
+  "repository": {
+    "language": "python",
+    "name": "conan-io/conan"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "7f197d45cb783556034d6596de794969e8408907907ced410b6fb1c34edc8c2e"
+  }
+}

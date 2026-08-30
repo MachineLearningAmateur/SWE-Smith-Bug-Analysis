@@ -1,0 +1,120 @@
+diff --git a/dask/backends.py b/dask/backends.py
+index 4164bfc..5d7af52 100644
+--- a/dask/backends.py
++++ b/dask/backends.py
+@@ -2,19 +2,12 @@ from __future__ import annotations
+ 
+ from collections.abc import Callable
+ from functools import lru_cache, wraps
+-from typing import TYPE_CHECKING, Generic, TypeVar
++from typing import Any, Callable, TypeVar, cast
+ 
+ from dask import config
+-from dask._compatibility import importlib_metadata
++from dask.compatibility import entry_points
+ from dask.utils import funcname
+ 
+-if TYPE_CHECKING:
+-    from typing_extensions import ParamSpec
+-
+-    BackendFuncParams = ParamSpec("BackendFuncParams")
+-    BackendFuncReturn = TypeVar("BackendFuncReturn")
+-
+-
+ class DaskBackendEntrypoint:
+     """Base Collection-Backend Entrypoint Class
+ 
+@@ -36,43 +29,41 @@ class DaskBackendEntrypoint:
+         """Create a new collection with this backend"""
+         raise NotImplementedError
+ 
+-
+ @lru_cache(maxsize=1)
+ def detect_entrypoints(entry_point_name):
+     return {
+-        ep.name: ep for ep in importlib_metadata.entry_points(group=entry_point_name)
++        ep.name: ep for ep in entry_points(group=entry_point_name)
+     }
+ 
+-
+ BackendEntrypointType = TypeVar(
+     "BackendEntrypointType",
+     bound="DaskBackendEntrypoint",
+ )
++BackendFuncType = TypeVar("BackendFuncType", bound=Callable[..., Any])
+ 
+-
+-class CreationDispatch(Generic[BackendEntrypointType]):
++class CreationDispatch:
+     """Simple backend dispatch for collection-creation functions"""
+ 
+-    _lookup: dict[str, BackendEntrypointType]
++    _lookup: dict
+     _module_name: str
+     _config_field: str
+     _default: str
+-    _entrypoint_class: type[BackendEntrypointType]
++    _entrypoint_class: type
+     _entrypoint_root: str
+ 
+     def __init__(
+         self,
+         module_name: str,
+         default: str,
+-        entrypoint_class: type[BackendEntrypointType],
+         name: str | None = None,
++        entrypoint_class: type | None = None,
+         entrypoint_root: str = "dask",
+     ):
+         self._lookup = {}
+         self._module_name = module_name
+         self._config_field = f"{module_name}.backend"
+         self._default = default
+-        self._entrypoint_class = entrypoint_class
++        self._entrypoint_class = entrypoint_class or DaskBackendEntrypoint
+         self._entrypoint_root = entrypoint_root
+         if name:
+             self.__name__ = name
+@@ -88,7 +79,7 @@ class CreationDispatch(Generic[BackendEntrypointType]):
+                 f"Got {type(backend)}"
+             )
+         self._lookup[name] = backend
+-        return backend
++        return cast(BackendEntrypointType, backend)
+ 
+     def dispatch(self, backend: str):
+         """Return the desired backend entrypoint"""
+@@ -120,15 +111,10 @@ class CreationDispatch(Generic[BackendEntrypointType]):
+         self,
+         backend: str,
+         name: str | None = None,
+-    ) -> Callable[
+-        [Callable[BackendFuncParams, BackendFuncReturn]],
+-        Callable[BackendFuncParams, BackendFuncReturn],
+-    ]:
++    ) -> Callable[[BackendFuncType], BackendFuncType]:
+         """Register dispatchable function"""
+ 
+-        def decorator(
+-            fn: Callable[BackendFuncParams, BackendFuncReturn]
+-        ) -> Callable[BackendFuncParams, BackendFuncReturn]:
++        def decorator(fn: BackendFuncType) -> BackendFuncType:
+             dispatch_name = name or fn.__name__
+             dispatcher = self.dispatch(backend)
+             dispatcher.__setattr__(dispatch_name, fn)
+@@ -151,7 +137,7 @@ class CreationDispatch(Generic[BackendEntrypointType]):
+                         raise exc from e
+ 
+             wrapper.__name__ = dispatch_name
+-            return wrapper
++            return cast(BackendFuncType, wrapper)
+ 
+         return decorator
+ 
+@@ -160,4 +146,4 @@ class CreationDispatch(Generic[BackendEntrypointType]):
+         Return the appropriate attribute for the current backend
+         """
+         backend = self.dispatch(self.backend)
+-        return getattr(backend, item)
++        return getattr(backend, item)
+\ No newline at end of file

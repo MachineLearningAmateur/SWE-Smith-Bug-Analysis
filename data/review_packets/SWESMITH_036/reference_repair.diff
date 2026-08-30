@@ -1,0 +1,36 @@
+diff --git a/astroid/brain/brain_namedtuple_enum.py b/astroid/brain/brain_namedtuple_enum.py
+index 626daa5..67d706d 100644
+--- a/astroid/brain/brain_namedtuple_enum.py
++++ b/astroid/brain/brain_namedtuple_enum.py
+@@ -395,7 +395,10 @@ def infer_enum_class(node: nodes.ClassDef) -> nodes.ClassDef:
+         dunder_members = {}
+         target_names = set()
+         for local, values in node.locals.items():
+-            if any(not isinstance(value, nodes.AssignName) for value in values):
++            if (
++                any(not isinstance(value, nodes.AssignName) for value in values)
++                or local == "_ignore_"
++            ):
+                 continue
+ 
+             stmt = values[0].statement()
+@@ -432,8 +435,14 @@ def infer_enum_class(node: nodes.ClassDef) -> nodes.ClassDef:
+                     def value(self):
+                         return {return_value}
+                     @property
++                    def _value_(self):
++                        return {return_value}
++                    @property
+                     def name(self):
+                         return "{name}"
++                    @property
++                    def _name_(self):
++                        return "{name}"
+                 """.format(
+                         name=target.name,
+                         types=", ".join(node.basenames),
+@@ -663,4 +672,3 @@ def register(manager: AstroidManager) -> None:
+         inference_tip(infer_typing_namedtuple),
+         _looks_like_typing_namedtuple,
+     )
+-

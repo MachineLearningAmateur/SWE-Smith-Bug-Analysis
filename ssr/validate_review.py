@@ -51,29 +51,29 @@ def validate_against_schema(record: Any, schema_name: str, *, label: str = "reco
         raise SsrError(f"{label} does not match {schema_name}.schema.json:\n" + "\n".join(lines))
 
 
-def packet_evidence_ids(bug_id: str) -> set[str]:
-    packet_path = REVIEW_PACKETS / bug_id / "packet.json"
+def packet_evidence_ids(case_id: str) -> set[str]:
+    packet_path = REVIEW_PACKETS / case_id / "packet.json"
     if not packet_path.is_file():
-        raise SsrError(f"no frozen packet for {bug_id}: {packet_path} does not exist")
+        raise SsrError(f"no frozen packet for {case_id}: {packet_path} does not exist")
     return set(read_json(packet_path).get("evidence_ids", []))
 
 
 def validate_result(record: dict[str, Any], *, check_packet: bool = True) -> list[str]:
     """Validate one review record. Returns advisory warnings; raises on errors."""
-    validate_against_schema(record, "review_result", label=f"review result {record.get('bug_id')}")
+    validate_against_schema(record, "review_result", label=f"review result {record.get('case_id')}")
 
-    bug_id = record["bug_id"]
+    case_id = record["case_id"]
     pattern = record["failure_pattern"]
     scope = record["failure_scope"]
     warnings: list[str] = []
 
     if check_packet:
-        available = packet_evidence_ids(bug_id)
+        available = packet_evidence_ids(case_id)
         cited = set(record["supporting_evidence_ids"])
         unknown = sorted(cited - available)
         if unknown:
             raise SsrError(
-                f"{bug_id}: cites evidence IDs that are not in the packet: {unknown}. "
+                f"{case_id}: cites evidence IDs that are not in the packet: {unknown}. "
                 f"Available: {sorted(available)}"
             )
 
@@ -82,7 +82,7 @@ def validate_result(record: dict[str, Any], *, check_packet: bool = True) -> lis
     # applies. Scope BOTH with a process pattern means the rule was inverted.
     if pattern in PROCESS_LABELS and scope == "BOTH":
         raise SsrError(
-            f"{bug_id}: code-state precedence violated. failure_pattern {pattern!r} is a "
+            f"{case_id}: code-state precedence violated. failure_pattern {pattern!r} is a "
             "verification-process pattern and failure_scope is BOTH, so a code-state "
             "pattern also applies and must be the primary label. Record the verification "
             "facet through failure_scope instead."
@@ -90,21 +90,21 @@ def validate_result(record: dict[str, Any], *, check_packet: bool = True) -> lis
 
     if pattern in CODE_STATE_LABELS and scope == "REPAIR_PROCESS":
         warnings.append(
-            f"{bug_id}: a code-state pattern with failure_scope REPAIR_PROCESS is unusual; "
+            f"{case_id}: a code-state pattern with failure_scope REPAIR_PROCESS is unusual; "
             "check that the scope is right."
         )
 
     if scope == "UNKNOWN":
         warnings.append(
-            f"{bug_id}: failure_scope UNKNOWN. Every case here is an execution-validated "
+            f"{case_id}: failure_scope UNKNOWN. Every case here is an execution-validated "
             "code state, so UNKNOWN should be rare."
         )
 
     if record["taxonomy_fit"] == "UNCLEAR" and record["pattern_confidence"] == "HIGH":
-        warnings.append(f"{bug_id}: taxonomy_fit UNCLEAR with pattern_confidence HIGH is inconsistent.")
+        warnings.append(f"{case_id}: taxonomy_fit UNCLEAR with pattern_confidence HIGH is inconsistent.")
 
     if len(record["reasoning_summary"].split()) < 8:
-        warnings.append(f"{bug_id}: reasoning_summary is very short; cite what the evidence shows.")
+        warnings.append(f"{case_id}: reasoning_summary is very short; cite what the evidence shows.")
 
     return warnings
 
@@ -113,10 +113,10 @@ def validate_results(records: Iterable[dict[str, Any]], *, check_packet: bool = 
     warnings: list[str] = []
     seen: set[str] = set()
     for record in records:
-        bug_id = record.get("bug_id")
-        if bug_id in seen:
-            raise SsrError(f"duplicate review record for {bug_id}")
-        seen.add(bug_id)
+        case_id = record.get("case_id")
+        if case_id in seen:
+            raise SsrError(f"duplicate review record for {case_id}")
+        seen.add(case_id)
         warnings.extend(validate_result(record, check_packet=check_packet))
     return warnings
 

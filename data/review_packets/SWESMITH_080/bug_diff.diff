@@ -1,0 +1,17 @@
+diff --git a/faker/providers/company/fi_FI/__init__.py b/faker/providers/company/fi_FI/__init__.py
+index adfecfb..f56c5f6 100644
+--- a/faker/providers/company/fi_FI/__init__.py
++++ b/faker/providers/company/fi_FI/__init__.py
+@@ -37,10 +37,9 @@ class Provider(CompanyProvider):
+             if sum_ % 11 == 1:
+                 raise ValueError("Checksum 1 is invalid")
+             if sum_ % 11 == 0:
+-                return "0"
+-            else:
+                 return str(11 - sum_ % 11)
+-
++            else:
++                return "0"
+         while True:
+             first_digit = str(self.random_digit_not_null())
+             body = first_digit + self.bothify("######")

@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 3,
+    "lines_deleted": 16,
+    "path": "bug_diff.diff",
+    "sha256": "0f3a6b5775246aac483e1871e3454bcaa21a7480e06b8b8ffb133862abb271cd"
+  },
+  "case_id": "SWESMITH_067",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_legacy.py",
+      "repo_path": "src/flake8/api/legacy.py",
+      "sha256": "693661eedd572ffcc11e9303568e8489b00dadc112d77ddc39d20c92d3683998"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 418,
+    "path": "test_evidence.md",
+    "sha256": "41b133b31d43a9d1a0d559e20c9df167ecce3affef4d29bd035574091de8ef1a",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/unit/test_legacy_api.py",
+        "test_name": "tests/unit/test_legacy_api.py::test_styleguide_excluded"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "3cc06c754f0eac00d623e42b8a7fb966c897b9381a49ca8db1fe1029c2cc9744"
+  },
+  "repository": {
+    "language": "python",
+    "name": "PyCQA/flake8"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "8e29e13587c8b04ef2d1645eaaca449ca8dc6a656fd87d346b806f6e707ca8cd"
+  }
+}

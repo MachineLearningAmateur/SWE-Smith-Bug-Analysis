@@ -1,0 +1,59 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 3,
+    "lines_deleted": 16,
+    "path": "bug_diff.diff",
+    "sha256": "9a5d5e91220c52a937a6345ab91d17fc1fa10d30b00b2ad2eefccea521c1b797"
+  },
+  "case_id": "SWESMITH_056",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_profile_visualize.py",
+      "repo_path": "dask/diagnostics/profile_visualize.py",
+      "sha256": "0db9d42780052350f77c3581392c3786848a24d4e875168fd4722a1f40d00830"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 1,
+    "passing_count": 17,
+    "path": "test_evidence.md",
+    "sha256": "f0658dddfcba9fa7e18af1d048332cf37915314051ef845e699f295c8a985a05",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "dask/diagnostics/tests/test_profiler.py",
+        "test_name": "dask/diagnostics/tests/test_profiler.py::test_plot_multiple"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "01fd0cba3599f4cb61325cd9f53a72d518a7fc94300b4f9b42c22c9fa2ab433d"
+  },
+  "repository": {
+    "language": "python",
+    "name": "dask/dask"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "13dc45adc821929634ec19592f4612a403491bc14795e0f96b28eff0d1eb21e8"
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 1,
+    "lines_deleted": 2,
+    "path": "bug_diff.diff",
+    "sha256": "4649849876abef7c05f15beee4e759e2c37d42d7ab8dbac776e07c67b27d5c8e"
+  },
+  "case_id": "SWESMITH_087",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_formparsers.py",
+      "repo_path": "starlette/formparsers.py",
+      "sha256": "6d6a639463f36fb8936dbf46d5bac7fe0c3769655c91f50bb3d8e1c5b21978ad"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08",
+    "TEST_FAILURE_09",
+    "TEST_FAILURE_10",
+    "TEST_FAILURE_11",
+    "TEST_FAILURE_12",
+    "TEST_FAILURE_13",
+    "TEST_FAILURE_14",
+    "TEST_FAILURE_15",
+    "TEST_FAILURE_16",
+    "TEST_FAILURE_17",
+    "TEST_FAILURE_18",
+    "TEST_FAILURE_19",
+    "TEST_FAILURE_20"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 26,
+    "passing_count": 815,
+    "path": "test_evidence.md",
+    "sha256": "2f9ce864524afe2a90d4f4287f87f163a955840789a1b442325e8103b6b6d673",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_max_part_size_exceeds_limit[asyncio-app-expectation0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_max_part_size_exceeds_limit[asyncio-app1-expectation1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_max_part_size_exceeds_limit[trio-app-expectation0]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_max_part_size_exceeds_limit[trio-app1-expectation1]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multi_items[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multi_items[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_multi_field_app_reads_body[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_multi_field_app_reads_body[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_09",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_data[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_10",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_data[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_11",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_files[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_12",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_files[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_13",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_files_with_content_type[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_14",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_files_with_content_type[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_15",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_mixed_files_and_data[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_16",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_mixed_files_and_data[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_17",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_multiple_files[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_18",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_multiple_files[trio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_19",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_multiple_files_with_headers[asyncio]"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_20",
+        "test_file": "tests/test_formparsers.py",
+        "test_name": "tests/test_formparsers.py::test_multipart_request_multiple_files_with_headers[trio]"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "2f9a8bb0619d596a13a1e41085edefdb521b44aa4af0ddb2d25007077985db63"
+  },
+  "repository": {
+    "language": "python",
+    "name": "encode/starlette"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "2a4e9ea8c3d7050013a21bc410f2fa15aff03212db5b92889908bf8fbfa80b54"
+  }
+}

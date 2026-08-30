@@ -1,0 +1,84 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 2,
+    "lines_added": 5,
+    "lines_deleted": 5,
+    "path": "bug_diff.diff",
+    "sha256": "ece7e66057a3fb454552b767def6527a22dffeb85e14e254225fdc0724a1964c"
+  },
+  "case_id": "SWESMITH_020",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_remotes.py",
+      "repo_path": "conan/api/subapi/remotes.py",
+      "sha256": "28bf82670c9b054c032ab3f8259f378e52d8dc316702bfadb64b33080e22e581"
+    },
+    {
+      "evidence_id": "CODE_CONTEXT_02",
+      "path": "context/02_remote.py",
+      "repo_path": "conan/cli/commands/remote.py",
+      "sha256": "5c532ea49cedfec4d6d6c4a1e8fe3b284ee07836de453a4c8b1648099c83f9cc"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "CODE_CONTEXT_02",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 4,
+    "passing_count": 27,
+    "path": "test_evidence.md",
+    "sha256": "b61c2c0e191a99b16bdc6b83a4e923909c42d937485291605898e5032d0b2df2",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "test/integration/command/remote_test.py",
+        "test_name": "test/integration/command/remote_test.py::RemoteServerTest::test_duplicated_error"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "test/integration/command/remote_test.py",
+        "test_name": "test/integration/command/remote_test.py::RemoteServerTest::test_insert"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "test/integration/command/remote_test.py",
+        "test_name": "test/integration/command/remote_test.py::test_add_duplicated_name_url"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "test/integration/command/remote_test.py",
+        "test_name": "test/integration/command/remote_test.py::test_add_duplicated_url"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "e450a11bbc3505bc78b59f4a69b59dc3b43bbd645b66402c02d9284078426edc"
+  },
+  "repository": {
+    "language": "python",
+    "name": "conan-io/conan"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "6bffd970ad6612af7b852be102c347dd45b8ec592af3343113affcc49b3084df"
+  }
+}

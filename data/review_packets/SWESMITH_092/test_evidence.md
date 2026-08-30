@@ -1,0 +1,24 @@
+# Failing test evidence
+
+The following tests **pass on the working state and fail on this buggy state**.
+They come from the corpus's own execution validation; they were not re-run
+here.
+
+The test files themselves are not present in the repository state under
+review: they were removed when the task was built, so the bug must be judged
+from the code, not from reading the assertions.
+
+Failing tests (10):
+
+  tests/test_convert.py::Test::test_cli_structure_text
+  tests/test_structure.py::Test::test_structure_tree
+  tests/test_structure.py::TestMany::test_figure_mcids
+  tests/test_structure.py::TestMany::test_hello_structure
+  tests/test_structure.py::TestMany::test_image_structure
+  tests/test_structure.py::TestMany::test_missing_parenttree
+  tests/test_structure.py::TestMany::test_proces_verbal
+  tests/test_structure.py::TestMany::test_scotus
+  tests/test_structure.py::TestMany::test_word365
+  tests/test_structure.py::TestUnparsed::test_unparsed_pages
+
+Tests passing in both states: 159

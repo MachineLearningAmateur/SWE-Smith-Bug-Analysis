@@ -1,0 +1,101 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 48,
+    "lines_deleted": 19,
+    "path": "bug_diff.diff",
+    "sha256": "dc095c48fb5392c2f39d06c01e57178772ead48be6c49eeba906357767971ff4"
+  },
+  "case_id": "SWESMITH_052",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_encaps.py",
+      "repo_path": "src/pydicom/encaps.py",
+      "sha256": "bebf1233c793d4fa2a1fc9fdb08cef506e5c23d0b700446077d9836f25bce2a5"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02",
+    "TEST_FAILURE_03",
+    "TEST_FAILURE_04",
+    "TEST_FAILURE_05",
+    "TEST_FAILURE_06",
+    "TEST_FAILURE_07",
+    "TEST_FAILURE_08"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 8,
+    "passing_count": 2321,
+    "path": "test_evidence.md",
+    "sha256": "5f20ad2f5eea8096a294c24ce2d891cdb663dc1cb1df2607bd029f6637707f73",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDecodeDataSequence::test_bot_single_fragment"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDecodeDataSequence::test_bot_triple_fragment_single_frame"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_03",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDecodeDataSequence::test_empty_bot_single_fragment"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_04",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDecodeDataSequence::test_empty_bot_triple_fragment_single_frame"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_05",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDecodeDataSequence::test_multi_frame_one_to_one"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_06",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDecodeDataSequence::test_multi_frame_three_to_one"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_07",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDecodeDataSequence::test_multi_frame_varied_ratio"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_08",
+        "test_file": "tests/test_encaps.py",
+        "test_name": "tests/test_encaps.py::TestDefragmentData::test_defragment"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "210569edd003256cd37ee262dc07f659ecdce0ea2028c34d6f68a97840c73840"
+  },
+  "repository": {
+    "language": "python",
+    "name": "pydicom/pydicom"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "a5c74e730dc3e76390ff0f0ec6d8256696372161bc00bf1525829863f28e4c6b"
+  }
+}

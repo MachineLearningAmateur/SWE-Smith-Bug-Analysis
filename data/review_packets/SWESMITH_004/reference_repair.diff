@@ -1,0 +1,35 @@
+diff --git a/src/pydicom/data/data_manager.py b/src/pydicom/data/data_manager.py
+index 6e5236f..91f2e23 100644
+--- a/src/pydicom/data/data_manager.py
++++ b/src/pydicom/data/data_manager.py
+@@ -161,15 +161,22 @@ def online_test_file_dummy_paths() -> dict[str, str]:
+ 
+ def fetch_data_files() -> None:
+     """Download missing test files to the local cache."""
+-    url_map = get_url_map()
+-    data_dir = get_data_dir()
+-    
+-    for filename in url_map.keys():
++    cache = get_data_dir()
++    paths = {cache / fname: fname for fname in list(get_url_map().keys())}
++
++    error = []
++    for p in paths:
++        # Download missing files or files that don't match the hash
+         try:
+-            data_path_with_download(filename)
+-            print(f"Downloaded or verified: {filename}")
+-        except Exception as e:
+-            warn_and_log(f"Failed to download {filename}: {e}")
++            data_path_with_download(p.name)
++        except Exception:
++            error.append(p.name)
++
++    if error:
++        raise RuntimeError(
++            f"An error occurred downloading the following files: {', '.join(error)}"
++        )
++
+ 
+ def get_files(
+     base: str | os.PathLike, pattern: str = "**/*", dtype: int = DataTypes.DATASET

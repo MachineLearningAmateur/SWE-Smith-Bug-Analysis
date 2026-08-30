@@ -1,0 +1,49 @@
+diff --git a/hydra/main.py b/hydra/main.py
+index 134bec0..6d579f2 100644
+--- a/hydra/main.py
++++ b/hydra/main.py
+@@ -78,27 +78,26 @@ def main(
+ 
+     def main_decorator(task_function: TaskFunction) -> Callable[[], None]:
+         @functools.wraps(task_function)
+-        def decorated_main(cfg_passthrough: Optional[DictConfig] = None) -> Any:
++        def decorated_main(cfg_passthrough: Optional[DictConfig]=None) ->Any:
++            """Decorated main function that processes config and executes the task function."""
+             if cfg_passthrough is not None:
+                 return task_function(cfg_passthrough)
+-            else:
+-                args_parser = get_args_parser()
+-                args = args_parser.parse_args()
+-                if args.experimental_rerun is not None:
+-                    cfg = _get_rerun_conf(args.experimental_rerun, args.overrides)
+-                    task_function(cfg)
+-                    _flush_loggers()
+-                else:
+-                    # no return value from run_hydra() as it may sometime actually run the task_function
+-                    # multiple times (--multirun)
+-                    _run_hydra(
+-                        args=args,
+-                        args_parser=args_parser,
+-                        task_function=task_function,
+-                        config_path=config_path,
+-                        config_name=config_name,
+-                    )
+ 
++            args_parser = get_args_parser()
++            args = args_parser.parse_args()
++    
++            if args.config_file is not None:
++                return task_function(_get_rerun_conf(args.config_file, args.overrides))
++    
++            try:
++                return _run_hydra(
++                    args=args,
++                    task_function=task_function,
++                    config_path=config_path,
++                    config_name=config_name,
++                )
++            finally:
++                _flush_loggers()
+         return decorated_main
+ 
+     return main_decorator

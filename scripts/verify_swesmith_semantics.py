@@ -64,7 +64,22 @@ BUG_COMMIT_SUBJECT = "Bug Patch"
 
 
 def git(*args: str, cwd: Path, timeout: int = 900) -> subprocess.CompletedProcess:
-    return subprocess.run(["git", *args], cwd=cwd, capture_output=True, text=True, timeout=timeout)
+    """Run git, decoding as UTF-8 with replacement.
+
+    ``text=True`` decodes with the locale encoding, which on Windows is
+    cp1252 and raises on the first non-ASCII byte in a diff. Source files
+    legitimately contain non-ASCII, so the encoding is pinned here rather
+    than left to the machine.
+    """
+    result = subprocess.run(
+        ["git", *args], cwd=cwd, capture_output=True, timeout=timeout
+    )
+    return subprocess.CompletedProcess(
+        result.args,
+        result.returncode,
+        (result.stdout or b"").decode("utf-8", "replace"),
+        (result.stderr or b"").decode("utf-8", "replace"),
+    )
 
 
 def normalise_diff(text: str) -> list[str]:

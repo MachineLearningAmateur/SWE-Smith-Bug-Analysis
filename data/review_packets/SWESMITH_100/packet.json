@@ -1,0 +1,65 @@
+{
+  "bug_diff": {
+    "description": "The change that introduced the defect, applied to the working code.",
+    "evidence_id": "BUG_DIFF",
+    "files_changed": 1,
+    "lines_added": 2,
+    "lines_deleted": 4,
+    "path": "bug_diff.diff",
+    "sha256": "d9f2286b9ab2e42a4731198b0fd681a6020c1b3e12925d2eeb35bfcfcf7353a2"
+  },
+  "case_id": "SWESMITH_100",
+  "code_context": [
+    {
+      "evidence_id": "CODE_CONTEXT_01",
+      "path": "context/01_main.py",
+      "repo_path": "src/dotenv/main.py",
+      "sha256": "f4576a1b37957bd93299bfbc1ebd53fb9bad8b834e45c3ae81b8372f586ec7e1"
+    }
+  ],
+  "evidence_ids": [
+    "BUG_DIFF",
+    "CODE_CONTEXT_01",
+    "REFERENCE_REPAIR",
+    "SPECIFICATION",
+    "TEST_FAILURE_01",
+    "TEST_FAILURE_02"
+  ],
+  "failing_tests": {
+    "evidence_id_prefix": "TEST_FAILURE",
+    "failing_count": 2,
+    "passing_count": 119,
+    "path": "test_evidence.md",
+    "sha256": "f0e9db1521d0435c728c7b68c060e75606fe340a9101e1a982e0693f103e9104",
+    "tests": [
+      {
+        "evidence_id": "TEST_FAILURE_01",
+        "test_file": "tests/test_zip_imports.py",
+        "test_name": "tests/test_zip_imports.py::test_load_dotenv_gracefully_handles_zip_imports_when_no_env_file"
+      },
+      {
+        "evidence_id": "TEST_FAILURE_02",
+        "test_file": "tests/test_zip_imports.py",
+        "test_name": "tests/test_zip_imports.py::test_load_dotenv_outside_zip_file_when_called_in_zipfile"
+      }
+    ]
+  },
+  "packet_version": 2,
+  "reference_repair": {
+    "description": "The reverse of the bug diff: it restores the working code.",
+    "evidence_id": "REFERENCE_REPAIR",
+    "path": "reference_repair.diff",
+    "sha256": "e94d94caace35e2a99654f6eb52e7a032fe6f75e41649b0b915773b03fac95ac"
+  },
+  "repository": {
+    "language": "python",
+    "name": "theskumar/python-dotenv"
+  },
+  "reviewer_question": "Based only on the frozen evidence in this packet, what kind of technical failure does this synthetic buggy repository state represent?",
+  "specification": {
+    "description": "The issue text supplied with this task. A description of the defect, not independent evidence of it; it may be inaccurate.",
+    "evidence_id": "SPECIFICATION",
+    "path": "specification.md",
+    "sha256": "ebecc11c9a92a6a119504e642b08098e62b5af011649e692294b73f624484701"
+  }
+}

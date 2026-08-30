@@ -1,0 +1,641 @@
+{
+  "allocation": {
+    "combine_file": 2,
+    "combine_module": 0,
+    "func_basic": 0,
+    "func_pm_class_rm_base": 2,
+    "func_pm_class_rm_funcs": 2,
+    "func_pm_class_shuffle_funcs": 0,
+    "func_pm_ctrl_invert_if": 5,
+    "func_pm_ctrl_shuffle": 12,
+    "func_pm_op_break_chains": 0,
+    "func_pm_op_change": 1,
+    "func_pm_op_change_const": 1,
+    "func_pm_op_swap": 1,
+    "func_pm_remove_assign": 5,
+    "func_pm_remove_cond": 3,
+    "func_pm_remove_loop": 1,
+    "func_pm_remove_wrapper": 1,
+    "lm_rewrite": 36,
+    "pr_mirror": 28
+  },
+  "balance": [
+    {
+      "allocated": 36,
+      "deviation": -0.0034,
+      "population_n": 1529,
+      "population_share": 0.3634,
+      "sample_n": 36,
+      "sample_share": 0.36,
+      "stratum": "lm_rewrite"
+    },
+    {
+      "allocated": 28,
+      "deviation": 0.004,
+      "population_n": 1161,
+      "population_share": 0.276,
+      "sample_n": 28,
+      "sample_share": 0.28,
+      "stratum": "pr_mirror"
+    },
+    {
+      "allocated": 12,
+      "deviation": -0.0,
+      "population_n": 505,
+      "population_share": 0.12,
+      "sample_n": 12,
+      "sample_share": 0.12,
+      "stratum": "func_pm_ctrl_shuffle"
+    },
+    {
+      "allocated": 5,
+      "deviation": -0.0032,
+      "population_n": 224,
+      "population_share": 0.0532,
+      "sample_n": 5,
+      "sample_share": 0.05,
+      "stratum": "func_pm_remove_assign"
+    },
+    {
+      "allocated": 5,
+      "deviation": -0.0021,
+      "population_n": 219,
+      "population_share": 0.0521,
+      "sample_n": 5,
+      "sample_share": 0.05,
+      "stratum": "func_pm_ctrl_invert_if"
+    },
+    {
+      "allocated": 3,
+      "deviation": 0.001,
+      "population_n": 122,
+      "population_share": 0.029,
+      "sample_n": 3,
+      "sample_share": 0.03,
+      "stratum": "func_pm_remove_cond"
+    },
+    {
+      "allocated": 2,
+      "deviation": 0.0003,
+      "population_n": 83,
+      "population_share": 0.0197,
+      "sample_n": 2,
+      "sample_share": 0.02,
+      "stratum": "func_pm_class_rm_funcs"
+    },
+    {
+      "allocated": 2,
+      "deviation": 0.0022,
+      "population_n": 75,
+      "population_share": 0.0178,
+      "sample_n": 2,
+      "sample_share": 0.02,
+      "stratum": "combine_file"
+    },
+    {
+      "allocated": 2,
+      "deviation": 0.0045,
+      "population_n": 65,
+      "population_share": 0.0155,
+      "sample_n": 2,
+      "sample_share": 0.02,
+      "stratum": "func_pm_class_rm_base"
+    },
+    {
+      "allocated": 1,
+      "deviation": -0.0028,
+      "population_n": 54,
+      "population_share": 0.0128,
+      "sample_n": 1,
+      "sample_share": 0.01,
+      "stratum": "func_pm_remove_loop"
+    },
+    {
+      "allocated": 1,
+      "deviation": -0.0026,
+      "population_n": 53,
+      "population_share": 0.0126,
+      "sample_n": 1,
+      "sample_share": 0.01,
+      "stratum": "func_pm_op_swap"
+    },
+    {
+      "allocated": 1,
+      "deviation": 0.0007,
+      "population_n": 39,
+      "population_share": 0.0093,
+      "sample_n": 1,
+      "sample_share": 0.01,
+      "stratum": "func_pm_op_change"
+    },
+    {
+      "allocated": 1,
+      "deviation": 0.0041,
+      "population_n": 25,
+      "population_share": 0.0059,
+      "sample_n": 1,
+      "sample_share": 0.01,
+      "stratum": "func_pm_op_change_const"
+    },
+    {
+      "allocated": 1,
+      "deviation": 0.0045,
+      "population_n": 23,
+      "population_share": 0.0055,
+      "sample_n": 1,
+      "sample_share": 0.01,
+      "stratum": "func_pm_remove_wrapper"
+    },
+    {
+      "allocated": 0,
+      "deviation": -0.0031,
+      "population_n": 13,
+      "population_share": 0.0031,
+      "sample_n": 0,
+      "sample_share": 0.0,
+      "stratum": "func_pm_op_break_chains"
+    },
+    {
+      "allocated": 0,
+      "deviation": -0.0017,
+      "population_n": 7,
+      "population_share": 0.0017,
+      "sample_n": 0,
+      "sample_share": 0.0,
+      "stratum": "func_basic"
+    },
+    {
+      "allocated": 0,
+      "deviation": -0.0014,
+      "population_n": 6,
+      "population_share": 0.0014,
+      "sample_n": 0,
+      "sample_share": 0.0,
+      "stratum": "func_pm_class_shuffle_funcs"
+    },
+    {
+      "allocated": 0,
+      "deviation": -0.001,
+      "population_n": 4,
+      "population_share": 0.001,
+      "sample_n": 0,
+      "sample_share": 0.0,
+      "stratum": "combine_module"
+    }
+  ],
+  "distortions": [
+    {
+      "cap": 5,
+      "instances_skipped": 2,
+      "stratum": "pr_mirror",
+      "type": "REPOSITORY_CAP_APPLIED"
+    },
+    {
+      "cap": 5,
+      "instances_skipped": 1,
+      "stratum": "func_pm_class_rm_funcs",
+      "type": "REPOSITORY_CAP_APPLIED"
+    },
+    {
+      "cap": 5,
+      "instances_skipped": 1,
+      "stratum": "func_pm_remove_loop",
+      "type": "REPOSITORY_CAP_APPLIED"
+    },
+    {
+      "cap": 5,
+      "instances_skipped": 1,
+      "stratum": "func_pm_op_change",
+      "type": "REPOSITORY_CAP_APPLIED"
+    },
+    {
+      "cap": 5,
+      "instances_skipped": 1,
+      "stratum": "func_pm_op_change_const",
+      "type": "REPOSITORY_CAP_APPLIED"
+    }
+  ],
+  "documented_trajectory_claim": 5017,
+  "exclusions": [],
+  "generated_at_utc": "2026-08-30T08:32:54Z",
+  "population_file": "D:\\Code Projects\\Algoverse\\pilots\\SWESmithSSR\\data\\population\\swesmith_training_tasks.csv",
+  "population_sha256": "256b2efce1136be96a568bd8aede4f2d0721db53abba7982708abc0c137c8358",
+  "sampling_config_sha256": "6a735b3d05e8e0f859d3f811d2ffd549d6854d6c836e0c80fa5c21f3dc267397",
+  "selection": [
+    {
+      "case_id": "SWESMITH_001",
+      "instance_id": "luozhouyang__python-string-similarity.115acaac.func_pm_class_rm_funcs__96brcjir"
+    },
+    {
+      "case_id": "SWESMITH_002",
+      "instance_id": "amueller__word_cloud.ec24191c.func_pm_remove_cond__evf0y6cw"
+    },
+    {
+      "case_id": "SWESMITH_003",
+      "instance_id": "pylint-dev__astroid.b114f6b5.pr_2570"
+    },
+    {
+      "case_id": "SWESMITH_004",
+      "instance_id": "pydicom__pydicom.7d361b3d.lm_rewrite__w9oz3z69"
+    },
+    {
+      "case_id": "SWESMITH_005",
+      "instance_id": "seperman__deepdiff.ed252022.lm_rewrite__tpvrougr"
+    },
+    {
+      "case_id": "SWESMITH_006",
+      "instance_id": "davidhalter__parso.338a5760.func_pm_class_rm_base__h6r9wse5"
+    },
+    {
+      "case_id": "SWESMITH_007",
+      "instance_id": "sloria__environs.73c372df.lm_rewrite__cm1ntr8d"
+    },
+    {
+      "case_id": "SWESMITH_008",
+      "instance_id": "tornadoweb__tornado.d5ac65c1.lm_rewrite__cnp2i98g"
+    },
+    {
+      "case_id": "SWESMITH_009",
+      "instance_id": "pylint-dev__astroid.b114f6b5.lm_rewrite__1h5bpz9d"
+    },
+    {
+      "case_id": "SWESMITH_010",
+      "instance_id": "kayak__pypika.1c9646f0.lm_rewrite__qw5j6bj2"
+    },
+    {
+      "case_id": "SWESMITH_011",
+      "instance_id": "encode__starlette.db5063c2.pr_2183"
+    },
+    {
+      "case_id": "SWESMITH_012",
+      "instance_id": "davidhalter__parso.338a5760.func_pm_ctrl_shuffle__cg3az98k"
+    },
+    {
+      "case_id": "SWESMITH_013",
+      "instance_id": "getmoto__moto.694ce1f4.pr_7015"
+    },
+    {
+      "case_id": "SWESMITH_014",
+      "instance_id": "theskumar__python-dotenv.2b8635b7.combine_file__j62kft93"
+    },
+    {
+      "case_id": "SWESMITH_015",
+      "instance_id": "marshmallow-code__apispec.8b421526.lm_rewrite__gtxozph0"
+    },
+    {
+      "case_id": "SWESMITH_016",
+      "instance_id": "davidhalter__parso.338a5760.func_pm_ctrl_shuffle__65sp27s9"
+    },
+    {
+      "case_id": "SWESMITH_017",
+      "instance_id": "pandas-dev__pandas.95280573.pr_57089"
+    },
+    {
+      "case_id": "SWESMITH_018",
+      "instance_id": "facebookresearch__hydra.0f03eb60.lm_rewrite__004ka3pp"
+    },
+    {
+      "case_id": "SWESMITH_019",
+      "instance_id": "facebookresearch__hydra.0f03eb60.lm_rewrite__lkkqomao"
+    },
+    {
+      "case_id": "SWESMITH_020",
+      "instance_id": "conan-io__conan.86f29e13.pr_13112"
+    },
+    {
+      "case_id": "SWESMITH_021",
+      "instance_id": "rubik__radon.54b88e58.lm_rewrite__qx06rsix"
+    },
+    {
+      "case_id": "SWESMITH_022",
+      "instance_id": "tkrajina__gpxpy.09fc46b3.lm_rewrite__joqpkv0n"
+    },
+    {
+      "case_id": "SWESMITH_023",
+      "instance_id": "arrow-py__arrow.1d70d009.func_pm_ctrl_shuffle__wisn8mb8"
+    },
+    {
+      "case_id": "SWESMITH_024",
+      "instance_id": "tox-dev__pipdeptree.c31b6418.func_pm_ctrl_shuffle__z2bvsjch"
+    },
+    {
+      "case_id": "SWESMITH_025",
+      "instance_id": "django__channels.a144b4b8.pr_2097"
+    },
+    {
+      "case_id": "SWESMITH_026",
+      "instance_id": "jaraco__inflect.c079a96a.lm_rewrite__wc4fd9gl"
+    },
+    {
+      "case_id": "SWESMITH_027",
+      "instance_id": "tkrajina__gpxpy.09fc46b3.func_pm_remove_assign__nugmh04d"
+    },
+    {
+      "case_id": "SWESMITH_028",
+      "instance_id": "encode__starlette.db5063c2.func_pm_ctrl_shuffle__f4j1ykgh"
+    },
+    {
+      "case_id": "SWESMITH_029",
+      "instance_id": "getmoto__moto.694ce1f4.pr_7605"
+    },
+    {
+      "case_id": "SWESMITH_030",
+      "instance_id": "oauthlib__oauthlib.1fd52536.func_pm_remove_assign__w945anr8"
+    },
+    {
+      "case_id": "SWESMITH_031",
+      "instance_id": "theskumar__python-dotenv.2b8635b7.lm_rewrite__zfuq5ykl"
+    },
+    {
+      "case_id": "SWESMITH_032",
+      "instance_id": "mido__mido.a0158ff9.lm_rewrite__mob59r3v"
+    },
+    {
+      "case_id": "SWESMITH_033",
+      "instance_id": "iterative__dvc.1d6ea681.pr_8343"
+    },
+    {
+      "case_id": "SWESMITH_034",
+      "instance_id": "rustedpy__result.0b855e1e.pr_185"
+    },
+    {
+      "case_id": "SWESMITH_035",
+      "instance_id": "tobymao__sqlglot.036601ba.func_pm_ctrl_invert_if__5liurb5h"
+    },
+    {
+      "case_id": "SWESMITH_036",
+      "instance_id": "pylint-dev__astroid.b114f6b5.pr_2289"
+    },
+    {
+      "case_id": "SWESMITH_037",
+      "instance_id": "pydantic__pydantic.acb0f10f.func_pm_remove_wrapper__1wa4y94n"
+    },
+    {
+      "case_id": "SWESMITH_038",
+      "instance_id": "iterative__dvc.1d6ea681.func_pm_ctrl_invert_if__t14q5i46"
+    },
+    {
+      "case_id": "SWESMITH_039",
+      "instance_id": "mido__mido.a0158ff9.combine_file__wzi5wc05"
+    },
+    {
+      "case_id": "SWESMITH_040",
+      "instance_id": "conan-io__conan.86f29e13.pr_11971"
+    },
+    {
+      "case_id": "SWESMITH_041",
+      "instance_id": "sqlfluff__sqlfluff.50a1c4b6.lm_rewrite__cupu2wpp"
+    },
+    {
+      "case_id": "SWESMITH_042",
+      "instance_id": "buriy__python-readability.40256f40.func_pm_remove_assign__5jxoz8xs"
+    },
+    {
+      "case_id": "SWESMITH_043",
+      "instance_id": "paramiko__paramiko.23f92003.lm_rewrite__5omeuvpt"
+    },
+    {
+      "case_id": "SWESMITH_044",
+      "instance_id": "datamade__usaddress.a42a8f0c.lm_rewrite__gvqcmfw6"
+    },
+    {
+      "case_id": "SWESMITH_045",
+      "instance_id": "pygments__pygments.27649ebb.pr_2545"
+    },
+    {
+      "case_id": "SWESMITH_046",
+      "instance_id": "getmoto__moto.694ce1f4.pr_8607"
+    },
+    {
+      "case_id": "SWESMITH_047",
+      "instance_id": "pydicom__pydicom.7d361b3d.lm_rewrite__lqvpuu3c"
+    },
+    {
+      "case_id": "SWESMITH_048",
+      "instance_id": "joke2k__faker.8b401a7d.lm_rewrite__3my69znu"
+    },
+    {
+      "case_id": "SWESMITH_049",
+      "instance_id": "davidhalter__parso.338a5760.func_pm_class_rm_base__3jb4kazg"
+    },
+    {
+      "case_id": "SWESMITH_050",
+      "instance_id": "conan-io__conan.86f29e13.pr_15266"
+    },
+    {
+      "case_id": "SWESMITH_051",
+      "instance_id": "getnikola__nikola.0f4c230e.func_pm_op_change__rwhfh97z"
+    },
+    {
+      "case_id": "SWESMITH_052",
+      "instance_id": "pydicom__pydicom.7d361b3d.lm_rewrite__50b4vtzv"
+    },
+    {
+      "case_id": "SWESMITH_053",
+      "instance_id": "dask__dask.5f61e423.pr_9573"
+    },
+    {
+      "case_id": "SWESMITH_054",
+      "instance_id": "getnikola__nikola.0f4c230e.func_pm_class_rm_funcs__loiwq6sx"
+    },
+    {
+      "case_id": "SWESMITH_055",
+      "instance_id": "seperman__deepdiff.ed252022.func_pm_remove_cond__tp5gnx93"
+    },
+    {
+      "case_id": "SWESMITH_056",
+      "instance_id": "dask__dask.5f61e423.pr_8544"
+    },
+    {
+      "case_id": "SWESMITH_057",
+      "instance_id": "pdfminer__pdfminer.six.1a8bd2f7.lm_rewrite__v8gi6dpt"
+    },
+    {
+      "case_id": "SWESMITH_058",
+      "instance_id": "pydantic__pydantic.acb0f10f.pr_9353"
+    },
+    {
+      "case_id": "SWESMITH_059",
+      "instance_id": "sqlfluff__sqlfluff.50a1c4b6.func_pm_ctrl_invert_if__jve5a8nt"
+    },
+    {
+      "case_id": "SWESMITH_060",
+      "instance_id": "mahmoud__glom.fb3c4e76.lm_rewrite__llfh9un0"
+    },
+    {
+      "case_id": "SWESMITH_061",
+      "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_assign__4i3p4bf1"
+    },
+    {
+      "case_id": "SWESMITH_062",
+      "instance_id": "tobymao__sqlglot.036601ba.func_pm_op_change_const__n6j6v9k8"
+    },
+    {
+      "case_id": "SWESMITH_063",
+      "instance_id": "Cog-Creators__Red-DiscordBot.33e0eac7.func_pm_ctrl_invert_if__rxgs897w"
+    },
+    {
+      "case_id": "SWESMITH_064",
+      "instance_id": "scanny__python-pptx.278b47b1.func_pm_ctrl_shuffle__cvtifmqt"
+    },
+    {
+      "case_id": "SWESMITH_065",
+      "instance_id": "pydicom__pydicom.7d361b3d.pr_1859"
+    },
+    {
+      "case_id": "SWESMITH_066",
+      "instance_id": "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__8k7oir2l"
+    },
+    {
+      "case_id": "SWESMITH_067",
+      "instance_id": "PyCQA__flake8.cf1542ce.lm_rewrite__dknnrpee"
+    },
+    {
+      "case_id": "SWESMITH_068",
+      "instance_id": "conan-io__conan.86f29e13.pr_15999"
+    },
+    {
+      "case_id": "SWESMITH_069",
+      "instance_id": "bottlepy__bottle.a8dfef30.lm_rewrite__831i267x"
+    },
+    {
+      "case_id": "SWESMITH_070",
+      "instance_id": "tkrajina__gpxpy.09fc46b3.lm_rewrite__ip40k5p6"
+    },
+    {
+      "case_id": "SWESMITH_071",
+      "instance_id": "keleshev__schema.24a30457.lm_rewrite__dj8ak5s7"
+    },
+    {
+      "case_id": "SWESMITH_072",
+      "instance_id": "python__mypy.e93f06ce.pr_5617"
+    },
+    {
+      "case_id": "SWESMITH_073",
+      "instance_id": "burnash__gspread.a8be3b96.lm_rewrite__9nuqeqz0"
+    },
+    {
+      "case_id": "SWESMITH_074",
+      "instance_id": "pexpect__ptyprocess.1067dbda.func_pm_op_swap__s2gwmv8x"
+    },
+    {
+      "case_id": "SWESMITH_075",
+      "instance_id": "pygments__pygments.27649ebb.lm_rewrite__pngsawyy"
+    },
+    {
+      "case_id": "SWESMITH_076",
+      "instance_id": "davidhalter__parso.338a5760.func_pm_ctrl_shuffle__27bimpg0"
+    },
+    {
+      "case_id": "SWESMITH_077",
+      "instance_id": "seperman__deepdiff.ed252022.func_pm_remove_assign__mozddtek"
+    },
+    {
+      "case_id": "SWESMITH_078",
+      "instance_id": "pyca__pyopenssl.04766a49.lm_rewrite__fpldckla"
+    },
+    {
+      "case_id": "SWESMITH_079",
+      "instance_id": "pandas-dev__pandas.95280573.func_pm_ctrl_shuffle__84pgewhn"
+    },
+    {
+      "case_id": "SWESMITH_080",
+      "instance_id": "joke2k__faker.8b401a7d.func_pm_ctrl_invert_if__hz9kn07j"
+    },
+    {
+      "case_id": "SWESMITH_081",
+      "instance_id": "benoitc__gunicorn.bacbf8aa.pr_3258"
+    },
+    {
+      "case_id": "SWESMITH_082",
+      "instance_id": "getmoto__moto.694ce1f4.pr_6509"
+    },
+    {
+      "case_id": "SWESMITH_083",
+      "instance_id": "conan-io__conan.86f29e13.pr_14508"
+    },
+    {
+      "case_id": "SWESMITH_084",
+      "instance_id": "oauthlib__oauthlib.1fd52536.func_pm_ctrl_shuffle__ugi2x6nz"
+    },
+    {
+      "case_id": "SWESMITH_085",
+      "instance_id": "gweis__isodate.17cb25eb.lm_rewrite__ghwxicip"
+    },
+    {
+      "case_id": "SWESMITH_086",
+      "instance_id": "pyupio__safety.7654596b.lm_rewrite__1swfdiwy"
+    },
+    {
+      "case_id": "SWESMITH_087",
+      "instance_id": "encode__starlette.db5063c2.func_pm_ctrl_shuffle__2neu2b83"
+    },
+    {
+      "case_id": "SWESMITH_088",
+      "instance_id": "pydantic__pydantic.acb0f10f.pr_10506"
+    },
+    {
+      "case_id": "SWESMITH_089",
+      "instance_id": "sqlfluff__sqlfluff.50a1c4b6.func_pm_remove_cond__odmz2rq5"
+    },
+    {
+      "case_id": "SWESMITH_090",
+      "instance_id": "tobymao__sqlglot.036601ba.func_pm_remove_loop__ntiun4kx"
+    },
+    {
+      "case_id": "SWESMITH_091",
+      "instance_id": "tobymao__sqlglot.036601ba.lm_rewrite__28ucmg0j"
+    },
+    {
+      "case_id": "SWESMITH_092",
+      "instance_id": "jsvine__pdfplumber.02ff4313.lm_rewrite__1nhq0adm"
+    },
+    {
+      "case_id": "SWESMITH_093",
+      "instance_id": "marshmallow-code__apispec.8b421526.pr_831"
+    },
+    {
+      "case_id": "SWESMITH_094",
+      "instance_id": "pandas-dev__pandas.95280573.pr_55807"
+    },
+    {
+      "case_id": "SWESMITH_095",
+      "instance_id": "scanny__python-pptx.278b47b1.func_pm_ctrl_shuffle__d0h8eyru"
+    },
+    {
+      "case_id": "SWESMITH_096",
+      "instance_id": "getmoto__moto.694ce1f4.pr_5900"
+    },
+    {
+      "case_id": "SWESMITH_097",
+      "instance_id": "pylint-dev__astroid.b114f6b5.lm_rewrite__yl1w79yz"
+    },
+    {
+      "case_id": "SWESMITH_098",
+      "instance_id": "pallets__click.fde47b4b.lm_rewrite__5wzprufu"
+    },
+    {
+      "case_id": "SWESMITH_099",
+      "instance_id": "joke2k__faker.8b401a7d.lm_rewrite__vgc38bve"
+    },
+    {
+      "case_id": "SWESMITH_100",
+      "instance_id": "theskumar__python-dotenv.2b8635b7.pr_456"
+    }
+  ],
+  "summary": {
+    "distortions": 5,
+    "excluded_instances": 0,
+    "largest_absolute_deviation": 0.0045,
+    "max_from_one_repository": 5,
+    "population_size": 4207,
+    "selected": 100,
+    "unique_repositories_in_sample": 52
+  },
+  "task_dataset": "SWE-bench/SWE-smith",
+  "task_dataset_revision": "9f2a10465194",
+  "task_revision_note": "The 2025-04-29 upload, made the same day as the trajectory release. 50,137 rows, and unlike the current main it still carries base_commit and created_at.",
+  "trajectory_dataset": "SWE-bench/SWE-smith-trajectories",
+  "trajectory_dataset_revision": "f6b6d7e01f2b",
+  "trajectory_revision_note": "Last revision before the 2025-07-18/19 expansion. Its dataset card declares a single train split with num_examples 5016, and its prose states these are the trajectories used to fine-tune SWE-agent-LM-32B."
+}
