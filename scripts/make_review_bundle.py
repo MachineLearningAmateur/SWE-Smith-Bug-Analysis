@@ -62,6 +62,7 @@ LIBRARY_MODULES = (
     "util.py",
     "taxonomy.py",
     "corpus.py",
+    "review_formats.py",
     "review_workflow.py",
     "validate_review.py",
 )
@@ -75,7 +76,6 @@ FORBIDDEN_IN_BUNDLE = (
     "data/rejected",
     "runs/",
     "analysis/",
-    "configs/",
     "prompts/",
     "workspace/",
     "metadata.json",
@@ -203,6 +203,9 @@ def main() -> int:
     shutil.copy2(REPO_ROOT / instructions, out / instructions)
     shutil.copy2(REPO_ROOT / "requirements-review.txt", out / "requirements-review.txt")
     shutil.copy2(REPO_ROOT / ".gitattributes", out / ".gitattributes")
+    (out / "configs").mkdir(exist_ok=True)
+    shutil.copy2(REPO_ROOT / "configs" / "review_formats.yaml",
+                 out / "configs" / "review_formats.yaml")
     write_text(out / ".gitignore", "__pycache__/\n*.py[cod]\n.venv/\n.pytest_cache/\n")
 
     if args.reviewer == "claude":

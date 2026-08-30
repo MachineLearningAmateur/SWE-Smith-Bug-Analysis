@@ -1,0 +1,22 @@
+# How each reviewer serialises its case records.
+#
+# The SEMANTICS are identical: every record, whatever the format, is the same
+# object and is validated against the same schemas/review_result.schema.json.
+# Only the bytes on disk differ.
+#
+# Two formats rather than one is a deliberate isolation measure. Byte-identical
+# outputs invite copy-paste between reviewers and make an accidental shared
+# edit hard to spot; distinct formats make each reviewer's output obviously
+# its own.
+#
+# Available: json | yaml | markdown  (see ssr/review_formats.py)
+
+formats:
+  codex: json
+  claude: yaml
+
+# The finalised review_results.jsonl stays JSON Lines for BOTH reviewers. It
+# is the sealed interchange artifact that the agreement analysis reads from
+# both sides at once, so it must be identical in shape. Changing a reviewer's
+# per-case format above does not affect it.
+results_file_format: jsonl

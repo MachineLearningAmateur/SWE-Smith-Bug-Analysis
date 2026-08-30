@@ -179,7 +179,12 @@ and stops. It is not a transcript of your reasoning.
 
 ## How to record a case
 
-One JSON file per case, at `reviews/codex/cases/SWESMITH_nnn.json`:
+You write **JSON**. Claude writes a different format on purpose: two
+reviewers producing byte-identical files invites copy-paste between them.
+The fields, the values and the rules are identical either way — only the
+serialisation differs.
+
+One **JSON** file per case, at `reviews/codex/cases/SWESMITH_nnn.json`:
 
 ```json
 {

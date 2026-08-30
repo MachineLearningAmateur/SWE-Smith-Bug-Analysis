@@ -161,17 +161,17 @@ every one, so a typo fails fast rather than surviving into the data.
 `TEST_FAILURE_01` names a test that passed before and fails now.
 `REFERENCE_REPAIR` puts the check back. Nothing else changed to compensate.
 
-```json
-{
-  "case_id": "SWESMITH_001",
-  "failure_pattern": "broke_existing_contract_or_behavior",
-  "pattern_confidence": "HIGH",
-  "failure_scope": "CODE_STATE",
-  "taxonomy_fit": "DIRECT",
-  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01"],
-  "reasoning_summary": "BUG_DIFF drops the upper-bound branch of clamp; TEST_FAILURE_01 covers exactly that bound, so behaviour the suite already promised is gone.",
-  "proposed_other_pattern": null
-}
+```yaml
+case_id: SWESMITH_001
+failure_pattern: incomplete_change_propagation
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- TEST_FAILURE_01
+reasoning_summary: Short evidence-based justification.
+proposed_other_pattern: null
 ```
 
 Note what the summary does: it names the evidence, says what the code now does,
@@ -179,19 +179,25 @@ and stops. It is not a transcript of your reasoning.
 
 ## How to record a case
 
-One JSON file per case, at `reviews/claude/cases/SWESMITH_nnn.json`:
+You write **YAML**. Codex writes a different format on purpose: two
+reviewers producing byte-identical files invites copy-paste between them.
+The fields, the values and the rules are identical either way — only the
+serialisation differs.
 
-```json
-{
-  "case_id": "SWESMITH_001",
-  "failure_pattern": "incomplete_change_propagation",
-  "pattern_confidence": "HIGH",
-  "failure_scope": "CODE_STATE",
-  "taxonomy_fit": "DIRECT",
-  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01"],
-  "reasoning_summary": "Short evidence-based justification.",
-  "proposed_other_pattern": null
-}
+One **YAML** file per case, at `reviews/claude/cases/SWESMITH_nnn.yaml`:
+
+```yaml
+case_id: SWESMITH_001
+failure_pattern: broke_existing_contract_or_behavior
+pattern_confidence: HIGH
+failure_scope: CODE_STATE
+taxonomy_fit: DIRECT
+supporting_evidence_ids:
+- BUG_DIFF
+- TEST_FAILURE_01
+reasoning_summary: BUG_DIFF drops the upper-bound branch of clamp; TEST_FAILURE_01 covers
+  exactly that bound, so behaviour the suite already promised is gone.
+proposed_other_pattern: null
 ```
 
 Rules for the record:

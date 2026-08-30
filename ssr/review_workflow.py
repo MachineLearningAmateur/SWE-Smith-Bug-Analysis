@@ -22,10 +22,21 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from ssr.paths import REVIEWERS, REVIEWS, REVIEW_SNAPSHOT_MANIFEST, reviewer_dir
+from ssr.review_formats import codec_for
 from ssr.taxonomy import taxonomy_fingerprint
-from ssr.util import SsrError, canonical_json, read_json, sha256_file, utc_now, write_json
+from ssr.util import (
+    SsrError,
+    canonical_json,
+    read_json,
+    sha256_file,
+    utc_now,
+    write_json,
+    write_text,
+)
 
-CASE_FILE_PATTERN = "SWESMITH_*.json"
+# Each reviewer writes its own format; the pattern follows the codec.
+def case_glob(reviewer: str) -> str:
+    return codec_for(reviewer).glob()
 
 
 @dataclass
@@ -56,8 +67,15 @@ class ReviewerPaths:
     def complete(self) -> Path:
         return self.root / "COMPLETE"
 
+    @property
+    def codec(self):
+        return codec_for(self.reviewer)
+
     def case_file(self, case_id: str) -> Path:
-        return self.cases / f"{case_id}.json"
+        return self.cases / self.codec.filename(case_id)
+
+    def case_files(self) -> list[Path]:
+        return sorted(self.cases.glob(self.codec.glob())) if self.cases.is_dir() else []
 
     def ensure(self) -> "ReviewerPaths":
         self.cases.mkdir(parents=True, exist_ok=True)
@@ -130,6 +148,7 @@ def init_metadata(reviewer: str, *, model: str, notes: str | None = None) -> dic
         # Carried into every downstream report, so a rehearsal review can
         # never be mistaken for a research result.
         "corpus_kind": corpus_kind,
+        "case_format": codec_for(reviewer).name,
         "expected_case_count": len(expected_case_ids()),
         "notes": notes,
     }
@@ -146,7 +165,7 @@ def save_case(reviewer: str, result: dict[str, Any]) -> Path:
         raise SsrError("a review result needs a string case_id")
     target = paths.case_file(case_id)
     assert_write_boundary(reviewer, target)
-    write_json(target, result)
+    write_text(target, paths.codec.dump(result))
     update_progress(reviewer)
     return target
 
@@ -156,10 +175,15 @@ def collect_cases(reviewer: str, *, require_all: bool = False) -> list[dict[str,
     if not paths.cases.is_dir():
         return []
     results: list[dict[str, Any]] = []
-    for path in sorted(paths.cases.glob(CASE_FILE_PATTERN)):
-        record = read_json(path)
-        if record.get("case_id") != path.stem:
-            raise SsrError(f"{path}: case_id {record.get('case_id')!r} does not match the file name")
+    for path in paths.case_files():
+        try:
+            record = paths.codec.load(path.read_text(encoding="utf-8"))
+        except SsrError as exc:
+            raise SsrError(f"{path}: {exc}") from exc
+        if record.get("case_id") != paths.codec.case_id_of(path.name):
+            raise SsrError(
+                f"{path}: case_id {record.get('case_id')!r} does not match the file name"
+            )
         results.append(record)
     if require_all:
         expected = expected_case_ids()
@@ -176,7 +200,7 @@ def collect_cases(reviewer: str, *, require_all: bool = False) -> list[dict[str,
 def update_progress(reviewer: str) -> dict[str, Any]:
     paths = ReviewerPaths(reviewer).ensure()
     expected = expected_case_ids()
-    done = sorted(path.stem for path in paths.cases.glob(CASE_FILE_PATTERN))
+    done = sorted(paths.codec.case_id_of(path.name) for path in paths.case_files())
     remaining = [case_id for case_id in expected if case_id not in set(done)]
     progress = {
         "reviewer": reviewer,
@@ -282,7 +306,7 @@ def summarise_all() -> dict[str, Any]:
     summary: dict[str, Any] = {}
     for reviewer in REVIEWERS:
         paths = ReviewerPaths(reviewer)
-        cases = len(list(paths.cases.glob(CASE_FILE_PATTERN))) if paths.cases.is_dir() else 0
+        cases = len(paths.case_files())
         summary[reviewer] = {
             "cases_saved": cases,
             "complete": paths.complete.is_file(),

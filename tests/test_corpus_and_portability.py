@@ -114,7 +114,6 @@ def test_bundle_excludes_every_hidden_artifact_kind():
         "data/validated_pool",
         "data/generated_pool",
         "analysis/",
-        "configs/",
         "prompts/",
         "metadata.json",
         "trajectory.jsonl",
@@ -126,6 +125,15 @@ def test_bundle_excludes_every_hidden_artifact_kind():
     for module in ("generation.py", "solving.py", "model.py", "agent_loop.py",
                    "exec_env.py", "swesmith_sampling.py", "packets.py", "swesmith.py"):
         assert module not in LIBRARY_MODULES, f"{module} must not be shipped to a reviewer"
+
+
+def test_bundle_ships_only_the_review_format_config():
+    """configs/ is otherwise hidden. review_formats.yaml has to travel: the
+    reviewer's tooling needs to know which format that reviewer writes."""
+    source = (REPO_ROOT_PATH / "scripts" / "make_review_bundle.py").read_text(encoding="utf-8")
+    assert 'configs" / "review_formats.yaml"' in source
+    for other in ("sampling.yaml", "generator.yaml", "solver.yaml"):
+        assert f'"{other}"' not in source
 
 
 def test_bundle_library_modules_all_exist():
@@ -193,7 +201,10 @@ def test_each_brief_points_at_its_own_review_directory():
         assert f"**Only `reviews/{reviewer}/**`.**" in text
         assert f"--reviewer {reviewer}" in text
         assert f"--reviewer {other}" not in text
-        assert f"reviews/{reviewer}/cases/SWESMITH_nnn.json" in text
+        from ssr.review_formats import codec_for
+
+        extension = codec_for(reviewer).extension
+        assert f"reviews/{reviewer}/cases/SWESMITH_nnn{extension}" in text
 
 
 def test_no_brief_tells_a_reviewer_to_avoid_itself():
@@ -223,11 +234,28 @@ def normalise_roles(text: str, own: str, other: str) -> str:
     return text.replace("AGENTS.md", "<BRIEF>").replace("CLAUDE.md", "<BRIEF>")
 
 
+def strip_serialisation(text: str) -> str:
+    """Remove the parts that are allowed to differ: the fenced record
+    examples and the sentence naming the format."""
+    text = re.sub(r"```(?:json|yaml)\n.*?```", "<RECORD EXAMPLE>", text, flags=re.S)
+    text = re.sub(r"You write \*\*[A-Z]+\*\*\.",
+                  "You write <FORMAT>.", text)
+    text = re.sub(r"One \*\*[A-Z]+\*\* file per case, at `[^`]+`:",
+                  "One <FORMAT> file per case, at <PATH>:", text)
+    return text
+
+
 def test_briefs_are_otherwise_identical():
-    """Only the reviewer names differ. Any other divergence is drift."""
-    codex = normalise_roles(brief("codex"), "codex", "claude")
-    claude = normalise_roles(brief("claude"), "claude", "codex")
+    """The two briefs differ in exactly two ways: the reviewer names, and the
+    serialisation format. Any third divergence is drift."""
+    codex = strip_serialisation(normalise_roles(brief("codex"), "codex", "claude"))
+    claude = strip_serialisation(normalise_roles(brief("claude"), "claude", "codex"))
     assert codex == claude
+
+
+def test_the_briefs_really_do_differ_before_that_is_stripped():
+    """Guard against the normaliser above hiding a real difference."""
+    assert normalise_roles(brief("codex"), "codex", "claude") !=         normalise_roles(brief("claude"), "claude", "codex")
 
 
 def test_both_briefs_open_with_the_preflight_command():
