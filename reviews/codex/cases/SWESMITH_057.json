@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_057",
+  "failure_pattern": "incomplete_change_propagation",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_03", "TEST_FAILURE_04"],
+  "reasoning_summary": "BUG_DIFF rewrites Plane._getrange to call ceil() but does not propagate that dependency to the module imports; CODE_CONTEXT_01 therefore raises during routine plane indexing, and TEST_FAILURE_03 and TEST_FAILURE_04 confirm broad layout failures.",
+  "proposed_other_pattern": null
+}

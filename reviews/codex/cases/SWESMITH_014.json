@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_014",
+  "failure_pattern": "disproportionate_or_duplicative_solution",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01", "TEST_FAILURE_04", "TEST_FAILURE_06", "TEST_FAILURE_11"],
+  "reasoning_summary": "BUG_DIFF broadly rewrites unrelated file opening, listing, unset, and run semantics, including several inverted conditions; failures across representative commands show that this excessive cross-command change itself constitutes the defect.",
+  "proposed_other_pattern": null
+}

@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_017",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_02", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF passes a compiled regex through StringMethods.match and relaxes only that accessor's public typing/documentation; CODE_CONTEXT_02 delegates the value unchanged to the backing array, and TEST_FAILURE_01 shows the pyarrow string backend does not accept it.",
+  "proposed_other_pattern": null
+}

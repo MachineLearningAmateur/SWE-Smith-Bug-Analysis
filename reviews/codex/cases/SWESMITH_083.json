@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_083",
+  "failure_pattern": "violated_project_constraint_or_convention",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF deletes consumption of the repository-specific tools.files.download:verify configuration while CODE_CONTEXT_01 continues to resolve the sibling retry settings from that same configuration before invoking the downloader; TEST_FAILURE_01 confirms the verify configuration contract is violated.",
+  "proposed_other_pattern": null
+}

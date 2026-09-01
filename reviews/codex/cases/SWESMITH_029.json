@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_029",
+  "failure_pattern": "broke_existing_contract_or_behavior",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_02", "TEST_FAILURE_03"],
+  "reasoning_summary": "BUG_DIFF stops removing deleted assignments and deletes both status-description implementations while returning unrelated response-layer request IDs; the three TEST_FAILURE entries cover deletion and both established status APIs.",
+  "proposed_other_pattern": null
+}

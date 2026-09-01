@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_077",
+  "failure_pattern": "broke_existing_contract_or_behavior",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_09"],
+  "reasoning_summary": "BUG_DIFF removes the path parser's root stripping and state initialization, stops accumulating ordinary path characters, and leaves inside_quotes and brackets undefined; the cited extraction and delta tests show the resulting core path behavior regression.",
+  "proposed_other_pattern": null
+}

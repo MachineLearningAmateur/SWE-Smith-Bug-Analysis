@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_010",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_02", "TEST_FAILURE_03"],
+  "reasoning_summary": "BUG_DIFF assumes QueryBuilder.into is only an INSERT entry point and removes the existing-select branch that sets _select_into; CODE_CONTEXT_01's SQL dispatcher depends on that flag, so all SELECT INTO variants fail.",
+  "proposed_other_pattern": null
+}

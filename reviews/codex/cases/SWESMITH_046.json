@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_046",
+  "failure_pattern": "broke_existing_contract_or_behavior",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "CODE_CONTEXT_02", "CODE_CONTEXT_03", "TEST_FAILURE_01", "TEST_FAILURE_02"],
+  "reasoning_summary": "BUG_DIFF removes the administrator-account operation from the backend, response handler, and URL routing layers, eliminating an established API in both configured and empty-account states; the two TEST_FAILURE entries directly cover those lost behaviors.",
+  "proposed_other_pattern": null
+}

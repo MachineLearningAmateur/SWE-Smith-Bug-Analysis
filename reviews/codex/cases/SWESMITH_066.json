@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_066",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_19"],
+  "reasoning_summary": "BUG_DIFF moves the return from Request.duplicate_params ahead of both the `seen_keys` initialization and the loop that populates it. CODE_CONTEXT_01 therefore raises on every duplicate-parameter check instead of computing duplicates, and TEST_FAILURE_19 exercises request error handling that depends on this property.",
+  "proposed_other_pattern": null
+}

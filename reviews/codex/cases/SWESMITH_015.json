@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_015",
+  "failure_pattern": "incomplete_change_propagation",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_02"],
+  "reasoning_summary": "BUG_DIFF retains plugins in APISpec and Components but removes the constructor loop that calls each plugin's init_spec hook; CODE_CONTEXT_01 then uses uninitialized plugins throughout component helpers, producing the broad plugin-dependent failures.",
+  "proposed_other_pattern": null
+}

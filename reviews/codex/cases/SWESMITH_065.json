@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_065",
+  "failure_pattern": "wrong_baseline_or_branch",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_03", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF replaces the current UID catalog with an older-style subset: it deletes newer transfer and generated storage UIDs, adds a legacy Python-version alias block, and then still references deleted HTJ2K/JPEG XL names while also using unimported `sys`. CODE_CONTEXT_03 therefore cannot initialize on this repository baseline, consistent with TEST_FAILURE_01 and the entire suite failing at import.",
+  "proposed_other_pattern": null
+}

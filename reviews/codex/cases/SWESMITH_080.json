@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_080",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF swaps the MOD 11-2 checksum branches, returning 11 for a zero remainder and 0 for other valid remainders; this contradicts the business-ID data contract documented in CODE_CONTEXT_01 and fails TEST_FAILURE_01.",
+  "proposed_other_pattern": null
+}

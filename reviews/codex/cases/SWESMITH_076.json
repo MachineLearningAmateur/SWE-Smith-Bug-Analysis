@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_076",
+  "failure_pattern": "broke_existing_contract_or_behavior",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01", "TEST_FAILURE_07"],
+  "reasoning_summary": "BUG_DIFF inserts an unconditional return ahead of all f-string closing logic, so the tokenizer can never emit a detected FSTRING_END; the cited error-recovery and invalid-f-string tests regress accordingly.",
+  "proposed_other_pattern": null
+}

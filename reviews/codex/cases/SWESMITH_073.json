@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_073",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF moves the batch-update options out of the request body and passes an unsupported params argument to values_batch_update; TEST_FAILURE_01 exercises Worksheet.batch_update and fails on that client API mismatch.",
+  "proposed_other_pattern": null
+}

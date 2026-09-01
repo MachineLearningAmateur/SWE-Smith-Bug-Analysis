@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_013",
+  "failure_pattern": "incomplete_change_propagation",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "CODE_CONTEXT_02", "TEST_FAILURE_01", "TEST_FAILURE_03"],
+  "reasoning_summary": "BUG_DIFF changes groups from NamedTuple objects to dictionaries but CODE_CONTEXT_02 still serializes each group with _asdict, and it removes both describe_group layers entirely; creation/description and listing tests consequently fail.",
+  "proposed_other_pattern": null
+}

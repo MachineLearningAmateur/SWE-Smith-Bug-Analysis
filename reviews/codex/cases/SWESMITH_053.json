@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_053",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF assumes entry_points is available from dask.compatibility instead of the repository's dask._compatibility importlib_metadata shim and also reorders an established positional constructor parameter; CODE_CONTEXT_01 contains those incompatible assumptions, and TEST_FAILURE_01 confirms backend dispatch no longer preserves its error behavior.",
+  "proposed_other_pattern": null
+}

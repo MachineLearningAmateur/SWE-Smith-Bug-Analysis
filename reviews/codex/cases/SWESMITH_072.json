@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_072",
+  "failure_pattern": "disproportionate_or_duplicative_solution",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF adds a special empty-TupleExpr diagnostic and then still runs the normal tuple/list lvalue analysis. That redundant check emits `can't assign to ()` in addition to the established non-iterable error instead of letting the existing analysis own the case; TEST_FAILURE_01 fails on the extra diagnostic.",
+  "proposed_other_pattern": null
+}

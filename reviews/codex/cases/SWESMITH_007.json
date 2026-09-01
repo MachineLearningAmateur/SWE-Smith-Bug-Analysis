@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_007",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_02", "TEST_FAILURE_03"],
+  "reasoning_summary": "BUG_DIFF replaces the repository's ${VAR:-default} pattern handling with an unrelated {{VAR}} regex and omits escaped-dollar normalization; CODE_CONTEXT_01 shows the actual expansion pattern, and all three affected contracts fail.",
+  "proposed_other_pattern": null
+}

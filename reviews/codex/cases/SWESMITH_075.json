@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_075",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF assumes _get_ttype_class is equivalent to _get_css_classes, but CODE_CONTEXT_01 shows the removed loop intentionally accumulated every parent CSS class; TEST_FAILURE_01 fails when a custom token depends on that hierarchy.",
+  "proposed_other_pattern": null
+}

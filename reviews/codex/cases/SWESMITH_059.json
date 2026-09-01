@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_059",
+  "failure_pattern": "false_premise_about_existing_code",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_02"],
+  "reasoning_summary": "BUG_DIFF attaches the recursive child-processing block to `not segment.segments` and moves the leaf abort to the opposite branch; CODE_CONTEXT_01 therefore tries to recurse only for childless segments and skips composites, while TEST_FAILURE_01 and TEST_FAILURE_02 confirm missing source patches.",
+  "proposed_other_pattern": null
+}

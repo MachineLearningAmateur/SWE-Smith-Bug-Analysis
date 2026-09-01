@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_058",
+  "failure_pattern": "incomplete_change_propagation",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_02"],
+  "reasoning_summary": "BUG_DIFF introduces a frame-depth decorator but does not propagate its requirements: CODE_CONTEXT_01 neither imports wraps nor defines the referenced _with_frame_depth method, and the helper is not integrated with TypeAdapter methods; TEST_FAILURE_01 and TEST_FAILURE_02 confirm regressions in the class's documented usage.",
+  "proposed_other_pattern": null
+}

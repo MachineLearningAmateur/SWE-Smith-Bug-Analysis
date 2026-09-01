@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_018",
+  "failure_pattern": "broke_existing_contract_or_behavior",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_01", "TEST_FAILURE_02"],
+  "reasoning_summary": "BUG_DIFF removes the path-separator normalization from matches, although CODE_CONTEXT_01 uses it for filesystem paths; TEST_FAILURE_01 and TEST_FAILURE_02 confirm that previously supported backslash paths no longer match.",
+  "proposed_other_pattern": null
+}

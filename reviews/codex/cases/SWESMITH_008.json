@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_008",
+  "failure_pattern": "incomplete_change_propagation",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "CODE_CONTEXT_01", "TEST_FAILURE_02", "TEST_FAILURE_03"],
+  "reasoning_summary": "BUG_DIFF rewrites write-side completion but drops the required unread-request branch that sets _disconnect_on_finish; CODE_CONTEXT_01 shows connection closure depends on that flag, matching both early-return failures.",
+  "proposed_other_pattern": null
+}

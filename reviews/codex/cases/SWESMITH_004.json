@@ -1,0 +1,10 @@
+{
+  "case_id": "SWESMITH_004",
+  "failure_pattern": "masked_symptom_instead_of_fixing",
+  "pattern_confidence": "HIGH",
+  "failure_scope": "CODE_STATE",
+  "taxonomy_fit": "DIRECT",
+  "supporting_evidence_ids": ["BUG_DIFF", "TEST_FAILURE_01"],
+  "reasoning_summary": "BUG_DIFF catches each download exception and only logs it, allowing fetch_data_files to return despite an incomplete cache; TEST_FAILURE_01 covers the lost failure-reporting behavior.",
+  "proposed_other_pattern": null
+}
